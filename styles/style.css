@@ -1,6 +1,6 @@
 @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@500;600&display=swap');
 
-* {
+*{
     margin: 0;
     padding: 0;
     box-sizing: border-box;
@@ -9,7 +9,7 @@
     color: black;  
 }
 
-.page {
+body{
     position: relative;
     background-image: url(../img/QuizBackground.png);
     background-size: cover;
@@ -24,11 +24,11 @@
     margin-bottom: 2%;
 }
 
-.menu__logo {
+.menu__logo{
     width: 25%;
 }
 
-.menu__list {
+.menu__list{
     display: flex;
     justify-content: space-evenly;
     align-items: center;
@@ -39,7 +39,7 @@
     box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25), 4px 4px 40px rgba(255, 0, 0, 0.9);
 }
 
-.menu__item {
+.menu__item{
     position: relative;
     padding: 10px;
     width: 20%;
@@ -49,11 +49,11 @@
     color: rgba(0, 0, 0, 0.4);
 }
 
-.menu__item--selected {
+.menu__item--selected{
     color: black; 
 }
 
-.menu__item--selected::before {
+.menu__item--selected::before{
     content: "";
     position: absolute;
     left: 0;
@@ -65,13 +65,13 @@
     border-radius: 4px;
 }
 
-.main {
+.main{
     width: 100%;
     display: flex;
     justify-content: space-around;
 }
 
-.question__photo {
+.question__photo{
     display: flex;
     flex-direction: column;
     justify-content: flex-start;
@@ -79,18 +79,18 @@
     width: 25%
 }
 
-.question__image {
+.question__image{
     width: 100%;
 }
 
-.mode {
+.mode{
     display: flex;
     flex-direction: column;
     justify-content: space-around;
     width: 65%;
 }
 
-.mode__type, .mode__rules {
+.mode__type, .mode__rules{
     background-color: white;
     width: 100%;
     padding: 30px; 
@@ -100,24 +100,24 @@
     box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25), 4px 4px 40px rgba(255, 0, 0, 0.9), inset 4px 5px 4px rgba(0, 0, 0, 0.5);
 }
 
-.mode__type {
+.mode__type{
     font-weight: 600;
 }
 
-.mode___description {
+.mode___description{
     margin-top: 20px;
     font-size: 0.8rem;
     text-align: left;
 }
 
-.buttons {
+.buttons{
     width: 65%;
     display: flex;
     justify-content: space-between;
     margin-left: 32%;
 }
 
-.button {
+.button{
     border-radius: 16px;
     border: none;
     padding: 20px 30px;
@@ -126,16 +126,16 @@
     transition: 0.2s linear;
 }
 
-.button:hover {
+.button:hover{
     background-color: #444;
     color: white;
 }
 
-.button--ranking {
+.button--ranking{
     width: 48%;
 }
 
-.button--play {
+.button--play{
     width: 48%;
     background-color: rgb(255, 0, 0);
     box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25), 4px 4px 40px rgba(255, 0, 0, 0.9);
@@ -143,9 +143,9 @@
     color: white;
 }
 
-.button--settings {
+.button--settings{
     position: absolute;
-    bottom: 5%;
+    bottom: 2%;
     left: 7%;
     width: 20%;
 } 
@@ -163,72 +163,73 @@
 }
 
 @media (max-width: 768px) {
-    * {
+    *{
         font-size: 20px;
     }
 
-    .menu {
+    .menu{
         flex-direction: column;
     }
 
-    .menu__logo {
+    .menu__logo{
         width: 60%;
     }
     
-    .menu__list {
+    .menu__list{
         width: 95%;
         height: 90px;
     }
 
-    .menu__item {
+    .menu__item{
         width: 25%;
     }
    
-    .question__photo {
+    .question__photo{
         justify-content: flex-start;
         width: 46%;
     }
     
-    .mode {
+    .mode{
         width: 46%;
     }
 
-    .buttons {
+    .buttons{
         width: 95%;
-        margin: 3%;    }
+        margin: 3%;    
+    }
     
-    .button--settings {
+    .button--settings{
         position: static;
         width: 95%;
     } 
 }
 
 @media (max-width: 480px) {
-    * {
+    *{
         font-size: 18px;
     }
     
-    .menu__list {
+    .menu__list{
         height: 70px;
     }
 
-    .menu__item {
+    .menu__item{
         font-size: 15px;
     }
 
-    .main {
+    .main{
         flex-direction: column;
         align-items: center;
         justify-content: center;
     }
 
-    .question__photo {
+    .question__photo{
         width: 95%;
         align-items: center;
         margin-bottom: 2%;
     }
     
-    .mode {
+    .mode{
         width: 95%;
     }  
 }
