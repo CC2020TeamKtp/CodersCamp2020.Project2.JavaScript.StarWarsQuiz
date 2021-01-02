@@ -1,20 +1,37 @@
 <!DOCTYPE html>
-<html lang="pl">
+<html lang="en">
 <head>
-    <meta charset="UTF-8"/>
-    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-    <meta http-equiv="X-UA-Compatible" content="ie=edge"/>
-    <title>CodersCamp2020 | Star Wars API QUIZ</title>
-    <link rel="stylesheet" href="styles/App.css"/>
-
-    <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap"
-          rel="stylesheet">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Star Wars Quiz</title>
+    <link rel="stylesheet" href="styles/style.css">
+    <script src="https://kit.fontawesome.com/84576b974f.js" crossorigin="anonymous"></script>
 </head>
 <body>
-
-<div id="swquiz-app">
-</div>
-
-<script src="src/index.js"></script>
+    <div class="menu">
+        <img class="menu__logo" src="img/StarWarsLogo.png" alt="star wars logo">
+        <nav class="menu__list">
+            <a class="menu__item menu__item--selected" href="#">People</a>
+            <a class="menu__item menu__item" href="#">Vehicles</a>
+            <a class="menu__item menu__item" href="#">Starships</a>
+        </nav>
+    </div>
+    <div class="main">
+        <div class="question__photo">
+            <img class="question__image" src="img/QuestionPhoto.png" alt="image for quiz question" >
+        </div>
+        <div class="mode">
+            <p class="mode__type">MODE: Who is this character?</p>
+            <div class="mode__rules">
+                <p class="mode__title"><i class="fas fa-graduation-cap"></i> Mode rules</p>
+                <p class="mode___description">You have one minute (1m) to answer as many questions as possible. During the game on each question you need to select who from Star Wars is showed on the left (Jar Jar Binks right now) from available options.</p>
+            </div>
+        </div>        
+    </div>
+    <div class="buttons">
+        <button class="button button--ranking"><i class="fas fa-id-badge"></i> Hall of fame</button>
+        <button class="button button--play">play the game</button>
+    </div>
+    <button class="button button--settings">Settings</button> 
 </body>
 </html>
