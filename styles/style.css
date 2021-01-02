@@ -150,6 +150,62 @@
     width: 20%;
 } 
 
+/* ****************** game in progress ************** */
+.option-buttons {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+}
+.button-option {
+    margin: 20px 0;
+    width: 47%;
+}
+.progress-wraper {
+    margin: auto;
+    display: flex;
+    flex-wrap: wrap;
+    width: 94%;
+    height: auto;
+}
+.progress-lightSaber {
+    position: relative;
+    left: 2%;
+    width: 100%;
+    display: flex;
+    height: auto;
+}
+.handle {
+    width: 20%;
+    display: block;
+    align-self: center;
+}
+.light {
+    width: 80%;
+    height: 68%;
+    background-color: grey;
+    align-self: center;
+    border-radius: 10px;
+    position: relative;
+    left: -2%;
+} 
+.light::after {
+    content: "";
+    display: block;
+    height: 100%;
+    width: 50%;
+    background-color: whitesmoke;
+    border-radius: inherit;
+    box-shadow: 14px 0px 16px 4px rgba(250,18,56,1);
+}
+.timeLeft {
+    color: red;
+    align-self: center;
+    margin: 10px auto;
+}
+.timeLeft span {
+    color: inherit;
+}
+
 @media (max-width: 1280px) {
     * {
         font-size: 27px;
