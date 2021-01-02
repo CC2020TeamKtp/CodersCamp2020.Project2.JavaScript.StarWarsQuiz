@@ -80,7 +80,8 @@
 }
 
 .question__image {
-    width: 100%;
+    width: 120%;
+    
 }
 
 .mode {
@@ -155,10 +156,12 @@
     display: flex;
     flex-wrap: wrap;
     justify-content: space-between;
+    /* border: 2px solid wheat; */
 }
 .button-option {
-    margin: 20px 0;
+    margin-bottom: 6%;
     width: 47%;
+    box-shadow: inset 3px 3px 12px -4px grey;
 }
 .progress-wraper {
     margin: auto;
