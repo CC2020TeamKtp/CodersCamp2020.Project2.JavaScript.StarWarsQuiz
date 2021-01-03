@@ -33,13 +33,7 @@ body {
   width: 25%;
 }
 
-.menu__list label {
-  color: white;
-  margin-right: 20px;
-  font-size: 0.8rem;
-}
-
-.menu__list .menu {
+.menu__list {
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
@@ -57,7 +51,7 @@ body {
           box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25), 4px 4px 40px rgba(255, 0, 0, 0.9);
 }
 
-.menu__list__item {
+.menu__item {
   position: relative;
   padding: 10px;
   width: 20%;
@@ -67,11 +61,11 @@ body {
   color: rgba(0, 0, 0, 0.4);
 }
 
-.menu__list__item--selected {
+.menu__item--selected {
   color: black;
 }
 
-.menu__list__item--selected::before {
+.menu__item--selected::before {
   content: '';
   position: absolute;
   left: 0;
@@ -84,7 +78,7 @@ body {
   border-radius: 4px;
 }
 
-.menu .main {
+.main {
   width: 100%;
   display: -webkit-box;
   display: -ms-flexbox;
@@ -93,7 +87,7 @@ body {
       justify-content: space-around;
 }
 
-.menu .question__photo {
+.question__photo {
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
@@ -110,11 +104,11 @@ body {
   width: 25%;
 }
 
-.menu .question__image {
+.question__image {
   width: 100%;
 }
 
-.menu .mode {
+.mode {
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
@@ -127,7 +121,7 @@ body {
   width: 65%;
 }
 
-.menu .mode__type, .menu .mode__rules {
+.mode__type, .mode__rules {
   background-color: white;
   width: 100%;
   padding: 30px;
@@ -138,28 +132,28 @@ body {
           box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25), 4px 4px 40px rgba(255, 0, 0, 0.9), inset 4px 5px 4px rgba(0, 0, 0, 0.5);
 }
 
-.menu .mode__type {
+.mode__type {
   font-weight: 600;
 }
 
-.menu .mode__type___description {
+.mode__type___description {
   margin-top: 20px;
   font-size: 0.8rem;
   text-align: left;
 }
 
-.menu .ranking__table {
+.ranking__table {
   max-height: 20rem;
   text-align: center;
   width: 100%;
   margin-top: 1rem;
 }
 
-.menu .ranking__table--header {
+.ranking__table--header {
   font-weight: bold;
 }
 
-.menu .buttons {
+.buttons {
   width: 65%;
   display: -webkit-box;
   display: -ms-flexbox;
@@ -170,7 +164,7 @@ body {
   margin-left: 32%;
 }
 
-.menu .button {
+.button {
   border-radius: 16px;
   border: none;
   padding: 20px 30px;
@@ -181,16 +175,16 @@ body {
   transition: 0.2s linear;
 }
 
-.menu .button:hover {
+.button:hover {
   background-color: #444;
   color: white;
 }
 
-.menu .button--ranking {
+.button--ranking {
   width: 48%;
 }
 
-.menu .button--play {
+.button--play {
   width: 48%;
   background-color: red;
   -webkit-box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25), 4px 4px 40px rgba(255, 0, 0, 0.9);
@@ -199,30 +193,30 @@ body {
   color: white;
 }
 
-.menu .button--settings {
+.button--settings {
   position: absolute;
   bottom: 2%;
   left: 7%;
   width: 20%;
 }
 
-.menu .button--back {
+.button--back {
   position: relative;
   margin-top: 10rem;
   width: 10rem;
 }
 
-.menu .button--save {
+.button--save {
   margin-top: 30px;
   width: 6rem;
 }
 
-.menu .button--clear {
+.button--clear {
   margin-top: 30px;
   width: 6rem;
 }
 
-.menu .api_key--input {
+.api_key--input {
   border: 4px solid #c4c4c4;
   border-radius: 8px;
   width: 55%;
@@ -231,7 +225,7 @@ body {
   height: 70px;
 }
 
-.menu .settings {
+.settings {
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
@@ -244,87 +238,87 @@ body {
   width: auto;
 }
 
+label {
+  color: white;
+  margin-right: 20px;
+  font-size: 0.8rem;
+}
+
 @media (max-width: 1280px) {
-  .menu * {
+  * {
     font-size: 27px;
   }
 }
 
 @media (max-width: 1024px) {
-  .menu * {
+  * {
     font-size: 24px;
   }
 }
 
 @media (max-width: 768px) {
-  .menu * {
+  * {
     font-size: 20px;
   }
-  .menu .menu {
+  .menu {
     -webkit-box-orient: vertical;
     -webkit-box-direction: normal;
         -ms-flex-direction: column;
             flex-direction: column;
   }
-  .menu .menu__logo {
+  .menu__logo {
     width: 60%;
   }
-  .menu .menu__list {
+  .menu__list {
     width: 95%;
     height: 90px;
   }
-  .menu .menu__list__item {
+  .menu__list__item {
     width: 25%;
   }
-  .menu .question__photo {
+  .question__photo {
     -webkit-box-pack: start;
         -ms-flex-pack: start;
             justify-content: flex-start;
     width: 46%;
   }
-  .menu .mode {
+  .mode {
     width: 46%;
   }
-  .menu .api_key--input {
+  .mode__hall {
+    padding: 15px;
+  }
+  .api_key--input {
     width: 80%;
   }
-  .menu .button--back {
+  .button--back {
     margin-top: 10rem;
     margin-left: 35px;
   }
-  .menu .mode {
-    width: 46%;
-  }
-  .menu .mode__hall {
-    padding: 15px;
-  }
-  .menu .ranking__table * {
+  .ranking__table * {
     font-size: 15px;
   }
-  .menu .buttons {
+  .buttons {
     width: 95%;
     margin: 3%;
   }
-  .menu .button--settings {
+  .button--settings {
     position: static;
     width: 95%;
-  }
-  .menu .settings {
-    margin-left: 20px;
   }
 }
 
 @media (max-width: 480px) {
-  .menu * {
+  * {
     font-size: 18px;
   }
-  .menu .menu__list {
+  .menu__list {
     height: 70px;
   }
-  .menu .menu__list__item {
+  .menu__list__item {
     font-size: 15px;
   }
-  .menu .main {
+  .main {
     -webkit-box-orient: vertical;
     -webkit-box-direction: normal;
         -ms-flex-direction: column;
@@ -336,14 +330,14 @@ body {
         -ms-flex-pack: center;
             justify-content: center;
   }
-  .menu .question__photo {
+  .question__photo {
     width: 95%;
     -webkit-box-align: center;
         -ms-flex-align: center;
             align-items: center;
     margin-bottom: 2%;
   }
-  .menu .mode {
+  .mode {
     width: 95%;
   }
 }
