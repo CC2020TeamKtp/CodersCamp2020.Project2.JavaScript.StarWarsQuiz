@@ -193,6 +193,13 @@ body {
 
   .mode {
     width: 46%;
+    &__hall {
+      padding: 15px;
+    }
+  }
+
+  .ranking__table * {
+    font-size: 15px;
   }
 
   .buttons {
