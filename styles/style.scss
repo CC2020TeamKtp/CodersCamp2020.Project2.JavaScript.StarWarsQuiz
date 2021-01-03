@@ -201,16 +201,12 @@ body {
     margin: 3%;
   }
 
-  
-    
-    .button--settings {
-      position: static;
-      width: 95%;
-      display: block;
-      margin: auto;
-      z-index: 1000;
-    }
-  
+  .button--settings {
+    position: static;
+    width: 95%;
+    display: block;
+    margin: auto;
+  }
 }
 
 @media (max-width: 480px) {
@@ -240,5 +236,4 @@ body {
   .mode {
     width: 95%;
   }
-  
 }
