@@ -9,7 +9,7 @@
     color: black;  
 }
 
-.page {
+body {
     position: relative;
     background-image: url(../img/QuizBackground.png);
     background-size: cover;
@@ -80,8 +80,7 @@
 }
 
 .question__image {
-    width: 120%;
-    
+    width: 120%; 
 }
 
 .mode {
@@ -152,37 +151,37 @@
 } 
 
 /* ****************** game in progress ************** */
-.option-buttons {
+.answers {
     display: flex;
     flex-wrap: wrap;
     justify-content: space-between;
     /* border: 2px solid wheat; */
 }
-.button-option {
+.answers__option {
     margin-bottom: 6%;
     width: 47%;
     box-shadow: inset 3px 3px 12px -4px grey;
 }
-.progress-wraper {
+.progress {
     margin: auto;
     display: flex;
     flex-wrap: wrap;
     width: 94%;
     height: auto;
 }
-.progress-lightSaber {
+.progress__lightSaber {
     position: relative;
     left: 2%;
     width: 100%;
     display: flex;
     height: auto;
 }
-.handle {
+.progress__saberHandle {
     width: 20%;
     display: block;
     align-self: center;
 }
-.light {
+.progress__saberLight {
     width: 80%;
     height: 68%;
     background-color: grey;
@@ -191,7 +190,7 @@
     position: relative;
     left: -2%;
 } 
-.light::after {
+.progress__saberLight::after {
     content: "";
     display: block;
     height: 100%;
@@ -200,12 +199,12 @@
     border-radius: inherit;
     box-shadow: 14px 0px 16px 4px rgba(250,18,56,1);
 }
-.timeLeft {
+.progress__time {
     color: red;
     align-self: center;
     margin: 10px auto;
 }
-.timeLeft span {
+.progress__timeLeft{
     color: inherit;
 }
 
@@ -266,13 +265,13 @@
     * {
         font-size: 18px;
     }
-    .progress-lightSaber {
+    .progress__lightSaber {
         height: 20px;
     }
-    .handle {
+    .progress__saberHandle {
         height: 20px;
     }
-    .timeLeft span {
+    .progress__timeLeft {
         font-size: 2rem;
     }
     .menu__list {
