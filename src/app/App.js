@@ -1,24 +1,22 @@
 export const App = ({ options }) => {
-  const buttonRanking = document.querySelector('.button--ranking');
+  const rankingBtn = document.querySelector('.button--ranking');
+  const modeHall = document.querySelector('.mode__hall');
+  const modeRules = document.querySelector('.mode__rules');
+  const rankingBtnTxt = rankingBtn.querySelector('.button__text');
+  const rankingBtnIcon = rankingBtn.querySelector('.fas');
 
-  function switchToHallOfFame() {
-    buttonRanking.lastElementChild.innerText = 'Rules';
-    buttonRanking.firstElementChild.classList = 'fas fa-graduation-cap';
+  modeHall.hidden = true;
+  rankingBtn.addEventListener('click', switchBtn);
+  function switchBtn() {
+    if (rankingBtnTxt.innerHTML === 'Hall of fame') {
+      rankingBtnTxt.innerHTML = 'Rules';
+      rankingBtnIcon.classList = 'fas fa-graduation-cap';
+    } else {
+      rankingBtnTxt.innerHTML = 'Hall of fame';
+      rankingBtnIcon.classList = 'fas fa-id-badge';
+    }
 
-    document.querySelector('.mode__hall').hidden = false;
-    document.querySelector('.mode__rules').hidden = true;
-
-    buttonRanking.addEventListener('click', switchToRules);
-    buttonRanking.removeEventListener('click', switchToHallOfFame);
+    modeHall.hidden = !modeHall.hidden;
+    modeRules.hidden = !modeRules.hidden;
   }
-  function switchToRules() {
-    buttonRanking.lastElementChild.innerText = 'Hall of fame';
-    buttonRanking.firstElementChild.classList = 'fas fa-id-badge';
-    document.querySelector('.mode__hall').hidden = true;
-    document.querySelector('.mode__rules').hidden = false;
-    buttonRanking.addEventListener('click', switchToHallOfFame);
-    buttonRanking.removeEventListener('click', switchToRules);
-  }
-
-  switchToRules();
 };

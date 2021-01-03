@@ -13,7 +13,7 @@ body {
   position: relative;
   background-image: url(../img/QuizBackground.png);
   background-size: cover;
-  padding: 3%;
+  padding: 1rem;
 }
 
 .menu {
@@ -109,25 +109,13 @@ body {
 .ranking {
   &__table {
     max-height: 20rem;
-    display: grid;
+    text-align: center;
+    width: 100%;
+    margin-top: 1rem;
   }
 
   &__table--header {
     font-weight: bold;
-    display: grid;
-    grid-template-columns: 1fr 1fr 1fr;
-    align-items: center;
-    margin-top: 1rem;
-  }
-
-  &__table--body {
-    display: grid;
-    grid-template-rows: 1fr 1fr 1fr;
-  }
-
-  &__table--row {
-    display: grid;
-    grid-template-columns: 1fr 1fr 1fr;
   }
 }
 .buttons {
