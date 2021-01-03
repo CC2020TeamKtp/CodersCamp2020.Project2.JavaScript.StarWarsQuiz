@@ -94,11 +94,11 @@ body{
     }
     &__type{
         font-weight: 600;
-        &___description{
-            margin-top: 20px;
-            font-size: 0.8rem;
-            text-align: left;
-        }
+    }
+    &___description{
+        margin-top: 20px;
+        font-size: 0.8rem;
+        text-align: left;
     }
 }
 
@@ -163,9 +163,9 @@ body{
         &__list{
             width: 95%;
             height: 90px;
-            &__item{
-                width: 25%;
-            }
+        }
+        &__item{
+            width: 25%;
         }
     }
 
@@ -196,9 +196,10 @@ body{
     
     .menu__list{
         height: 70px;
-        &__item{
-            font-size: 15px;
-        }
+    }
+
+    .menu__item{
+        font-size: 15px;
     }
 
     .main{
