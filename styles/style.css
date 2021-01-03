@@ -266,6 +266,12 @@
     * {
         font-size: 18px;
     }
+    .progress-lightSaber {
+        height: 20px;
+    }
+    .handle {
+        height: 20px;
+    }
     .timeLeft span {
         font-size: 2rem;
     }
