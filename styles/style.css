@@ -266,7 +266,9 @@
     * {
         font-size: 18px;
     }
-    
+    .timeLeft span {
+        font-size: 2rem;
+    }
     .menu__list {
         height: 70px;
     }
