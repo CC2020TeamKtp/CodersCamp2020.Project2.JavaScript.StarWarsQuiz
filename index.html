@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Star Wars Quiz</title>
-    <link rel="stylesheet" href="styles/style.css">
+    <link rel="stylesheet" href="styles/style.scss">
     <script src="https://kit.fontawesome.com/84576b974f.js" crossorigin="anonymous"></script>
     <script src="src/index.js" defer></script>
 </head>
@@ -58,6 +58,17 @@
         <button class="button button--ranking"><i class="fas fa-id-badge"></i> <span class="button__text">Hall of fame</span></button>
         <button class="button button--play">play the game</button>
     </div>
+     
     <button class="button button--settings">Settings</button> 
+    <div class="settings">
+        <form>
+           <label for="api_key">Google Vision API Key:</label>
+           <input class="api_key--input" type="text" id="api_key" name="api_key">
+           <input class="button button--save" type="submit" value="Save"> 
+           <input class="button button--clear" type="submit" value="Clear">
+        </form>       
+     </div>     
+     <button class="button button--back">Back</button> 
+    
 </body>
 </html>

@@ -4,6 +4,32 @@ export const App = ({ options }) => {
   const modeRules = document.querySelector('.mode__rules');
   const rankingBtnTxt = rankingBtn.querySelector('.button__text');
   const rankingBtnIcon = rankingBtn.querySelector('.fas');
+  const btnSettings = document.querySelector('.button--settings');
+  const formSettings = document.querySelector('form');
+  const btnBack = document.querySelector('.button--back');
+
+  btnSettings.addEventListener('click', () => {
+    btnSettings.hidden = true;
+
+    document.querySelector('.mode__rules').hidden = true;
+    document.querySelector('.mode__type').hidden = true;
+    document.querySelector('.button--ranking').hidden = true;
+    document.querySelector('.button--play').hidden = true;
+    document.querySelector('.question__image').hidden = true;
+    formSettings.hidden = false;
+    btnBack.hidden = false;
+  });
+
+  btnBack.addEventListener('click', () => {
+    window.location.reload();
+  });
+
+  function onLoadHide() {
+    formSettings.hidden = true;
+    btnBack.hidden = true;
+  }
+
+  onLoadHide();
 
   modeHall.hidden = true;
   rankingBtn.addEventListener('click', switchBtn);
