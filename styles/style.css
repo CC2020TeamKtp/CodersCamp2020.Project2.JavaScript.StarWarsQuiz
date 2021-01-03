@@ -10,10 +10,14 @@
 }
 
 body {
-  position: relative;
   background-image: url(../img/QuizBackground.png);
   background-size: cover;
   padding: 1rem;
+}
+
+.wrapper {
+  position: relative;
+  margin: 0 0;
 }
 
 .menu {
@@ -196,7 +200,7 @@ body {
 .button--settings {
   position: absolute;
   bottom: 2%;
-  left: 7%;
+  left: 5%;
   width: 20%;
 }
 
@@ -244,9 +248,139 @@ label {
   font-size: 0.8rem;
 }
 
+.modal {
+  display: none;
+  position: absolute;
+  z-index: 9999;
+  top: 5%;
+  left: 50%;
+  -webkit-transform: translate(-50%, -4%);
+          transform: translate(-50%, -4%);
+  min-width: 80%;
+  height: auto;
+  background-color: white;
+  border-radius: 16px;
+  -webkit-box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25), 4px 4px 40px rgba(255, 0, 0, 0.9);
+          box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25), 4px 4px 40px rgba(255, 0, 0, 0.9);
+  padding: 2rem 2.5rem;
+}
+
+.modal__title {
+  text-align: center;
+  text-transform: uppercase;
+  font-weight: 600;
+  font-size: 1.4rem;
+  line-height: 1.7rem;
+}
+
+.modal__description {
+  padding-top: 0.5rem;
+  padding-bottom: 1.67rem;
+}
+
+.modal__answers {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+}
+
+.modal__answers--img {
+  height: 11.5rem;
+}
+
+.modal .table {
+  margin-left: 1.83rem;
+  text-align: left;
+}
+
+.modal .table caption {
+  text-align: left;
+  font-size: 0.87rem;
+  line-height: 1.07rem;
+  font-weight: 600;
+  padding-bottom: 0.6rem;
+}
+
+.modal .table th {
+  color: rgba(0, 0, 0, 0.6);
+}
+
+.modal .table th,
+.modal .table td {
+  font-size: 0.8rem;
+}
+
+.modal .table td {
+  padding-right: 1.83rem;
+}
+
+.modal .table .table__cell--correct {
+  color: rgba(87, 181, 13, 0.6);
+}
+
+.modal .table .table__cell--incorrect {
+  color: rgba(255, 0, 0, 0.6);
+}
+
+.modal .table__img {
+  height: 2.87rem;
+  -webkit-box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25), 4px 4px 40px rgba(255, 0, 0, 0.9);
+          box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25), 4px 4px 40px rgba(255, 0, 0, 0.9);
+  border-radius: 16px;
+  -webkit-transform: matrix(-1, 0, 0, 1, 0, 0);
+          transform: matrix(-1, 0, 0, 1, 0, 0);
+}
+
+.modal .form {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+}
+
+.modal .form__input {
+  border: 4px solid #c4c4c4;
+  border-radius: 8px;
+  height: 2rem;
+  width: 16rem;
+  font-size: 1.2rem;
+  padding: 1rem;
+}
+
+.modal .form label {
+  font-size: 0.93rem;
+  padding-left: 0.7rem;
+  color: black;
+}
+
+.modal .submit {
+  margin-top: 2rem;
+  width: 22rem;
+  margin-left: auto;
+  margin-right: auto;
+  padding: 0.7rem;
+  background-color: #ff0000;
+  -webkit-box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25), 4px 4px 40px rgba(255, 0, 0, 0.9);
+          box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25), 4px 4px 40px rgba(255, 0, 0, 0.9);
+  border-radius: 16px;
+}
+
+.modal .submit button {
+  width: 100%;
+  background: none;
+  border: none;
+  outline: none;
+  color: white;
+  font-weight: 500;
+  text-transform: uppercase;
+  text-align: center;
+}
+
 @media (max-width: 1280px) {
   * {
     font-size: 27px;
+  }
+  .modal .form label {
+    font-size: 0.7rem;
   }
 }
 
@@ -306,6 +440,48 @@ label {
     position: static;
     width: 95%;
   }
+  .modal {
+    width: 100%;
+    min-height: 100vh;
+    border-radius: 0;
+    top: 0;
+    -webkit-transform: translate(-50%, 0%);
+            transform: translate(-50%, 0%);
+    padding: 2rem 2rem;
+  }
+  .modal__answers {
+    -webkit-box-orient: vertical;
+    -webkit-box-direction: normal;
+        -ms-flex-direction: column;
+            flex-direction: column;
+  }
+  .modal__answers--img {
+    width: 10rem;
+    height: auto;
+    margin: 0 auto;
+    padding-bottom: 1rem;
+  }
+  .modal .table {
+    margin-left: 0;
+  }
+  .modal .table td {
+    padding-right: 0.93rem;
+  }
+  .modal .form {
+    -webkit-box-orient: vertical;
+    -webkit-box-direction: normal;
+        -ms-flex-direction: column;
+            flex-direction: column;
+    padding-top: 1.3rem;
+  }
+  .modal .form__input,
+  .modal .form label {
+    margin: 0.3rem auto;
+    width: 13rem;
+  }
+  .modal .submit {
+    width: 11rem;
+  }
 }
 
 @media (max-width: 480px) {
@@ -339,6 +515,9 @@ label {
   }
   .mode {
     width: 95%;
+  }
+  .modal {
+    padding: 2rem 1.5rem;
   }
 }
 /*# sourceMappingURL=style.css.map */
