@@ -14,6 +14,7 @@ body {
   background-image: url(../img/QuizBackground.png);
   background-size: cover;
   padding: 1rem;
+  max-height: 100vh;
 }
 
 .menu {
@@ -200,15 +201,21 @@ body {
     margin: 3%;
   }
 
-  .button--settings {
-    position: static;
-    width: 95%;
-  }
+  
+    
+    .button--settings {
+      position: static;
+      width: 95%;
+      display: block;
+      margin: auto;
+      z-index: 1000;
+    }
+  
 }
 
 @media (max-width: 480px) {
   * {
-    font-size: 18px;
+    font-size: 0.9rem;
   }
 
   .menu__list {
@@ -233,4 +240,5 @@ body {
   .mode {
     width: 95%;
   }
+  
 }

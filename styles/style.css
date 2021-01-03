@@ -14,6 +14,7 @@ body {
   background-image: url(../img/QuizBackground.png);
   background-size: cover;
   padding: 1rem;
+  max-height: 100vh;
 }
 
 .menu {
@@ -248,12 +249,15 @@ body {
   .button--settings {
     position: static;
     width: 95%;
+    display: block;
+    margin: auto;
+    z-index: 1000;
   }
 }
 
 @media (max-width: 480px) {
   * {
-    font-size: 18px;
+    font-size: 0.9rem;
   }
   .menu__list {
     height: 70px;
