@@ -16,6 +16,8 @@ export const App = ({ options }) => {
     document.querySelector('.button--ranking').hidden = true;
     document.querySelector('.button--play').hidden = true;
     document.querySelector('.question__image').hidden = true;
+    document.querySelector('table').hidden = true;
+    document.querySelector('.mode__hall').hidden = true;
     formSettings.hidden = false;
     btnBack.hidden = false;
   });
