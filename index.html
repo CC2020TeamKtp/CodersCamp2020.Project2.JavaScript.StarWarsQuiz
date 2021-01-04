@@ -1,74 +1,155 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Star Wars Quiz</title>
-    <link rel="stylesheet" href="styles/style.scss">
-    <script src="https://kit.fontawesome.com/84576b974f.js" crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="styles/style.scss" />
+    <script
+      src="https://kit.fontawesome.com/84576b974f.js"
+      crossorigin="anonymous"
+    ></script>
     <script src="src/index.js" defer></script>
-</head>
-<body>
-    <div class="menu">
-        <img class="menu__logo" src="img/StarWarsLogo.png" alt="star wars logo">
+  </head>
+  <body>
+    <div class="wrapper">
+      <div class="menu">
+        <img
+          class="menu__logo"
+          src="img/StarWarsLogo.png"
+          alt="star wars logo"
+        />
         <nav class="menu__list">
-            <a class="menu__item menu__item--selected" href="#">People</a>
-            <a class="menu__item menu__item" href="#">Vehicles</a>
-            <a class="menu__item menu__item" href="#">Starships</a>
+          <a class="menu__item menu__item--selected" href="#">People</a>
+          <a class="menu__item menu__item" href="#">Vehicles</a>
+          <a class="menu__item menu__item" href="#">Starships</a>
         </nav>
-    </div>
-    <div class="main">
+      </div>
+      <div class="main">
         <div class="question__photo">
-            <img class="question__image" src="img/QuestionPhoto.png" alt="image for quiz question" >
+          <img
+            class="question__image"
+            src="img/QuestionPhoto.png"
+            alt="image for quiz question"
+          />
         </div>
         <div class="mode">
-            <p class="mode__type">MODE: Who is this character?</p>
-            <div class="mode__rules">
-                <p class="mode__title"><i class="fas fa-graduation-cap"></i> Mode rules</p>
-                <p class="mode___description">You have one minute (1m) to answer as many questions as possible. During the game on each question you need to select who from Star Wars is showed on the left (Jar Jar Binks right now) from available options.</p>
-            </div>
-            <div class="mode__rules mode__hall">
-                <p class="mode__title"><i class="fas fa-id-badge"></i> Mode ranking</p>
-                <table class="ranking__table">
-                    <tr class="ranking__table--header">
-                        <th class="ranking__header--bold">Place</th>
-                        <th class="ranking__header--bold">Player</th>
-                        <th class="ranking__header--bold">Answered</th>
-                    </tr>                    
-                    <tr class="ranking__table--row">
-                        <td class="ranking__place">1st</td>
-                        <td class="ranking__name">Ania</td>
-                        <td class="ranking__score">15/20</td>
-                    </tr>
-                    <tr class="ranking__table--row">
-                        <td class="ranking__place">2nd</td>
-                        <td class="ranking__name">Mateusz</td>
-                        <td class="ranking__score">14/30</td>
-                    </tr>
-                    <tr class="ranking__table--row">
-                        <td class="ranking__place">3rd</td>
-                        <td class="ranking__name">Leia Organa</td>
-                        <td class="ranking__score">1/23</td>
-                    </tr>                     
-                </table>                  
-            </div>
-        </div>        
-    </div>
-    <div class="buttons">
-        <button class="button button--ranking"><i class="fas fa-id-badge"></i> <span class="button__text">Hall of fame</span></button>
+          <p class="mode__type">MODE: Who is this character?</p>
+          <div class="mode__rules">
+            <p class="mode__title">
+              <i class="fas fa-graduation-cap"></i> Mode rules
+            </p>
+            <p class="mode___description">
+              You have one minute (1m) to answer as many questions as possible.
+              During the game on each question you need to select who from Star
+              Wars is showed on the left (Jar Jar Binks right now) from
+              available options.
+            </p>
+          </div>
+          <div class="mode__rules mode__hall">
+            <p class="mode__title">
+              <i class="fas fa-id-badge"></i> Mode ranking
+            </p>
+            <table class="ranking__table">
+              <tr class="ranking__table--header">
+                <th class="ranking__header--bold">Place</th>
+                <th class="ranking__header--bold">Player</th>
+                <th class="ranking__header--bold">Answered</th>
+              </tr>
+              <tr class="ranking__table--row">
+                <td class="ranking__place">1st</td>
+                <td class="ranking__name">Ania</td>
+                <td class="ranking__score">15/20</td>
+              </tr>
+              <tr class="ranking__table--row">
+                <td class="ranking__place">2nd</td>
+                <td class="ranking__name">Mateusz</td>
+                <td class="ranking__score">14/30</td>
+              </tr>
+              <tr class="ranking__table--row">
+                <td class="ranking__place">3rd</td>
+                <td class="ranking__name">Leia Organa</td>
+                <td class="ranking__score">1/23</td>
+              </tr>
+            </table>
+          </div>
+        </div>
+      </div>
+      <div class="buttons">
+        <button class="button button--ranking">
+          <i class="fas fa-id-badge"></i>
+          <span class="button__text">Hall of fame</span>
+        </button>
         <button class="button button--play">play the game</button>
+      </div>
+      <button class="button button--settings">Settings</button>
     </div>
-     
-    <button class="button button--settings">Settings</button> 
     <div class="settings">
-        <form>
-           <label for="api_key">Google Vision API Key:</label>
-           <input class="api_key--input" type="text" id="api_key" name="api_key">
-           <input class="button button--save" type="submit" value="Save"> 
-           <input class="button button--clear" type="submit" value="Clear">
-        </form>       
-     </div>     
-     <button class="button button--back">Back</button> 
-    
-</body>
+      <form>
+        <label for="api_key">Google Vision API Key:</label>
+        <input class="api_key--input" type="text" id="api_key" name="api_key" />
+        <input class="button button--save" type="submit" value="Save" />
+        <input class="button button--clear" type="submit" value="Clear" />
+      </form>
+    </div>
+    <button class="button button--back">Back</button>
+    <div class="modal">
+      <h1 class="modal__title">game over</h1>
+      <p class="modal__description">
+        The force is strong in you young Padawan! During 1 minute you have
+        answered 10 / 23 questions. And Computer guessed 5 / 23.
+      </p>
+      <div class="modal__answers">
+        <img
+          class="modal__answers--img"
+          src="./static/assets/ui/MasterYodaLeft.png"
+        />
+        <table class="table">
+          <caption>
+            Detailed answers
+          </caption>
+          <tr>
+            <th></th>
+            <th>You</th>
+            <th>Computer</th>
+            <th>Answer</th>
+          </tr>
+          <tr>
+            <td>
+              <img
+                class="table__img"
+                src="./static/assets/img/modes/people/4.jpg"
+              />
+            </td>
+            <td class="table__cell--correct">Darth Vader</td>
+            <td class="table__cell--incorrect">Darth Father</td>
+            <td>Darth Vader</td>
+          </tr>
+          <tr>
+            <td>
+              <img
+                class="table__img"
+                src="./static/assets/img/modes/people/36.jpg"
+              />
+            </td>
+            <td class="table__cell--correct">Jar Jar Binks</td>
+            <td class="table__cell--correct">Jar Jar Binks</td>
+            <td>Jar Jar Binks</td>
+          </tr>
+        </table>
+      </div>
+      <form>
+        <div class="form">
+          <input class="form__input" id="name" />
+          <label for="name"
+            >Please fill your name in order to receive eternal glory in whole
+            Galaxy!</label
+          >
+        </div>
+        <div class="submit">
+          <button type="submit">may the force be with you!</button>
+        </div>
+      </form>
+    </div>
+  </body>
 </html>
