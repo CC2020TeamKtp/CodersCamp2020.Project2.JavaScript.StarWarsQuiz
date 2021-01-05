@@ -72,10 +72,10 @@ export const App = ({ options }) => {
   playTheGame.addEventListener('click', () => play(selectedGame));
 
   function play(query) {
-    fetch(`https://swapi.dev/api/${query}/`)
+    !quizData[query] && fetch(`https://swapi.dev/api/${query}/`)
       .then((response) => response.json())
       .then((data) => {
-        quizData[query] = data.results;
+        quizData.setData(query, data.results);
       })
       .then((q) => console.log('q:', quizData, q));
   }

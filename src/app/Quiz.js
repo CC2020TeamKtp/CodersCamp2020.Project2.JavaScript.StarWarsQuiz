@@ -1,11 +1,19 @@
-
 export class Quiz {
   constructor() {
-    this.people = [];
-    this.vehicles = [];
-    this.starships = [];
+    this.people = null;
+    this.vehicles = null;
+    this.starships = null;
   }
-  set data(data) {
-    this.data.length < 1 && this[data].push(data);
+  setData(query, data) {
+    switch (query) {
+      case 'people':
+        this.people = data;
+        break;
+      case 'vehicles':
+        this.vehicles = data;
+        break;
+      case 'starships':
+        this.starships = data;
+    }
   }
 }
