@@ -7,6 +7,7 @@ export const App = ({ options }) => {
   const btnSettings = document.querySelector('.button--settings');
   const formSettings = document.querySelector('form');
   const btnBack = document.querySelector('.button--back');
+  const gameModes = document.querySelectorAll('.menu__item');
 
   btnSettings.addEventListener('click', () => {
     btnSettings.hidden = true;
@@ -47,4 +48,17 @@ export const App = ({ options }) => {
     modeHall.hidden = !modeHall.hidden;
     modeRules.hidden = !modeRules.hidden;
   }
+  
+  // dynamicaly set active game mode
+  gameModes.forEach(mode => {
+    mode.addEventListener('click', (e) => {
+      gameModes.forEach(mode => {
+        mode.classList.remove('menu__item--selected')
+      })
+      if (!e.target.classList.contains('menu__item--selected')) {
+        e.target.classList.add('menu__item--selected')
+      } 
+    })
+  })
+
 };
