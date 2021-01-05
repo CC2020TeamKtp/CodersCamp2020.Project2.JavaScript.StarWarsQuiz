@@ -1,4 +1,4 @@
-import {Quiz} from './quiz';
+import {Quiz} from './Quiz';
 
 export const App = ({ options }) => {
   const rankingBtn = document.querySelector('.button--ranking');
