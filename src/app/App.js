@@ -10,8 +10,8 @@ export const App = ({ options }) => {
   const formSettings = document.querySelector('form');
   const btnBack = document.querySelector('.button--back');
   const gameModes = document.querySelectorAll('.menu__item');
-  const play_the_game = document.querySelector('.button--play');
-  let selected_game = document.querySelector('.menu__item--selected').innerHTML.toLowerCase();
+  const playTheGame = document.querySelector('.button--play');
+  let selectedGame = document.querySelector('.menu__item--selected').innerHTML.toLowerCase();
 
   btnSettings.addEventListener('click', () => {
     btnSettings.hidden = true;
@@ -62,13 +62,13 @@ export const App = ({ options }) => {
       })
       if (!e.target.classList.contains('menu__item--selected')) {
         e.target.classList.add('menu__item--selected')
-        selected_game = document.querySelector('.menu__item--selected').innerHTML.toLowerCase();
+        selectedGame = document.querySelector('.menu__item--selected').innerHTML.toLowerCase();
       } 
     })
   })
   //get data from API based on active game mode
   const quizData = new Quiz();
-  play_the_game.addEventListener('click', () => play(selected_game));
+  playTheGame.addEventListener('click', () => play(selectedGame));
 
   function play(query) {
     fetch(`https://swapi.dev/api/${query}/`)
