@@ -1,4 +1,4 @@
-import {Quiz} from './Quiz';
+import { Quiz } from './Quiz';
 
 export const App = ({ options }) => {
   const rankingBtn = document.querySelector('.button--ranking');
@@ -11,7 +11,9 @@ export const App = ({ options }) => {
   const btnBack = document.querySelector('.button--back');
   const gameModes = document.querySelectorAll('.menu__item');
   const playTheGame = document.querySelector('.button--play');
-  let selectedGame = document.querySelector('.menu__item--selected').innerHTML.toLowerCase();
+  let selectedGame = document
+    .querySelector('.menu__item--selected')
+    .innerHTML.toLowerCase();
 
   btnSettings.addEventListener('click', () => {
     btnSettings.hidden = true;
@@ -54,18 +56,17 @@ export const App = ({ options }) => {
   }
 
   // dynamicaly set active game mode
-  gameModes.forEach(mode => {
+  gameModes.forEach((mode) => {
     mode.addEventListener('click', (e) => {
-      gameModes.forEach(mode => {
-        mode.classList.remove('menu__item--selected')
-        
-      })
-      if (!e.target.classList.contains('menu__item--selected')) {
-        e.target.classList.add('menu__item--selected')
-        selectedGame = document.querySelector('.menu__item--selected').innerHTML.toLowerCase();
-      } 
-    })
-  })
+      gameModes.forEach((mode) => {
+        mode.classList.remove('menu__item--selected');
+      });
+      e.target.classList.add('menu__item--selected');
+      selectedGame = document
+        .querySelector('.menu__item--selected')
+        .innerHTML.toLowerCase();
+    });
+  });
   //get data from API based on active game mode
   const quizData = new Quiz();
   playTheGame.addEventListener('click', () => play(selectedGame));
@@ -74,9 +75,8 @@ export const App = ({ options }) => {
     fetch(`https://swapi.dev/api/${query}/`)
       .then((response) => response.json())
       .then((data) => {
-        quizData[query] = data.results
+        quizData[query] = data.results;
       })
-      .then(q => console.log('q:', quizData, q)) 
+      .then((q) => console.log('q:', quizData, q));
   }
-
 };
