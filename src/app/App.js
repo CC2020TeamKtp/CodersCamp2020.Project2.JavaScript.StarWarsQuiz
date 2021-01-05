@@ -1,3 +1,5 @@
+import {Quiz} from './quiz';
+
 export const App = ({ options }) => {
   const rankingBtn = document.querySelector('.button--ranking');
   const modeHall = document.querySelector('.mode__hall');
@@ -8,6 +10,8 @@ export const App = ({ options }) => {
   const formSettings = document.querySelector('form');
   const btnBack = document.querySelector('.button--back');
   const gameModes = document.querySelectorAll('.menu__item');
+  const play_the_game = document.querySelector('.button--play');
+  let selected_game = document.querySelector('.menu__item--selected').innerHTML.toLowerCase();
 
   btnSettings.addEventListener('click', () => {
     btnSettings.hidden = true;
@@ -48,17 +52,31 @@ export const App = ({ options }) => {
     modeHall.hidden = !modeHall.hidden;
     modeRules.hidden = !modeRules.hidden;
   }
-  
+
   // dynamicaly set active game mode
   gameModes.forEach(mode => {
     mode.addEventListener('click', (e) => {
       gameModes.forEach(mode => {
         mode.classList.remove('menu__item--selected')
+        
       })
       if (!e.target.classList.contains('menu__item--selected')) {
         e.target.classList.add('menu__item--selected')
+        selected_game = document.querySelector('.menu__item--selected').innerHTML.toLowerCase();
       } 
     })
   })
+  //get data from API based on active game mode
+  const quizData = new Quiz();
+  play_the_game.addEventListener('click', () => play(selected_game));
+
+  function play(query) {
+    fetch(`https://swapi.dev/api/${query}/`)
+      .then((response) => response.json())
+      .then((data) => {
+        quizData[query] = data.results
+      })
+      .then(q => console.log('q:', quizData, q)) 
+  }
 
 };
