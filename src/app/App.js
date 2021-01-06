@@ -9,6 +9,7 @@ export const App = ({ options }) => {
   const btnBack = document.querySelector('.button--back');
   const rankingTable = document.querySelector('.ranking__table');
   const rankingInvitation = document.querySelector('.ranking__invitation');
+  const buttonForce = document.querySelector('.submit');
 
   btnSettings.addEventListener('click', () => {
     btnSettings.hidden = true;
@@ -25,8 +26,10 @@ export const App = ({ options }) => {
   });
 
   btnBack.addEventListener('click', () => {
-    window.location.reload();
+    //window.location.reload();
   });
+
+  buttonForce.addEventListener('click', submitResult);
 
   function onLoadHide() {
     formSettings.hidden = true;
@@ -52,24 +55,34 @@ export const App = ({ options }) => {
   }
 
   // issue 16 hall of fame//
+  function submitResult() {
+    const result = {
+      //przerobić na pobieranie inputu z html i wyniku z js/html
+      name: document.querySelector('.form__input').value,
+      answered: 20,
+      correct: 10 + Math.floor(Math.random() * 20),
+    };
+    saveResult(result);
+    const modal = document.querySelector('.modal');
+    modal.hidden = true;
+  }
+
+  function saveResult(result) {
+    // podział na game type
+    let resultStorage = getBestResults();
+    resultStorage.unshift(result);
+    resultStorage = resultStorage
+      .sort((a, b) => {
+        // logika najlepszego wyniku
+        return b.correct - a.correct;
+      })
+      .slice(0, 3);
+
+    localStorage.setItem('results', JSON.stringify(resultStorage));
+  }
+
   function getBestResults() {
-    return [
-      {
-        name: 'Ania',
-        answered: 20,
-        correct: 15,
-      },
-      {
-        name: 'Mateusz',
-        answered: 30,
-        correct: 14,
-      },
-      {
-        name: 'Leia Organa',
-        answered: 23,
-        correct: 1,
-      },
-    ];
+    return JSON.parse(localStorage.getItem('results')) || [];
   }
 
   function updateHallOfFame() {
