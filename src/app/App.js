@@ -8,7 +8,8 @@ export const App = ({ options }) => {
   const formSettings = document.querySelector('form');
   const btnBack = document.querySelector('.button--back');
   const btnPlay = document.querySelector('.button--play');
-  console.log(btnPlay)
+  const inGameMode = document.querySelector('.mode__game-in-progress');
+  const progresBarContainer = document.querySelector('.progress');
 
   btnSettings.addEventListener('click', () => {
     btnSettings.hidden = true;
@@ -53,13 +54,13 @@ export const App = ({ options }) => {
   btnPlay.addEventListener('click', setGameInProgressView);
 
   function setGameInProgressView() {
-    document.querySelector('.mode__rules').hidden = true;
-    document.querySelector('.button--ranking').hidden = true;
+    modeRules.hidden = true;
+    rankingBtn.hidden = true;
     btnPlay.hidden = true;
     btnSettings.hidden = true;
-    document.querySelector('.mode__game-in-progress').hidden = false;
-    document.querySelector('.progress').style.display = 'flex';
-     document.querySelector(".mode__rules.mode__hall").style.display = 'none';
+    inGameMode.hidden = false;
+    progresBarContainer.style.display = 'flex';
+    document.querySelector('div.mode__rules.mode__hall').style.display = 'none';
   }
 
 };
