@@ -117,8 +117,12 @@ body {
     width: 100%;
     margin-top: 1rem;
   }
+  &__invitation {
+    text-transform: uppercase;
+    margin-top: 1rem;
+  }
 
-  &__table--header {
+  &__header--bold {
     font-weight: bold;
   }
 }
