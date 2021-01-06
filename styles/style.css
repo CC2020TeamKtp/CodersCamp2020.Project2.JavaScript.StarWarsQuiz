@@ -112,6 +112,120 @@ body {
   width: 100%;
 }
 
+.mode__wrap-game-in-progress {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+  -ms-flex-pack: distribute;
+      justify-content: space-around;
+  width: 65%;
+}
+
+.mode__wrap-game-in-progress__type, .mode__wrap-game-in-progress__rules {
+  background-color: white;
+  width: 100%;
+  padding: 30px;
+  text-align: center;
+  margin-bottom: 3%;
+  border-radius: 16px;
+  -webkit-box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25), 4px 4px 40px rgba(255, 0, 0, 0.9), inset 4px 5px 4px rgba(0, 0, 0, 0.5);
+          box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25), 4px 4px 40px rgba(255, 0, 0, 0.9), inset 4px 5px 4px rgba(0, 0, 0, 0.5);
+}
+
+.mode__wrap-game-in-progress__type {
+  font-weight: 600;
+}
+
+.mode__wrap-game-in-progress___description {
+  margin-top: 20px;
+  font-size: 0.8rem;
+  text-align: left;
+}
+
+.answers {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -ms-flex-wrap: wrap;
+      flex-wrap: wrap;
+  -webkit-box-pack: justify;
+      -ms-flex-pack: justify;
+          justify-content: space-between;
+}
+
+.answers__option {
+  margin-bottom: 6%;
+  width: 47%;
+  -webkit-box-shadow: inset 3px 3px 12px -4px grey;
+          box-shadow: inset 3px 3px 12px -4px grey;
+}
+
+.progress {
+  margin: auto;
+  display: none;
+  -ms-flex-wrap: wrap;
+      flex-wrap: wrap;
+  width: 94%;
+  height: auto;
+}
+
+.progress__lightSaber {
+  position: relative;
+  left: 2%;
+  width: 100%;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  height: auto;
+}
+
+.progress__saberHandle {
+  width: 20%;
+  display: block;
+  -ms-flex-item-align: center;
+      -ms-grid-row-align: center;
+      align-self: center;
+}
+
+.progress__saberLight {
+  width: 80%;
+  height: 68%;
+  background-color: grey;
+  -ms-flex-item-align: center;
+      -ms-grid-row-align: center;
+      align-self: center;
+  border-radius: 10px;
+  position: relative;
+  left: -2%;
+}
+
+.progress__saberLight::after {
+  content: "";
+  display: block;
+  height: 100%;
+  width: 50%;
+  background-color: whitesmoke;
+  border-radius: inherit;
+  -webkit-box-shadow: 14px 0px 16px 4px #fa1238;
+          box-shadow: 14px 0px 16px 4px #fa1238;
+}
+
+.progress__time {
+  color: red;
+  -ms-flex-item-align: center;
+      -ms-grid-row-align: center;
+      align-self: center;
+  margin: 10px auto;
+}
+
+.progress__timeLeft {
+  color: inherit;
+}
+
 .mode {
   display: -webkit-box;
   display: -ms-flexbox;
