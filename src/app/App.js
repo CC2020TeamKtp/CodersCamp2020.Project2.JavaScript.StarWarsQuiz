@@ -14,7 +14,7 @@ export const App = ({ options }) => {
   let selectedGame = document
     .querySelector('.menu__item--selected')
     .innerHTML.toLowerCase();
-
+  let randomizedQuizObject;
   btnSettings.addEventListener('click', () => {
     btnSettings.hidden = true;
 
@@ -71,12 +71,28 @@ export const App = ({ options }) => {
   const quizData = new Quiz();
   playTheGame.addEventListener('click', () => play(selectedGame));
 
-  function play(query) {
-    !quizData[query] && fetch(`https://swapi.dev/api/${query}/`)
+  function play(gameMode) {
+    !quizData[gameMode].length && fetch(`https://swapi.dev/api/${gameMode}/`)
       .then((response) => response.json())
       .then((data) => {
-        quizData.setData(query, data.results);
+        data.results.map(gameObject => {
+          quizData.setData(gameMode, gameObject.name);
+        })        
       })
-      .then((q) => console.log('q:', quizData, q));
+      .then(() =>  { 
+        randomizedQuizObject = quizData.getRandomQuizObject(gameMode);
+        /*it retursn object {
+          correct: {
+            name,
+            imgUrl
+          }
+          suggestedAnswers: [4 x names] which includes correct.name
+        }
+        */
+        updateUI(randomizedQuizObject)
+      }) 
+  }
+  function updateUI(data) {
+    console.log('data for update UI', data)
   }
 };
