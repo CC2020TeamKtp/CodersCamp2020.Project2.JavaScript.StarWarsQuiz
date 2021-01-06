@@ -59,6 +59,7 @@ export const App = ({ options }) => {
     btnSettings.hidden = true;
     document.querySelector('.mode__game-in-progress').hidden = false;
     document.querySelector('.progress').style.display = 'flex';
+     document.querySelector(".mode__rules.mode__hall").style.display = 'none';
   }
-  
+
 };
