@@ -21,19 +21,19 @@ export class Quiz {
   }
   getRandomQuizObject(gameMode) {
     let indices = [];
+    let name;
     while (indices.length < 4) {
       let randomIndex = Math.floor(Math.random() * 9) + 1; //9 is hardcoded becasue this is exactly how many we get from swapi
       if (indices.indexOf(randomIndex) === -1) indices.push(randomIndex);
     }
+    name = this[gameMode][indices[0]]
     return {
       [gameMode]: {
         correctAnswer: {
-          name: this[gameMode][indices[0]],
-          imgUrl: findImageUrl(this[gameMode][indices[0]]),
+          name ,
+          imgUrl: findImageUrl(name),
         },
-        suggestedAnswers: shuffle(
-          indices.map((index) => this[gameMode][index]),
-        ) /*  shuffle an order of all "4" asnwers */,
+        suggestedAnswers: shuffle(indices.map((index) => this[gameMode][index]))
       },
     };
   }

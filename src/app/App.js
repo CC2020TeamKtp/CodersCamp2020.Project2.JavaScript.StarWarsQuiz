@@ -81,15 +81,7 @@ export const App = ({ options }) => {
       })
       .then(() =>  { 
         randomizedQuizObject = quizData.getRandomQuizObject(gameMode);
-        /*it retursn object {
-          correct: {
-            name,
-            imgUrl
-          }
-          suggestedAnswers: [4 x names] which includes correct.name
-        }
-        */
-        updateUI(randomizedQuizObject)
+        updateUI(randomizedQuizObject) //for now just console it
       }) 
   }
   function updateUI(data) {
