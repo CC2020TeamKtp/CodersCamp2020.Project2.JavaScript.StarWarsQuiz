@@ -1,7 +1,7 @@
-export function findImageUrl(name) {
-    console.log('correct answer name', name)
+export function findImageUrl(mode, idx) {
+    console.log('index', idx)
     function emptySpacesToUnderscore(name) {
-        return `swapi-json-server/public/${name.split(' ').join('_')}.jpg`
+        return `/static/img/modes/${mode}/${idx}.jpg`
     }
     return emptySpacesToUnderscore(name)
 }
