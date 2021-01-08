@@ -15,6 +15,9 @@ export const App = ({ options }) => {
     .querySelector('.menu__item--selected')
     .innerHTML.toLowerCase();
   let randomizedQuizObject;
+  const inGameMode = document.querySelector('.mode__game-in-progress');
+  const progresBarContainer = document.querySelector('.progress');
+
   btnSettings.addEventListener('click', () => {
     btnSettings.hidden = true;
 
@@ -72,19 +75,31 @@ export const App = ({ options }) => {
   playTheGame.addEventListener('click', () => play(selectedGame));
 
   function play(gameMode) {
-    !quizData[gameMode].length && fetch(`https://swapi.dev/api/${gameMode}/`)
-      .then((response) => response.json())
-      .then((data) => {
-        data.results.map(gameObject => {
-          quizData.setData(gameMode, gameObject.name);
-        })        
-      })
-      .then(() =>  { 
-        randomizedQuizObject = quizData.getRandomQuizObject(gameMode);
-        updateUI(randomizedQuizObject) //for now just console it
-      }) 
+    !quizData[gameMode].length &&
+      fetch(`https://swapi.dev/api/${gameMode}/`)
+        .then((response) => response.json())
+        .then((data) => {
+          data.results.map((gameObject) => {
+            quizData.setData(gameMode, gameObject.name);
+          });
+        })
+        .then(() => {
+          randomizedQuizObject = quizData.getRandomQuizObject(gameMode);
+          updateUI(randomizedQuizObject); //for now just console it
+        });
   }
   function updateUI(data) {
-    console.log('data for update UI', data)
+    console.log('data for update UI', data);
+  }
+  btnPlay.addEventListener('click', setGameInProgressView);
+
+  function setGameInProgressView() {
+    modeRules.hidden = true;
+    rankingBtn.hidden = true;
+    btnPlay.hidden = true;
+    btnSettings.hidden = true;
+    inGameMode.hidden = false;
+    progresBarContainer.style.display = 'flex';
+    document.querySelector('div.mode__rules.mode__hall').style.display = 'none';
   }
 };
