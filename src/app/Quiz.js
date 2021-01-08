@@ -1,5 +1,5 @@
 import { shuffle } from './shuffle';
-import { findImageUrl } from './findImageUrl'
+import { findImageUrl } from './findImageUrl';
 export class Quiz {
   constructor() {
     this.people = [];
@@ -19,22 +19,23 @@ export class Quiz {
         break;
     }
   }
+
   getRandomQuizObject(gameMode) {
     let indices = [];
     let name, imgIndex;
     while (indices.length < 4) {
       let randomIndex = Math.floor(Math.random() * 9) + 1; //9 is hardcoded becasue this is exactly how many we get from swapi
-      if (indices.indexOf(randomIndex) === -1) indices.push(randomIndex)
+      if (indices.indexOf(randomIndex) === -1) indices.push(randomIndex);
     }
-    name = this[gameMode][indices[0]]
-    imgIndex = indices[0]
+    name = this[gameMode][indices[0]];
+    imgIndex = indices[0];
     return {
       [gameMode]: {
         correctAnswer: {
-          name ,
+          name,
           imgUrl: findImageUrl(gameMode, imgIndex),
         },
-        possibleAnswers: shuffle(indices.map((index) => this[gameMode][index]))
+        possibleAnswers: shuffle(indices.map((index) => this[gameMode][index])),
       },
     };
   }

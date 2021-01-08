@@ -79,7 +79,6 @@ export const App = ({ options }) => {
       fetch(`https://swapi.dev/api/${gameMode}/`)
         .then((response) => response.json())
         .then((data) => {
-          console.log(data.results);
           data.results.map((gameObject) => {
             quizData.setData(gameMode, gameObject.name);
           });
@@ -91,10 +90,6 @@ export const App = ({ options }) => {
   }
   function updateUI(data) {
     console.log('data for update UI', data);
-    console.log(data.people.correctAnswer.imgUrl);
-    var elem = document.createElement('img');
-    elem.setAttribute('src', `${data.people.correctAnswer.imgUrl}`);
-    document.querySelector('.menu').appendChild(elem);
   }
   playTheGame.addEventListener('click', setGameInProgressView);
 
