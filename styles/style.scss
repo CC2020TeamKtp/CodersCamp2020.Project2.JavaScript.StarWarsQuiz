@@ -1,5 +1,5 @@
 @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@500;600&display=swap');
-
+@import '../src/app/components/HallOfFame/style.scss';
 * {
   margin: 0;
   padding: 0;
@@ -89,22 +89,24 @@ body {
   flex-direction: column;
   justify-content: space-around;
   width: 65%;
-  &__type, &__rules{
-      background-color: white;
-      width: 100%;
-      padding: 30px; 
-      text-align: center;
-      margin-bottom: 3%;
-      border-radius: 16px;
-      box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25), 4px 4px 40px rgba(255, 0, 0, 0.9), inset 4px 5px 4px rgba(0, 0, 0, 0.5);
+  &__type,
+  &__rules {
+    background-color: white;
+    width: 100%;
+    padding: 30px;
+    text-align: center;
+    margin-bottom: 3%;
+    border-radius: 16px;
+    box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25),
+      4px 4px 40px rgba(255, 0, 0, 0.9), inset 4px 5px 4px rgba(0, 0, 0, 0.5);
   }
-  &__type{
-      font-weight: 600;
+  &__type {
+    font-weight: 600;
   }
-  &___description{
-      margin-top: 20px;
-      font-size: 0.8rem;
-      text-align: left;
+  &___description {
+    margin-top: 20px;
+    font-size: 0.8rem;
+    text-align: left;
   }
 }
 
@@ -113,9 +115,9 @@ body {
   flex-wrap: wrap;
   justify-content: space-between;
   &__option {
-      margin-bottom: 6%;
-      width: 47%;
-      box-shadow: inset 3px 3px 12px -4px grey;
+    margin-bottom: 6%;
+    width: 47%;
+    box-shadow: inset 3px 3px 12px -4px grey;
   }
 }
 
@@ -126,42 +128,42 @@ body {
   width: 94%;
   height: auto;
   &__lightSaber {
-      position: relative;
-      left: 2%;
-      width: 100%;
-      display: flex;
-      height: auto;
+    position: relative;
+    left: 2%;
+    width: 100%;
+    display: flex;
+    height: auto;
   }
   &__saberHandle {
-      width: 20%;
-      display: block;
-      align-self: center;
+    width: 20%;
+    display: block;
+    align-self: center;
   }
   &__saberLight {
-      width: 80%;
-      height: 68%;
-      background-color: grey;
-      align-self: center;
-      border-radius: 10px;
-      position: relative;
-      left: -2%;
-      &::after {
-          content: "";
-          display: block;
-          height: 100%;
-          width: 50%;
-          background-color: whitesmoke;
-          border-radius: inherit;
-          box-shadow: 14px 0px 16px 4px rgba(250,18,56,1);
-      } 
+    width: 80%;
+    height: 68%;
+    background-color: grey;
+    align-self: center;
+    border-radius: 10px;
+    position: relative;
+    left: -2%;
+    &::after {
+      content: '';
+      display: block;
+      height: 100%;
+      width: 50%;
+      background-color: whitesmoke;
+      border-radius: inherit;
+      box-shadow: 14px 0px 16px 4px rgba(250, 18, 56, 1);
+    }
   }
   &__time {
-      color: red;
-      align-self: center;
-      margin: 10px auto;
+    color: red;
+    align-self: center;
+    margin: 10px auto;
   }
-  &__timeLeft{
-      color: inherit;
+  &__timeLeft {
+    color: inherit;
   }
 }
 
@@ -191,22 +193,6 @@ body {
   }
 }
 
-.ranking {
-  &__table {
-    max-height: 20rem;
-    text-align: center;
-    width: 100%;
-    margin-top: 1rem;
-  }
-  &__invitation {
-    text-transform: uppercase;
-    margin-top: 1rem;
-  }
-
-  &__header--bold {
-    font-weight: bold;
-  }
-}
 .buttons {
   width: 65%;
   display: flex;
@@ -401,6 +387,10 @@ label {
   }
 }
 
+.hide {
+  display: none;
+}
+
 @media (max-width: 1280px) {
   * {
     font-size: 27px;
@@ -457,10 +447,6 @@ label {
   .button--back {
     margin-top: 10rem;
     margin-left: 35px;
-  }
-
-  .ranking__table * {
-    font-size: 15px;
   }
 
   .buttons {
