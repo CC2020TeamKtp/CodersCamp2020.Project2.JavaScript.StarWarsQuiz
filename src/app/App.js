@@ -1,3 +1,5 @@
+import { Quiz } from './Quiz';
+
 export const App = ({ options }) => {
   const rankingBtn = document.querySelector('.button--ranking');
   const modeHall = document.querySelector('.mode__hall');
@@ -7,9 +9,20 @@ export const App = ({ options }) => {
   const btnSettings = document.querySelector('.button--settings');
   const formSettings = document.querySelector('form');
   const btnBack = document.querySelector('.button--back');
+<<<<<<< HEAD
   const rankingTable = document.querySelector('.ranking__table');
   const rankingInvitation = document.querySelector('.ranking__invitation');
   const buttonForce = document.querySelector('.submit');
+=======
+  const gameModes = document.querySelectorAll('.menu__item');
+  const playTheGame = document.querySelector('.button--play');
+  let selectedGame = document
+    .querySelector('.menu__item--selected')
+    .innerHTML.toLowerCase();
+  let randomizedQuizObject;
+  const inGameMode = document.querySelector('.mode__game-in-progress');
+  const progresBarContainer = document.querySelector('.progress');
+>>>>>>> develop
 
   btnSettings.addEventListener('click', () => {
     btnSettings.hidden = true;
@@ -54,6 +67,7 @@ export const App = ({ options }) => {
     modeRules.hidden = !modeRules.hidden;
   }
 
+<<<<<<< HEAD
   // issue 16 hall of fame//
   function submitResult() {
     const result = {
@@ -111,5 +125,50 @@ export const App = ({ options }) => {
         row.querySelector('.ranking__score').textContent = '';
       }
     }
+=======
+  // dynamicaly set active game mode
+  gameModes.forEach((mode) => {
+    mode.addEventListener('click', (e) => {
+      gameModes.forEach((mode) => {
+        mode.classList.remove('menu__item--selected');
+      });
+      e.target.classList.add('menu__item--selected');
+      selectedGame = document
+        .querySelector('.menu__item--selected')
+        .innerHTML.toLowerCase();
+    });
+  });
+  //get data from API based on active game mode
+  const quizData = new Quiz();
+  playTheGame.addEventListener('click', () => play(selectedGame));
+
+  function play(gameMode) {
+    !quizData[gameMode].length &&
+      fetch(`https://swapi.dev/api/${gameMode}/`)
+        .then((response) => response.json())
+        .then((data) => {
+          data.results.map((gameObject) => {
+            quizData.setData(gameMode, gameObject.name);
+          });
+        })
+        .then(() => {
+          randomizedQuizObject = quizData.getRandomQuizObject(gameMode);
+          updateUI(randomizedQuizObject); //for now just console it
+        });
+  }
+  function updateUI(data) {
+    console.log('data for update UI', data);
+  }
+  playTheGame.addEventListener('click', setGameInProgressView);
+
+  function setGameInProgressView() {
+    modeRules.hidden = true;
+    rankingBtn.hidden = true;
+    playTheGame.hidden = true;
+    btnSettings.hidden = true;
+    inGameMode.hidden = false;
+    progresBarContainer.style.display = 'flex';
+    document.querySelector('div.mode__rules.mode__hall').style.display = 'none';
+>>>>>>> develop
   }
 };
