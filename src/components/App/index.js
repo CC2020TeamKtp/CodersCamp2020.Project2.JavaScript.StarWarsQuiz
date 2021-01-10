@@ -1,5 +1,5 @@
 import { Quiz } from './Quiz';
-import { GameMode } from '../components/GameMode';
+import { GameModeSelect } from '../GameModeSelect';
 
 export const App = ({ options }) => {
   const rankingBtn = document.querySelector('.button--ranking');
@@ -14,8 +14,9 @@ export const App = ({ options }) => {
   let randomizedQuizObject;
   const inGameMode = document.querySelector('.mode__game-in-progress');
   const progresBarContainer = document.querySelector('.progress');
+  const gameMode = new GameModeSelect(config);
 
-  let config = {
+  const config = {
     selectedGameMode: `people`,
   };
 
@@ -91,7 +92,4 @@ export const App = ({ options }) => {
     progresBarContainer.style.display = 'flex';
     document.querySelector('div.mode__rules.mode__hall').style.display = 'none';
   }
-
-  const gameMode = new GameMode(config);
-  gameMode.changeGameMode();
 };
