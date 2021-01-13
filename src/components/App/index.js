@@ -113,6 +113,6 @@ export const App = ({ options }) => {
     btnSettings.hidden = true;
     inGameMode.hidden = false;
     progresBarContainer.style.display = 'flex';
-    document.querySelector('div.mode__rules.mode__hall').style.display = 'none';
+    hallOfFame.hide();
   }
 };

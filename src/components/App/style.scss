@@ -9,7 +9,7 @@
 }
 
 body {
-  background-image: url("../img/QuizBackground.png");
+  background-image: url('../img/QuizBackground.png');
   background-size: cover;
   padding: 1rem;
 }
@@ -220,6 +220,7 @@ label {
 }
 
 .modal {
+  display: none;
   position: absolute;
   z-index: 9999;
   top: 5%;
