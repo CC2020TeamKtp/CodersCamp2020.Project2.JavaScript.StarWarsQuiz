@@ -1,5 +1,5 @@
 export const gameModePages = {
-  people: 2,
+  people: 9,
   starships: 4,
   vehicles: 4,
 };

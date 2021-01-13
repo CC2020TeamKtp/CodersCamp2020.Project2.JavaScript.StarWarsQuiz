@@ -1,9 +1,6 @@
-import { findImageUrl } from '../../findImageUrl';
+import { findImageUrl } from '../../components/App/findImageUrl';
 import { gameModeQuestionIndexes } from '../Util/GameModeQuestionIndexes';
-import PlayerType from '../Util/PlayerType';
-
 import Util from '../Util/Util';
-import ApiDataFetcher from '../ApiDataFetcher/ApiDataFetcher';
 
 export class GameEngine {
   constructor(gameMode, apiDataFetcher) {
@@ -11,27 +8,8 @@ export class GameEngine {
     this.apiDataFetcher = apiDataFetcher;
     this.allPossibleQuestions = [];
     this.alreadyUsedIndexes = [];
-    this.nextQuestionIndex = 0;
   }
 
-  // single question for given GameMode:
-  //
-  // askedQuestionId
-  // correctId
-  // answeredId
-  // answeredBy
-
-  // uniqueRandom() musi zmniejszac mozliwe indexy zamiast tego while!!!
-  // w momencie kiedy skoncza sie unikalne indexy to koniec gry.
-
-  // 1. wczytywanie all danych z api powinno się odbyć przy wyborze trybu gry a nie przy kliknieciu PLAY
-  // bo musimy wczytać losową postać do opisu
-
-  // w konstruktorze? przekazanie gameMode dynamicznie / po kliknieciu i reload tej metody?
-
-  // pobieranie
-
-  // this.questions -> ['people', [...], 'vehicle', [...], 'starships', [...]]
   extractDataFromFetchResponse(apiDataObjects) {
     let resultResponse = [];
     apiDataObjects.map((response) => {
@@ -43,13 +21,10 @@ export class GameEngine {
   }
 
   fetchAllQuestionsForMode(gameMode) {
-    Promise.all(this.apiDataFetcher.getAllDataForGameMode(gameMode))
+    return Promise.all(this.apiDataFetcher.getAllDataForGameMode(gameMode))
       .then((res) => this.extractDataFromFetchResponse(res))
-      .then((data) => console.log('data fetched from API: ', data))
-      .then((data) => this.allPossibleQuestions.concat(data))
-      .then((questions) => console.log('all possible questions: ', this.allPossibleQuestions))
-      .catch((err) => console.error('error while fetching data from API: ', err),
-      );
+      .then((data) => this.allPossibleQuestions = data)
+      .catch((err) => console.error('error while fetching data from API: ', err));
   }
 
   getRangeOfQuestions(gameMode) {
@@ -64,29 +39,35 @@ export class GameEngine {
       maxIndx,
       alreadyAskedQuestionIndexes,
     );
-    console.log(`generated next question index as ${nextQuestionIndex}`);
+    alreadyAskedQuestionIndexes.push(nextQuestionIndex);
     return nextQuestionIndex;
   }
 
+  generateRandomAnswersIndexes(nextQuestionIndex) {
+    const allAnswersIndexes = [nextQuestionIndex];
+    while (allAnswersIndexes.length < 4) {
+      allAnswersIndexes.push(this.getRandomQuestionIndex(this.gameMode, this.alreadyUsedIndexes))
+    }
+    console.log(`all answers: ${allAnswersIndexes}`)
+    return allAnswersIndexes;
+  }
+
+  getAllAnswers(nextQuestionIndex) {
+    const allAnswersIndexes = this.generateRandomAnswersIndexes(nextQuestionIndex);
+    return allAnswersIndexes.map(index => this.allPossibleQuestions[`${index}`].name);
+  }
 
   generateNextQuestion() {
     const nextQuestionIndex = this.getRandomQuestionIndex(this.gameMode, this.alreadyUsedIndexes);
-    this.alreadyUsedIndexes.push(nextQuestionIndex);
-    console.log('generated index: ', nextQuestionIndex);
-    console.log('question picked: ', this.allPossibleQuestions[`${nextQuestionIndex}`]);
-    const {name, index:id} = this.allPossibleQuestions[`${nextQuestionIndex}`];
+    console.log('question picked: ', this.allPossibleQuestions[nextQuestionIndex]);
+    const {name, index:id} = this.allPossibleQuestions[nextQuestionIndex];
     const questionToAsk = { 'name': name, 'imgUrl': findImageUrl(this.gameMode, id) };
-    const allAnswers = [];
+    const allAnswers = this.getAllAnswers(nextQuestionIndex);
     return {
-     'gameMode': this.gameMode,
-     'question': questionToAsk,
-     'correctAnswer': name,
-     'allAnswers': allAnswers,
-     'player': PlayerType.HUMAN,
+     gameMode: this.gameMode,
+     question: questionToAsk,
+     correctAnswer: name,
+     allAnswers: Util.shuffle(allAnswers),
     };
-  }
-
-  getOtherPossibleAnswers(gameMode, nextQuestionIndex, allQuestionsForMode) {
-    console.log('meh');
   }
 }
