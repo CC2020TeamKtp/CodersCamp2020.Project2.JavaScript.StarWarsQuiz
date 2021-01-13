@@ -1,5 +1,4 @@
 @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@500;600&display=swap');
-
 * {
   margin: 0;
   padding: 0;
@@ -147,18 +146,6 @@ body {
   }
 }
 
-.ranking {
-  &__table {
-    max-height: 20rem;
-    text-align: center;
-    width: 100%;
-    margin-top: 1rem;
-  }
-
-  &__table--header {
-    font-weight: bold;
-  }
-}
 .buttons {
   width: 65%;
   display: flex;
@@ -233,7 +220,6 @@ label {
 }
 
 .modal {
-  display: none;
   position: absolute;
   z-index: 9999;
   top: 5%;
@@ -354,6 +340,10 @@ label {
   }
 }
 
+.hide {
+  display: none;
+}
+
 @media (max-width: 1280px) {
   * {
     font-size: 27px;
@@ -396,10 +386,6 @@ label {
   .button--back {
     margin-top: 10rem;
     margin-left: 35px;
-  }
-
-  .ranking__table * {
-    font-size: 15px;
   }
 
   .buttons {
