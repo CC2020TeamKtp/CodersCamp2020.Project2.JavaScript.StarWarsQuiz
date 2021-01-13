@@ -1,7 +1,7 @@
 export class HallOfFame {
   constructor(element, config) {
     this.element = element;
-    this.config = config || { selectedGameMode: 'people' };
+    this.config = config;
   }
 
   hide() {
@@ -59,16 +59,15 @@ export class HallOfFame {
       .sort((a, b) => this.getScore(b) - this.getScore(a))
       .slice(0, 3);
     localStorage.setItem(
-      `results_${this.config.selectedGameMode}`,
+      `results_${this.config.selectedGame}`,
       JSON.stringify(resultStorage),
     );
   }
 
   getBestResults() {
     return (
-      JSON.parse(
-        localStorage.getItem(`results_${this.config.selectedGameMode}`),
-      ) || []
+      JSON.parse(localStorage.getItem(`results_${this.config.selectedGame}`)) ||
+      []
     );
   }
 }

@@ -1,11 +1,10 @@
 import { Quiz } from './Quiz';
-import { HallOfFame } from './components/HallOfFame';
+import { HallOfFame } from '../HallOfFame';
+import { GameModeSelect } from '../GameModeSelect';
 
 export const App = ({ options }) => {
-  const config = { selectedGameMode: 'people' };
   const rankingBtn = document.querySelector('.button--ranking');
   const modeHall = document.querySelector('#halloffame');
-  const hallOfFame = new HallOfFame(modeHall, config);
   const modeRules = document.querySelector('.mode__rules');
   const rankingBtnTxt = rankingBtn.querySelector('.button__text');
   const rankingBtnIcon = rankingBtn.querySelector('.fas');
@@ -15,12 +14,16 @@ export const App = ({ options }) => {
   const buttonForce = document.querySelector('.submit');
   const gameModes = document.querySelectorAll('.menu__item');
   const playTheGame = document.querySelector('.button--play');
-  let selectedGame = document
-    .querySelector('.menu__item--selected')
-    .innerHTML.toLowerCase();
   let randomizedQuizObject;
   const inGameMode = document.querySelector('.mode__game-in-progress');
   const progresBarContainer = document.querySelector('.progress');
+
+  const config = {
+    selectedGame: `people`,
+  };
+
+  const hallOfFame = new HallOfFame(modeHall, config);
+  const gameMode = new GameModeSelect(config);
 
   btnSettings.addEventListener('click', () => {
     btnSettings.hidden = true;
@@ -80,22 +83,9 @@ export const App = ({ options }) => {
     modal.hidden = true;
   }
 
-  // dynamicaly set active game mode
-  gameModes.forEach((mode) => {
-    mode.addEventListener('click', (e) => {
-      gameModes.forEach((mode) => {
-        mode.classList.remove('menu__item--selected');
-      });
-      e.target.classList.add('menu__item--selected');
-      config.selectedGameMode = document
-        .querySelector('.menu__item--selected')
-        .innerHTML.toLowerCase();
-      hallOfFame.display();
-    });
-  });
   //get data from API based on active game mode
   const quizData = new Quiz();
-  playTheGame.addEventListener('click', () => play(selectedGame));
+  playTheGame.addEventListener('click', () => play(config.selectedGame));
 
   function play(gameMode) {
     !quizData[gameMode].length &&
