@@ -1,6 +1,6 @@
 import { findImageUrl } from '../../findImageUrl';
-import { gameModeQuestionIndexes } from '../../services/Util/GameModeQuestionIndexes';
-import PlayerType from '../../services/Util/PlayerType';
+import { gameModeQuestionIndexes } from '../Util/GameModeQuestionIndexes';
+import PlayerType from '../Util/PlayerType';
 
 import Util from '../Util/Util';
 import ApiDataFetcher from '../ApiDataFetcher/ApiDataFetcher';
@@ -76,7 +76,7 @@ export class GameEngine {
     console.log('question picked: ', this.allPossibleQuestions[`${nextQuestionIndex}`]);
     const {name, index:id} = this.allPossibleQuestions[`${nextQuestionIndex}`];
     const questionToAsk = { 'name': name, 'imgUrl': findImageUrl(this.gameMode, id) };
-    const allAnswers = []; 
+    const allAnswers = [];
     return {
      'gameMode': this.gameMode,
      'question': questionToAsk,
