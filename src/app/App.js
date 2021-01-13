@@ -2,9 +2,10 @@ import { Quiz } from './Quiz';
 import { HallOfFame } from './components/HallOfFame';
 
 export const App = ({ options }) => {
+  const config = { selectedGameMode: 'people' };
   const rankingBtn = document.querySelector('.button--ranking');
   const modeHall = document.querySelector('#halloffame');
-  const hallOfFame = new HallOfFame(modeHall);
+  const hallOfFame = new HallOfFame(modeHall, config);
   const modeRules = document.querySelector('.mode__rules');
   const rankingBtnTxt = rankingBtn.querySelector('.button__text');
   const rankingBtnIcon = rankingBtn.querySelector('.fas');
@@ -86,9 +87,10 @@ export const App = ({ options }) => {
         mode.classList.remove('menu__item--selected');
       });
       e.target.classList.add('menu__item--selected');
-      selectedGame = document
+      config.selectedGameMode = document
         .querySelector('.menu__item--selected')
         .innerHTML.toLowerCase();
+      hallOfFame.display();
     });
   });
   //get data from API based on active game mode
