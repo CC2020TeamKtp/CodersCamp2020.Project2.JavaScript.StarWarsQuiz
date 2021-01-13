@@ -4,7 +4,7 @@ import { HallOfFame } from './components/HallOfFame';
 export const App = ({ options }) => {
   const rankingBtn = document.querySelector('.button--ranking');
   const modeHall = document.querySelector('#halloffame');
-  const hallOfFameElement = new HallOfFame(modeHall);
+  const hallOfFame = new HallOfFame(modeHall);
   const modeRules = document.querySelector('.mode__rules');
   const rankingBtnTxt = rankingBtn.querySelector('.button__text');
   const rankingBtnIcon = rankingBtn.querySelector('.fas');
@@ -40,6 +40,10 @@ export const App = ({ options }) => {
   });
 
   buttonForce.addEventListener('click', submitResult);
+  document.addEventListener('switch-to-hall-of-fame', () => {
+    hallOfFame.display();
+    modeRules.hidden = true;
+  });
 
   function onLoadHide() {
     formSettings.hidden = true;
@@ -53,17 +57,16 @@ export const App = ({ options }) => {
     if (rankingBtnTxt.innerHTML === 'Hall of fame') {
       rankingBtnTxt.innerHTML = 'Rules';
       rankingBtnIcon.classList = 'fas fa-graduation-cap';
-      hallOfFameElement.display();
-      hallOfFameElement.update();
+      hallOfFame.display();
     } else {
       rankingBtnTxt.innerHTML = 'Hall of fame';
       rankingBtnIcon.classList = 'fas fa-id-badge';
-      hallOfFameElement.hide();
+      hallOfFame.hide();
     }
     modeRules.hidden = !modeRules.hidden;
   }
 
-  // issue 16 hall of fame//
+  // do komponentu Game Over
   function submitResult() {
     const result = {
       //przerobić na pobieranie inputu z html i wyniku z js/html
@@ -71,7 +74,7 @@ export const App = ({ options }) => {
       answered: 20,
       correct: 10 + Math.floor(Math.random() * 20),
     };
-    hallOfFameElement.saveResult(result);
+    hallOfFame.saveResult(result);
     const modal = document.querySelector('.modal');
     modal.hidden = true;
   }
