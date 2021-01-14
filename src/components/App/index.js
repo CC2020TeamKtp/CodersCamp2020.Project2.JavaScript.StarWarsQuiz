@@ -1,18 +1,16 @@
 import { Quiz } from './Quiz';
 import { HallOfFame } from '../HallOfFame';
 import { GameModeSelect } from '../GameModeSelect';
+import { GameOver } from '../GameOver';
 
 export const App = ({ options }) => {
   const rankingBtn = document.querySelector('.button--ranking');
-  const modeHall = document.querySelector('#halloffame');
   const modeRules = document.querySelector('.mode__rules');
   const rankingBtnTxt = rankingBtn.querySelector('.button__text');
   const rankingBtnIcon = rankingBtn.querySelector('.fas');
   const btnSettings = document.querySelector('.button--settings');
   const formSettings = document.querySelector('form');
   const btnBack = document.querySelector('.button--back');
-  const buttonForce = document.querySelector('.submit');
-  const gameModes = document.querySelectorAll('.menu__item');
   const playTheGame = document.querySelector('.button--play');
   let randomizedQuizObject;
   const inGameMode = document.querySelector('.mode__game-in-progress');
@@ -22,7 +20,17 @@ export const App = ({ options }) => {
     selectedGame: `people`,
   };
 
-  const hallOfFame = new HallOfFame(modeHall, config);
+  const hallOfFame = new HallOfFame(
+    document.querySelector('#halloffame'),
+    config,
+  );
+  const gameOver = new GameOver(
+    document.querySelector('#gameovermodal'),
+    config,
+    (result) => hallOfFame.saveResult(result),
+  );
+  gameOver.display(); //tymczasowe, jedyna metoda wywołania modala
+
   const gameMode = new GameModeSelect(config);
 
   btnSettings.addEventListener('click', () => {
@@ -41,12 +49,6 @@ export const App = ({ options }) => {
 
   btnBack.addEventListener('click', () => {
     //window.location.reload();
-  });
-
-  buttonForce.addEventListener('click', submitResult);
-  document.addEventListener('switch-to-hall-of-fame', () => {
-    hallOfFame.display();
-    modeRules.hidden = true;
   });
 
   function onLoadHide() {
@@ -68,19 +70,6 @@ export const App = ({ options }) => {
       hallOfFame.hide();
     }
     modeRules.hidden = !modeRules.hidden;
-  }
-
-  // do komponentu Game Over
-  function submitResult() {
-    const result = {
-      //przerobić na pobieranie inputu z html i wyniku z js/html
-      name: document.querySelector('.form__input').value,
-      answered: 20,
-      correct: 10 + Math.floor(Math.random() * 20),
-    };
-    hallOfFame.saveResult(result);
-    const modal = document.querySelector('.modal');
-    modal.hidden = true;
   }
 
   //get data from API based on active game mode
