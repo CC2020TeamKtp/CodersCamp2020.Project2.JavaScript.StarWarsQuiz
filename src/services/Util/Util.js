@@ -1,16 +1,18 @@
 export default class Util {
 
-  static randomizeUnique(min, max, exludeArray) {
-    let randomValue = Math.floor(Math.random() * (max - min)) + min;
+  static randomizeUnique(max, exludeArray) {
+    let randomValue = Math.floor(Math.random() * max);
 
     while (exludeArray.includes(randomValue)) {
-      randomValue = Math.floor(Math.random() * (max - min)) + min;
+      randomValue = Math.floor(Math.random() * max);
     }
     return randomValue;
   }
 
-  static getFirstAndLastElement(arr) {
-    return [arr[0], arr[arr.length - 1]];
+  static removeOneAtRandom(possibleIds) {
+    const randomIndex = Math.floor(Math.random() * possibleIds.length);
+    possibleIds.splice(randomIndex, 1);
+    return randomIndex;
   }
 
   static shuffle(array) {

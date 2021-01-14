@@ -89,7 +89,6 @@ export const App = ({ options }) => {
 
   async function play(gameMode) {
     const quiz = new GameEngine(gameMode, apiDataFetcher);
-
     await quiz.fetchAllQuestionsForMode(gameMode);
     const nextQuestion = quiz.generateNextQuestion();
     updateUI(nextQuestion);
