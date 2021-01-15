@@ -41,27 +41,26 @@ export class GameEngine {
   }
 
   getAllAnswers(nextQuestionIndex) {
-    const allAnswersIndexes = this.generateRandomAnswersIndexes(
-      nextQuestionIndex,
-    );
+    const allAnswersIndexes = this.generateRandomAnswersIndexes(nextQuestionIndex);
     return allAnswersIndexes.map((index) => this.allQuestions[index].name);
   }
 
   findQuestionByIndex(idx) {
-    return this.allQuestions.find((question) => parseInt(question.index) === idx);
+    return this.allQuestions.find((question) =>  parseInt(question.index) === idx);
   }
 
   generateNextQuestion() {
     console.log('all q:', this.allQuestions);
 
-    const metaIndex = Util.removeOneAtRandom(this.questionIndexes);
-    const nextQuestionIndex = gameModeQuestionIndexes[this.gameMode][metaIndex];
-    const { name, index: id } = this.findQuestionByIndex(nextQuestionIndex);
+    const nextQuestionIndex = Util.removeOneAtRandom(this.questionIndexes);
+    
+    const nextQuestion = this.findQuestionByIndex(nextQuestionIndex);
+    const { name, index: id } = nextQuestion;
     const questionToAsk = {
       name: name,
       imgUrl: findImageUrl(this.gameMode, id),
     };
-    const allAnswers = this.getAllAnswers(nextQuestionIndex);
+    const allAnswers = this.getAllAnswers(this.allQuestions.indexOf(nextQuestion));
     return {
       gameMode: this.gameMode,
       question: questionToAsk,
