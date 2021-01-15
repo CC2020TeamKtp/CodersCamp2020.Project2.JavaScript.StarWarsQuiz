@@ -1,7 +1,8 @@
-import { Quiz } from './Quiz';
 import { HallOfFame } from '../HallOfFame';
 import { GameModeSelect } from '../GameModeSelect';
 import { GameOver } from '../GameOver';
+import ApiDataFetcher from '../../services/ApiDataFetcher/ApiDataFetcher';
+import { GameEngine } from '../../services/GameEngine/GameEngine';
 
 export const App = ({ options }) => {
   const rankingBtn = document.querySelector('.button--ranking');
@@ -12,7 +13,6 @@ export const App = ({ options }) => {
   const formSettings = document.querySelector('form');
   const btnBack = document.querySelector('.button--back');
   const playTheGame = document.querySelector('.button--play');
-  let randomizedQuizObject;
   const inGameMode = document.querySelector('.mode__game-in-progress');
   const progresBarContainer = document.querySelector('.progress');
 
@@ -73,22 +73,14 @@ export const App = ({ options }) => {
   }
 
   //get data from API based on active game mode
-  const quizData = new Quiz();
+  const apiDataFetcher = new ApiDataFetcher(options.swApiBaseUrl);
   playTheGame.addEventListener('click', () => play(config.selectedGame));
 
-  function play(gameMode) {
-    !quizData[gameMode].length &&
-      fetch(`https://swapi.dev/api/${gameMode}/`)
-        .then((response) => response.json())
-        .then((data) => {
-          data.results.map((gameObject) => {
-            quizData.setData(gameMode, gameObject.name);
-          });
-        })
-        .then(() => {
-          randomizedQuizObject = quizData.getRandomQuizObject(gameMode);
-          updateUI(randomizedQuizObject); //for now just console it
-        });
+  async function play(gameMode) {
+    const quiz = new GameEngine(gameMode, apiDataFetcher);
+    await quiz.fetchAllQuestionsForMode(gameMode);
+    const nextQuestion = quiz.generateNextQuestion();
+    updateUI(nextQuestion);
   }
   function updateUI(data) {
     console.log('data for update UI', data);
