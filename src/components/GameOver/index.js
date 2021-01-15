@@ -1,5 +1,5 @@
 export class GameOver {
-  constructor(element, config, handleScoreSubmit) {
+  constructor({ element, config, handleScoreSubmit }) {
     this.element = element;
     this.config = config;
     this.handleScoreSubmit = handleScoreSubmit;
