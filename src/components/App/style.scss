@@ -74,52 +74,6 @@ body {
   }
 }
 
-.progress {
-  margin: auto;
-  display: none;
-  flex-wrap: wrap;
-  width: 94%;
-  height: auto;
-  &__lightSaber {
-    position: relative;
-    left: 2%;
-    width: 100%;
-    display: flex;
-    height: auto;
-  }
-  &__saberHandle {
-    width: 20%;
-    display: block;
-    align-self: center;
-  }
-  &__saberLight {
-    width: 80%;
-    height: 68%;
-    background-color: grey;
-    align-self: center;
-    border-radius: 10px;
-    position: relative;
-    left: -2%;
-    &::after {
-      content: '';
-      display: block;
-      height: 100%;
-      width: 50%;
-      background-color: whitesmoke;
-      border-radius: inherit;
-      box-shadow: 14px 0px 16px 4px rgba(250, 18, 56, 1);
-    }
-  }
-  &__time {
-    color: red;
-    align-self: center;
-    margin: 10px auto;
-  }
-  &__timeLeft {
-    color: inherit;
-  }
-}
-
 .mode {
   display: flex;
   flex-direction: column;

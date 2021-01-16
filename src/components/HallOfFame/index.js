@@ -18,6 +18,8 @@ export class HallOfFame {
     </div>`;
   }
 
+  update = () => this.element.innerHTML && this.display();
+
   getTableHTML() {
     let results = this.getBestResults();
     if (results.length) {
