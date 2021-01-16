@@ -24,12 +24,12 @@ export const App = ({ options }) => {
     document.querySelector('#halloffame'),
     config,
   );
-  const gameOver = new GameOver(
-    document.querySelector('#gameovermodal'),
-    config,
-    (result) => hallOfFame.saveResult(result),
-  );
-  gameOver.display(); //tymczasowe, jedyna metoda wywołania modala
+  const gameOver = new GameOver({
+    element: document.querySelector('#gameovermodal'),
+    config: config,
+    handleScoreSubmit: (result) => hallOfFame.saveResult(result),
+  });
+  //gameOver.display(); //tymczasowe, jedyna metoda wywołania modala
 
   const gameMode = new GameModeSelect(config);
 
@@ -41,14 +41,13 @@ export const App = ({ options }) => {
     document.querySelector('.button--ranking').hidden = true;
     document.querySelector('.button--play').hidden = true;
     document.querySelector('.question__image').hidden = true;
-    document.querySelector('table').hidden = true;
-    document.querySelector('.mode__hall').hidden = true;
+    hallOfFame.hide();
     formSettings.hidden = false;
     btnBack.hidden = false;
   });
 
   btnBack.addEventListener('click', () => {
-    //window.location.reload();
+    window.location.reload();
   });
 
   function onLoadHide() {
