@@ -41,6 +41,7 @@ export const App = ({ options }) => {
     playTheGame.hidden = false;
     btnSettings.hidden = false;
     switchToHall();
+    gameMode.enableButtons();
   }
 
   const gameMode = new GameModeSelect(config);
@@ -124,5 +125,6 @@ export const App = ({ options }) => {
     inGameMode.hidden = false;
     timer.display();
     hallOfFame.hide();
+    gameMode.disableButtons();
   }
 };
