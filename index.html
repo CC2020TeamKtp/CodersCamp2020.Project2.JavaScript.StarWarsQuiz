@@ -91,7 +91,63 @@
       </form>
     </div>
     <button class="button button--back">Back</button>
-    <div id="gameovermodal">
+    <div class="modal">
+      <h1 class="modal__title">game over</h1>
+      <p class="modal__description">
+        The force is strong in you young Padawan! During 1 minute you have
+        answered 10 / 23 questions. And Computer guessed 5 / 23.
+      </p>
+      <div class="modal__answers">
+        <img
+          class="modal__answers--img"
+          src="./static/assets/ui/MasterYodaLeft.png"
+        />
+        <table class="table">
+          <caption>
+            Detailed answers
+          </caption>
+          <tr>
+            <th></th>
+            <th>You</th>
+            <th>Computer</th>
+            <th>Answer</th>
+          </tr>
+          <tr>
+            <td>
+              <img
+                class="table__img"
+                src="./static/assets/img/modes/people/4.jpg"
+              />
+            </td>
+            <td class="table__cell--correct">Darth Vader</td>
+            <td class="table__cell--incorrect">Darth Father</td>
+            <td>Darth Vader</td>
+          </tr>
+          <tr>
+            <td>
+              <img
+                class="table__img"
+                src="./static/assets/img/modes/people/36.jpg"
+              />
+            </td>
+            <td class="table__cell--correct">Jar Jar Binks</td>
+            <td class="table__cell--correct">Jar Jar Binks</td>
+            <td>Jar Jar Binks</td>
+          </tr>
+        </table>
+      </div>
+      <form>
+        <div class="form">
+          <input class="form__input" id="name" />
+          <label for="name"
+            >Please fill your name in order to receive eternal glory in whole
+            Galaxy!</label
+          >
+        </div>
+        <div class="submit">
+          <button type="button">may the force be with you!</button>
+        </div>
+      </form>
     </div>
   </body>
 </html>
