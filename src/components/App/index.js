@@ -3,6 +3,7 @@ import { GameModeSelect } from '../GameModeSelect';
 import { GameOver } from '../GameOver';
 import ApiDataFetcher from '../../services/ApiDataFetcher/ApiDataFetcher';
 import { GameEngine } from '../../services/GameEngine/GameEngine';
+import { GameView } from '../GameView';
 
 export const App = ({ options }) => {
   const rankingBtn = document.querySelector('.button--ranking');
@@ -77,13 +78,14 @@ export const App = ({ options }) => {
 
   async function play(gameMode) {
     const quiz = new GameEngine(gameMode, apiDataFetcher);
+
     await quiz.fetchAllQuestionsForMode(gameMode);
+
+    const gameView = new GameView();
     const nextQuestion = quiz.generateNextQuestion();
-    updateUI(nextQuestion);
+    gameView.displayQuestion(nextQuestion);
   }
-  function updateUI(data) {
-    console.log('data for update UI', data);
-  }
+
   playTheGame.addEventListener('click', setGameInProgressView);
 
   function setGameInProgressView() {
