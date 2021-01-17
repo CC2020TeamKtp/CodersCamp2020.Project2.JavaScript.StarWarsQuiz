@@ -46,7 +46,9 @@ export class GameEngine {
   }
 
   findQuestionByIndex(idx) {
-    return this.allQuestions.find((question) =>  parseInt(question.index) === idx);
+    return this.allQuestions.find(
+      (question) => parseInt(question.index) === idx,
+    );
   }
 
   generateNextQuestion() {

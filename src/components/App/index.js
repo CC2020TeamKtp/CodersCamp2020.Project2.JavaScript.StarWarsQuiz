@@ -5,10 +5,10 @@ import ApiDataFetcher from '../../services/ApiDataFetcher/ApiDataFetcher';
 import { GameEngine } from '../../services/GameEngine/GameEngine';
 import { Timer } from '../Timer';
 import { GameView } from '../GameView';
+import { GameDescription } from '../GameDescription';
 
 export const App = ({ options }) => {
   const rankingBtn = document.querySelector('.button--ranking');
-  const modeRules = document.querySelector('.mode__rules');
   const rankingBtnTxt = rankingBtn.querySelector('.button__text');
   const rankingBtnIcon = rankingBtn.querySelector('.fas');
   const btnSettings = document.querySelector('.button--settings');
@@ -23,6 +23,8 @@ export const App = ({ options }) => {
   };
 
   const hallOfFame = new HallOfFame(config);
+
+  const apiDataFetcher = new ApiDataFetcher(options.swApiBaseUrl);
 
   const gameOver = new GameOver({
     config: config,
@@ -42,7 +44,17 @@ export const App = ({ options }) => {
     gameMode.enableButtons();
   }
 
-  const gameMode = new GameModeSelect(config);
+  const gameDescription = new GameDescription({
+    config: config,
+    apiDataFetcher: apiDataFetcher,
+  });
+
+  const gameMode = new GameModeSelect(handleGameModeChange);
+
+  function handleGameModeChange(selected) {
+    config.selectedGame = selected;
+    gameDescription.setGameDescription(selected);
+  }
 
   const timer = new Timer({
     config: config,
@@ -56,7 +68,7 @@ export const App = ({ options }) => {
   btnSettings.addEventListener('click', () => {
     btnSettings.hidden = true;
 
-    document.querySelector('.mode__rules').hidden = true;
+    document.querySelector('.mode___description').hidden = true;
     document.querySelector('.mode__type').hidden = true;
     document.querySelector('.button--ranking').hidden = true;
     document.querySelector('.button--play').hidden = true;
@@ -83,14 +95,14 @@ export const App = ({ options }) => {
     rankingBtnTxt.innerText = 'Hall of fame';
     rankingBtnIcon.classList = 'fas fa-id-badge';
     hallOfFame.hide();
-    modeRules.hidden = false;
+    document.querySelector('.mode__rules').hidden = false;
   }
 
   function switchToHall() {
     rankingBtnTxt.innerText = 'Rules';
     rankingBtnIcon.classList = 'fas fa-graduation-cap';
     hallOfFame.display();
-    modeRules.hidden = true;
+    document.querySelector('.mode__rules').hidden = true;
   }
 
   function switchBtn() {
@@ -100,7 +112,6 @@ export const App = ({ options }) => {
   }
 
   //get data from API based on active game mode
-  const apiDataFetcher = new ApiDataFetcher(options.swApiBaseUrl);
   playTheGame.addEventListener('click', () => play(config.selectedGame));
 
   async function play(gameMode) {
@@ -116,7 +127,7 @@ export const App = ({ options }) => {
   playTheGame.addEventListener('click', setGameInProgressView);
 
   function setGameInProgressView() {
-    modeRules.hidden = true;
+    document.querySelector('.mode__rules').hidden = true;
     rankingBtn.hidden = true;
     playTheGame.hidden = true;
     btnSettings.hidden = true;
