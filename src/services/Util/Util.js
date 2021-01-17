@@ -10,9 +10,7 @@ export default class Util {
   }
 
   static removeOneAtRandom(possibleIds) {
-    const randomIndex = Math.floor(Math.random() * possibleIds.length);
-    possibleIds.splice(randomIndex, 1);
-    return randomIndex;
+    return possibleIds.splice(Math.floor(Math.random() * possibleIds.length), 1)[0];
   }
 
   static shuffle(array) {
