@@ -1,6 +1,6 @@
 export class Timer {
-  constructor({ element, config, announceGameOver }) {
-    this.element = element;
+  constructor({ config, announceGameOver }) {
+    this.element = document.querySelector('#progress');
     this.config = config;
     this.announceGameOver = announceGameOver;
     this.timeOutId = '';

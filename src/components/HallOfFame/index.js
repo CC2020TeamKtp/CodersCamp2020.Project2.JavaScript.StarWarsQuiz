@@ -1,6 +1,6 @@
 export class HallOfFame {
-  constructor(element, config) {
-    this.element = element;
+  constructor(config) {
+    this.element = document.querySelector('#halloffame');
     this.config = config;
   }
 

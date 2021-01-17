@@ -22,19 +22,16 @@ export const App = ({ options }) => {
     quizMaxTime: options.quizMaxTime,
   };
 
-  const hallOfFame = new HallOfFame(
-    document.querySelector('#halloffame'),
-    config,
-  );
+  const hallOfFame = new HallOfFame(config);
+
   const gameOver = new GameOver({
-    element: document.querySelector('#gameovermodal'),
     config: config,
     handleScoreSubmit: (result) =>
       hallOfFame.saveResult(result) || hallOfFame.update(),
   });
 
   //do wykorzystania także, gdy skończą się pytania
-  function onGameOver() {
+  function handleGameOver() {
     gameOver.display();
     timer.hide();
     inGameMode.hidden = true;
@@ -48,14 +45,13 @@ export const App = ({ options }) => {
   const gameMode = new GameModeSelect(config);
 
   const timer = new Timer({
-    element: document.querySelector('#progress'),
     config: config,
-    announceGameOver: onGameOver,
+    announceGameOver: handleGameOver,
   });
   /*to się przydaje do testów w sytuacji, gdy skończyły się pytania
   document
     .querySelector('.answers__option')
-    .addEventListener('click', () => onGameOver());*/
+    .addEventListener('click', () => handleGameOver());*/
 
   btnSettings.addEventListener('click', () => {
     btnSettings.hidden = true;
@@ -84,21 +80,21 @@ export const App = ({ options }) => {
   rankingBtn.addEventListener('click', switchBtn);
 
   function switchToRules() {
-    rankingBtnTxt.innerHTML = 'Hall of fame';
+    rankingBtnTxt.innerText = 'Hall of fame';
     rankingBtnIcon.classList = 'fas fa-id-badge';
     hallOfFame.hide();
     modeRules.hidden = false;
   }
 
   function switchToHall() {
-    rankingBtnTxt.innerHTML = 'Rules';
+    rankingBtnTxt.innerText = 'Rules';
     rankingBtnIcon.classList = 'fas fa-graduation-cap';
     hallOfFame.display();
     modeRules.hidden = true;
   }
 
   function switchBtn() {
-    rankingBtnTxt.innerHTML === 'Hall of fame'
+    rankingBtnTxt.innerText === 'Hall of fame'
       ? switchToHall()
       : switchToRules();
   }
