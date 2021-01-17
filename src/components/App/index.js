@@ -5,15 +5,16 @@ import ApiDataFetcher from '../../services/ApiDataFetcher/ApiDataFetcher';
 import { GameEngine } from '../../services/GameEngine/GameEngine';
 import { Timer } from '../Timer';
 import { GameView } from '../GameView';
+import { ComputerMind } from '../../services/ComputerMind/ComputerMind';
 
 export const App = ({ options }) => {
   const rankingBtn = document.querySelector('.button--ranking');
   const modeRules = document.querySelector('.mode__rules');
   const rankingBtnTxt = rankingBtn.querySelector('.button__text');
   const rankingBtnIcon = rankingBtn.querySelector('.fas');
-  const btnSettings = document.querySelector('.button--settings');
-  const formSettings = document.querySelector('form');
-  const btnBack = document.querySelector('.button--back');
+ 
+  const setGameLevel = document.getElementById("setGameLevel");
+ 
   const playTheGame = document.querySelector('.button--play');
   const inGameMode = document.querySelector('.mode__game-in-progress');
 
@@ -37,7 +38,7 @@ export const App = ({ options }) => {
     inGameMode.hidden = true;
     rankingBtn.hidden = false;
     playTheGame.hidden = false;
-    btnSettings.hidden = false;
+   
     switchToHall();
     gameMode.enableButtons();
   }
@@ -53,29 +54,7 @@ export const App = ({ options }) => {
     .querySelector('.answers__option')
     .addEventListener('click', () => handleGameOver());*/
 
-  btnSettings.addEventListener('click', () => {
-    btnSettings.hidden = true;
-
-    document.querySelector('.mode__rules').hidden = true;
-    document.querySelector('.mode__type').hidden = true;
-    document.querySelector('.button--ranking').hidden = true;
-    document.querySelector('.button--play').hidden = true;
-    document.querySelector('.question__image').hidden = true;
-    hallOfFame.hide();
-    formSettings.hidden = false;
-    btnBack.hidden = false;
-  });
-
-  btnBack.addEventListener('click', () => {
-    window.location.reload();
-  });
-
-  function onLoadHide() {
-    formSettings.hidden = true;
-    btnBack.hidden = true;
-  }
-
-  onLoadHide();
+ 
 
   rankingBtn.addEventListener('click', switchBtn);
 
@@ -98,20 +77,56 @@ export const App = ({ options }) => {
       ? switchToHall()
       : switchToRules();
   }
-
+  
+  let nextQuestion = {}; 
+  const arrGameOverResuls = [];
+  let currentPlayerAnswer = "";
+  let quiz = {};
   //get data from API based on active game mode
   const apiDataFetcher = new ApiDataFetcher(options.swApiBaseUrl);
   playTheGame.addEventListener('click', () => play(config.selectedGame));
 
   async function play(gameMode) {
-    const quiz = new GameEngine(gameMode, apiDataFetcher);
+    quiz = new GameEngine(gameMode, apiDataFetcher);
 
     await quiz.fetchAllQuestionsForMode(gameMode);
 
     const gameView = new GameView();
-    const nextQuestion = quiz.generateNextQuestion();
+    nextQuestion = quiz.generateNextQuestion();
     gameView.displayQuestion(nextQuestion);
+ 
   }
+  
+
+  inGameMode.addEventListener('click', (event) => {
+    const isButton = event.target.nodeName === 'BUTTON';   
+    currentPlayerAnswer = event.target.innerText;
+      if (isButton) {
+        const computerMind = new ComputerMind();
+        const setGameLevel  = computerMind.setGameLevel(nextQuestion);
+        const playersSelection = computerMind.RandomComputerAnswer(setGameLevel, nextQuestion)
+        const result = gameOverView(playersSelection);
+        console.log(result);
+        const gameView = new GameView();
+        nextQuestion = quiz.generateNextQuestion();
+        gameView.displayQuestion(nextQuestion);
+   
+      }   
+   
+       
+    })
+
+    function gameOverView(selectedAnswers){
+      let keys = Object.keys(selectedAnswers)    
+      arrGameOverResuls.push({
+        correctAnswer: {id: selectedAnswers[keys[0]].imgId, name: selectedAnswers[keys[0]].correctAnswer},  
+        computerAnswer:  selectedAnswers[keys[0]].computerSelection,
+        playerAnswer: currentPlayerAnswer
+        
+      })
+     console.log("GameOver: ", arrGameOverResuls)
+   
+    }
 
   playTheGame.addEventListener('click', setGameInProgressView);
 
@@ -119,7 +134,7 @@ export const App = ({ options }) => {
     modeRules.hidden = true;
     rankingBtn.hidden = true;
     playTheGame.hidden = true;
-    btnSettings.hidden = true;
+   setGameLevel.hidden = true;
     inGameMode.hidden = false;
     timer.display();
     hallOfFame.hide();

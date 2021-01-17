@@ -50,7 +50,7 @@ export class GameEngine {
   }
 
   generateNextQuestion() {
-    console.log('all q:', this.allQuestions);
+   // console.log('all q:', this.allQuestions);
 
     const nextQuestionIndex = Util.removeOneAtRandom(this.questionIndexes);
     
@@ -59,6 +59,7 @@ export class GameEngine {
     const questionToAsk = {
       name: name,
       imgUrl: findImageUrl(this.gameMode, id),
+      id: id,
     };
     const allAnswers = this.getAllAnswers(this.allQuestions.indexOf(nextQuestion));
     return {
