@@ -1,6 +1,6 @@
 export class HallOfFame {
-  constructor(element, config) {
-    this.element = element;
+  constructor(config) {
+    this.element = document.querySelector('#halloffame');
     this.config = config;
   }
 
@@ -17,6 +17,8 @@ export class HallOfFame {
       ${this.getTableHTML()}
     </div>`;
   }
+
+  update = () => this.element.innerHTML && this.display();
 
   getTableHTML() {
     let results = this.getBestResults();

@@ -3,6 +3,7 @@ import { GameModeSelect } from '../GameModeSelect';
 import { GameOver } from '../GameOver';
 import ApiDataFetcher from '../../services/ApiDataFetcher/ApiDataFetcher';
 import { GameEngine } from '../../services/GameEngine/GameEngine';
+import { Timer } from '../Timer';
 import { GameView } from '../GameView';
 
 export const App = ({ options }) => {
@@ -15,24 +16,42 @@ export const App = ({ options }) => {
   const btnBack = document.querySelector('.button--back');
   const playTheGame = document.querySelector('.button--play');
   const inGameMode = document.querySelector('.mode__game-in-progress');
-  const progresBarContainer = document.querySelector('.progress');
 
   const config = {
     selectedGame: `people`,
+    quizMaxTime: options.quizMaxTime,
   };
 
-  const hallOfFame = new HallOfFame(
-    document.querySelector('#halloffame'),
-    config,
-  );
+  const hallOfFame = new HallOfFame(config);
+
   const gameOver = new GameOver({
-    element: document.querySelector('#gameovermodal'),
     config: config,
-    handleScoreSubmit: (result) => hallOfFame.saveResult(result),
+    handleScoreSubmit: (result) =>
+      hallOfFame.saveResult(result) || hallOfFame.update(),
   });
-  //gameOver.display(); //tymczasowe, jedyna metoda wywołania modala
+
+  //do wykorzystania także, gdy skończą się pytania
+  function handleGameOver() {
+    gameOver.display();
+    timer.hide();
+    inGameMode.hidden = true;
+    rankingBtn.hidden = false;
+    playTheGame.hidden = false;
+    btnSettings.hidden = false;
+    switchToHall();
+    gameMode.enableButtons();
+  }
 
   const gameMode = new GameModeSelect(config);
+
+  const timer = new Timer({
+    config: config,
+    announceGameOver: handleGameOver,
+  });
+  /*to się przydaje do testów w sytuacji, gdy skończyły się pytania
+  document
+    .querySelector('.answers__option')
+    .addEventListener('click', () => handleGameOver());*/
 
   btnSettings.addEventListener('click', () => {
     btnSettings.hidden = true;
@@ -59,17 +78,25 @@ export const App = ({ options }) => {
   onLoadHide();
 
   rankingBtn.addEventListener('click', switchBtn);
+
+  function switchToRules() {
+    rankingBtnTxt.innerText = 'Hall of fame';
+    rankingBtnIcon.classList = 'fas fa-id-badge';
+    hallOfFame.hide();
+    modeRules.hidden = false;
+  }
+
+  function switchToHall() {
+    rankingBtnTxt.innerText = 'Rules';
+    rankingBtnIcon.classList = 'fas fa-graduation-cap';
+    hallOfFame.display();
+    modeRules.hidden = true;
+  }
+
   function switchBtn() {
-    if (rankingBtnTxt.innerHTML === 'Hall of fame') {
-      rankingBtnTxt.innerHTML = 'Rules';
-      rankingBtnIcon.classList = 'fas fa-graduation-cap';
-      hallOfFame.display();
-    } else {
-      rankingBtnTxt.innerHTML = 'Hall of fame';
-      rankingBtnIcon.classList = 'fas fa-id-badge';
-      hallOfFame.hide();
-    }
-    modeRules.hidden = !modeRules.hidden;
+    rankingBtnTxt.innerText === 'Hall of fame'
+      ? switchToHall()
+      : switchToRules();
   }
 
   //get data from API based on active game mode
@@ -94,7 +121,8 @@ export const App = ({ options }) => {
     playTheGame.hidden = true;
     btnSettings.hidden = true;
     inGameMode.hidden = false;
-    progresBarContainer.style.display = 'flex';
+    timer.display();
     hallOfFame.hide();
+    gameMode.disableButtons();
   }
 };

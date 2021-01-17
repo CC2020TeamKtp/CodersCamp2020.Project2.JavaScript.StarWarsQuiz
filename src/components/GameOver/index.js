@@ -1,6 +1,6 @@
 export class GameOver {
-  constructor({ element, config, handleScoreSubmit }) {
-    this.element = element;
+  constructor({ config, handleScoreSubmit }) {
+    this.element = document.querySelector('#gameovermodal');
     this.config = config;
     this.handleScoreSubmit = handleScoreSubmit;
     //tymczasowe dla testów
