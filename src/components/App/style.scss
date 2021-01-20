@@ -100,57 +100,6 @@ body {
   }
 }
 
-.buttons {
-  width: 65%;
-  display: flex;
-  justify-content: space-between;
-  margin-left: 32%;
-}
-
-.button {
-  border-radius: 16px;
-  border: none;
-  outline: none;
-  padding: 20px 30px;
-  box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
-  background-color: white;
-  transition: 0.2s linear;
-  &:hover {
-    background-color: #444;
-    color: white;
-  }
-  &--ranking {
-    width: 48%;
-  }
-  &--play {
-    width: 48%;
-    background-color: rgb(255, 0, 0);
-    box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25),
-      4px 4px 40px rgba(255, 0, 0, 0.9);
-    text-transform: uppercase;
-    color: white;
-  }
-  &--settings {
-    position: absolute;
-    bottom: 2%;
-    left: 5%;
-    width: 20%;
-  }
-  &--back {
-    position: relative;
-    margin-top: 10rem;
-    width: 10rem;
-  }
-  &--save {
-    margin-top: 30px;
-    width: 6rem;
-  }
-  &--clear {
-    margin-top: 30px;
-    width: 6rem;
-  }
-}
-
 .api_key--input {
   border: 4px solid #c4c4c4;
   border-radius: 8px;
@@ -158,14 +107,6 @@ body {
   font-size: 1.2rem;
   margin-right: 20px;
   height: 70px;
-}
-
-.settings {
-  display: flex;
-  flex-direction: column;
-  margin-top: 20px;
-  margin-left: 60px;
-  width: auto;
 }
 
 label {
@@ -208,20 +149,6 @@ label {
   }
   .api_key--input {
     width: 80%;
-  }
-  .button--back {
-    margin-top: 10rem;
-    margin-left: 35px;
-  }
-
-  .buttons {
-    width: 95%;
-    margin: 3%;
-  }
-
-  .button--settings {
-    position: static;
-    width: 95%;
   }
 }
 
