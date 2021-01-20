@@ -1,5 +1,4 @@
 export default class Util {
-
   static randomizeUnique(max, exludeArray) {
     let randomValue = Math.floor(Math.random() * max);
 
@@ -24,4 +23,7 @@ export default class Util {
     return copy;
   }
 
+  static getRandomArrayElement(array) {
+    return array[Math.floor(Math.random() * array.length)];
+  }
 }
