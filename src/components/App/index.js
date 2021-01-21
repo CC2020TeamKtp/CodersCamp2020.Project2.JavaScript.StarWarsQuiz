@@ -116,10 +116,14 @@ export const App = ({ options }) => {
 
   async function play(gameMode) {
     const quiz = new GameEngine(gameMode, apiDataFetcher);
-
-    await quiz.fetchAllQuestionsForMode(gameMode);
-
     const gameView = new GameView();
+
+    try {
+      await quiz.fetchAllQuestionsForMode(gameMode);
+    } catch(err) {
+      gameView.displayNoQuestionsFetchedError();
+    }
+
     const nextQuestion = quiz.generateNextQuestion();
     gameView.displayQuestion(nextQuestion);
   }
