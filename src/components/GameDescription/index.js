@@ -27,7 +27,7 @@ export class GameDescription {
             <p class="mode___description">
             You have one minute (1m) to answer as many questions as possible.
             During the game on each question you need to select who from Star
-            Wars is showed on the left (${descriptionAsset.name} right now) from
+            Wars is showed in the photo (${descriptionAsset.name} right now) from
             available options.
             </p>`;
   }
