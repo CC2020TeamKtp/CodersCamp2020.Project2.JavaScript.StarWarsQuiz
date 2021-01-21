@@ -7,6 +7,7 @@ import { Timer } from '../Timer';
 import { GameView } from '../GameView';
 import { ControlButtons } from '../ControlButtons';
 import { GameDescription } from '../GameDescription';
+
 export const App = ({ options }) => {
   const inGameMode = document.querySelector('.mode__game-in-progress');
 
@@ -50,8 +51,8 @@ export const App = ({ options }) => {
     handleSwitchToHall: () => hallOfFame.display() || gameDescription.hide(),
     handlePlayTheGame: () => play(config.selectedGame),
   });
-
   controlButtons.display();
+
   //do wykorzystania także, gdy skończą się pytania
   function handleGameOver() {
     gameOver.display();
@@ -59,17 +60,11 @@ export const App = ({ options }) => {
     inGameMode.hidden = true;
     controlButtons.display();
     gameMode.enableButtons();
-    hallOfFame.display();
-    gameDescription.hide();
+    controlButtons.switchToHall();
   }
 
-  /*to się przydaje do testów w sytuacji, gdy skończyły się pytania
-  document
-    .querySelector('.answers__option')
-    .addEventListener('click', () => handleGameOver());*/
-
   async function play(gameMode) {
-    const quiz = new GameEngine(gameMode, apiDataFetcher);
+    const quiz = new GameEngine(gameMode, apiDataFetcher, handleGameOver);
     const gameView = new GameView();
     try {
       await quiz.fetchAllQuestionsForMode(gameMode);
