@@ -1,20 +1,34 @@
-import { HallOfFame } from '../HallOfFame';
-import { GameModeSelect } from '../GameModeSelect';
-import { GameOver } from '../GameOver';
+import {
+  HallOfFame
+} from '../HallOfFame';
+import {
+  GameModeSelect
+} from '../GameModeSelect';
+import {
+  GameOver
+} from '../GameOver';
 import ApiDataFetcher from '../../services/ApiDataFetcher/ApiDataFetcher';
-import { GameEngine } from '../../services/GameEngine/GameEngine';
-import { Timer } from '../Timer';
-import { GameView } from '../GameView';
-import { ComputerMind } from '../../services/ComputerMind/ComputerMind';
+import {
+  GameEngine
+} from '../../services/GameEngine/GameEngine';
+import {
+  Timer
+} from '../Timer';
+import {
+  GameView
+} from '../GameView';
+import {ComputerMind} from '../../services/ComputerMind/ComputerMind';
 
-export const App = ({ options }) => {
+export const App = ({
+  options
+}) => {
   const rankingBtn = document.querySelector('.button--ranking');
   const modeRules = document.querySelector('.mode__rules');
   const rankingBtnTxt = rankingBtn.querySelector('.button__text');
   const rankingBtnIcon = rankingBtn.querySelector('.fas');
- 
-  const setGameLevel = document.getElementById("setGameLevel");
- 
+
+  const GameLevel = document.getElementById("GameLevel");
+
   const playTheGame = document.querySelector('.button--play');
   const inGameMode = document.querySelector('.mode__game-in-progress');
 
@@ -38,7 +52,7 @@ export const App = ({ options }) => {
     inGameMode.hidden = true;
     rankingBtn.hidden = false;
     playTheGame.hidden = false;
-   
+
     switchToHall();
     gameMode.enableButtons();
   }
@@ -54,7 +68,7 @@ export const App = ({ options }) => {
     .querySelector('.answers__option')
     .addEventListener('click', () => handleGameOver());*/
 
- 
+
 
   rankingBtn.addEventListener('click', switchBtn);
 
@@ -73,13 +87,13 @@ export const App = ({ options }) => {
   }
 
   function switchBtn() {
-    rankingBtnTxt.innerText === 'Hall of fame'
-      ? switchToHall()
-      : switchToRules();
+    rankingBtnTxt.innerText === 'Hall of fame' ?
+      switchToHall() :
+      switchToRules();
   }
-  
-  let nextQuestion = {}; 
-  const arrGameOverResuls = [];
+
+  let nextQuestion = {};
+  const gameOverResults = [];
   let currentPlayerAnswer = "";
   let quiz = {};
   //get data from API based on active game mode
@@ -90,43 +104,31 @@ export const App = ({ options }) => {
     quiz = new GameEngine(gameMode, apiDataFetcher);
 
     await quiz.fetchAllQuestionsForMode(gameMode);
-
-    const gameView = new GameView();
+    
+    const gameView = new GameView(handleAnswerSelected);
     nextQuestion = quiz.generateNextQuestion();
     gameView.displayQuestion(nextQuestion);
- 
+
   }
-  
 
-  inGameMode.addEventListener('click', (event) => {
-    const isButton = event.target.nodeName === 'BUTTON';   
-    currentPlayerAnswer = event.target.innerText;
-      if (isButton) {
-        const computerMind = new ComputerMind();
-        const setGameLevel  = computerMind.setGameLevel(nextQuestion);
-        const playersSelection = computerMind.RandomComputerAnswer(setGameLevel, nextQuestion)
-        const result = gameOverView(playersSelection);
-        console.log(result);
-        const gameView = new GameView();
-        nextQuestion = quiz.generateNextQuestion();
-        gameView.displayQuestion(nextQuestion);
-   
-      }   
-   
-       
-    })
+  function handleAnswerSelected(PlayerAnswer, CorrectAnswer){
+    setTimeout(() => {
+      const computerMind = new ComputerMind();
+      const setGameLevel = computerMind.setGameLevel(nextQuestion);
+      const computerSelection = computerMind.randomComputerAnswer(setGameLevel, nextQuestion)
+ 
+      const gameView = new GameView(handleAnswerSelected);
+      gameOverResults.push({playerAnswer: PlayerAnswer, 
+                            correctAnswer: {name: CorrectAnswer, id:computerSelection.imgId}, 
+                            computerAnswer: computerSelection.computerSelection,
+                            });
+      console.log('GameOverResult: ',gameOverResults);
+      nextQuestion = quiz.generateNextQuestion();
+      gameView.displayQuestion(nextQuestion);
+    }, 1000);
+  }
+ 
 
-    function gameOverView(selectedAnswers){
-      let keys = Object.keys(selectedAnswers)    
-      arrGameOverResuls.push({
-        correctAnswer: {id: selectedAnswers[keys[0]].imgId, name: selectedAnswers[keys[0]].correctAnswer},  
-        computerAnswer:  selectedAnswers[keys[0]].computerSelection,
-        playerAnswer: currentPlayerAnswer
-        
-      })
-     console.log("GameOver: ", arrGameOverResuls)
-   
-    }
 
   playTheGame.addEventListener('click', setGameInProgressView);
 
@@ -134,7 +136,7 @@ export const App = ({ options }) => {
     modeRules.hidden = true;
     rankingBtn.hidden = true;
     playTheGame.hidden = true;
-   setGameLevel.hidden = true;
+    GameLevel.hidden = true;
     inGameMode.hidden = false;
     timer.display();
     hallOfFame.hide();
