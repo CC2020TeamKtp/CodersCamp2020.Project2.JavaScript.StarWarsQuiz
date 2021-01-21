@@ -1,4 +1,8 @@
+import { GameEngine } from '../GameEngine/GameEngine';
 import { gameModePages } from '../Util/GameModePages';
+import Util from '../Util/Util';
+import { gameModeQuestionIndexes } from '../Util/GameModeQuestionIndexes';
+
 
 export default class ApiDataFetcher {
   constructor(apiURL) {
@@ -31,5 +35,13 @@ export default class ApiDataFetcher {
       this.callPageableApi(gameMode, indx + 1),
     );
     return apiDataPromises;
+  }
+
+  getRandomAsset(gameMode) {
+    const id = Util.getRandomArrayElement(gameModeQuestionIndexes[gameMode]);
+    const url = `${this.apiURL}/${gameMode}/${id}`;
+    return fetch(url)
+      .then((response) => response.json())
+      .then((res) => (({ name, url }) => ({ name, url }))(res));
   }
 }
