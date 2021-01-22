@@ -17,11 +17,12 @@ export const App = ({
   const rankingBtnIcon = rankingBtn.querySelector('.fas');
 
   
-
   const playTheGame = document.querySelector('.button--play');
   const inGameMode = document.querySelector('.mode__game-in-progress');
   const gameLevel = new GameLevel();
   gameLevel.displayGameLevel();
+  
+
 
   const config = {
     selectedGame: `people`,
@@ -42,7 +43,7 @@ export const App = ({
     timer.hide();
     inGameMode.hidden = true;
     rankingBtn.hidden = false;
-  
+    gameLevel.displayGameLevel();
     playTheGame.hidden = false;
 
     switchToHall();
@@ -77,7 +78,6 @@ export const App = ({
     rankingBtnTxt.innerText = 'Rules';
     rankingBtnIcon.classList = 'fas fa-graduation-cap';
     hallOfFame.display();
-    
     modeRules.hidden = true;
   }
 
@@ -92,24 +92,29 @@ export const App = ({
   const gameOverResults = [];
 
   let quiz = {};
-
-   
+  let level = 0;
+  
   //get data from API based on active game mode
   const computerMind = new ComputerMind();
   const apiDataFetcher = new ApiDataFetcher(options.swApiBaseUrl);
-  playTheGame.addEventListener('click', () => play(config.selectedGame));
 
+
+  playTheGame.addEventListener('click', () => play(config.selectedGame));
+   
   async function play(gameMode) {
+    level = gameLevel.saveGameLevel();
+ 
     quiz = new GameEngine(gameMode, apiDataFetcher);
     await quiz.fetchAllQuestionsForMode(gameMode);  
-    const gameView = new GameView(handleAnswerSelected);
-    nextQuestion = quiz.generateNextQuestion();
+    const gameView = new GameView(handleAnswerSelected);    nextQuestion = quiz.generateNextQuestion();
     gameView.displayQuestion(nextQuestion);
+
   }
 
   function handleAnswerSelected(playerAnswer, correctAnswer){
     setTimeout(() => {     
-      const setGameLevel = gameLevel.setGameLevel(nextQuestion);
+      console.log(level);
+      const setGameLevel = gameLevel.setGameLevel(nextQuestion, level);
       const computerSelection = computerMind.randomComputerAnswer(setGameLevel, nextQuestion)
       const gameView = new GameView(handleAnswerSelected);
       gameOverResults.push({playerAnswer: playerAnswer, 
