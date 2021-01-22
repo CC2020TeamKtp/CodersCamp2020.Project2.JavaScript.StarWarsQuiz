@@ -6,6 +6,7 @@ import { GameEngine } from '../../services/GameEngine/GameEngine';
 import { Timer } from '../Timer';
 import { GameView } from '../GameView';
 import { GameDescription } from '../GameDescription';
+import { SoundEffects } from '../SoundEffects';
 
 export const App = ({ options }) => {
   const rankingBtn = document.querySelector('.button--ranking');
@@ -30,6 +31,8 @@ export const App = ({ options }) => {
     config: config,
     handleScoreSubmit: (result) =>
       hallOfFame.saveResult(result) || hallOfFame.update(),
+    handleGameSummary: (playerHasWon) =>
+      soundEffects.playFinalMelody(playerHasWon),
   });
 
   //do wykorzystania także, gdy skończą się pytania
@@ -55,6 +58,9 @@ export const App = ({ options }) => {
     config.selectedGame = selected;
     gameDescription.setGameDescription(selected);
   }
+
+  const soundEffects = new SoundEffects();
+  soundEffects.display();
 
   const timer = new Timer({
     config: config,
@@ -116,11 +122,13 @@ export const App = ({ options }) => {
 
   async function play(gameMode) {
     const quiz = new GameEngine(gameMode, apiDataFetcher);
-    const gameView = new GameView();
+    const gameView = new GameView((correctAnswer) =>
+      soundEffects.playBeeper(correctAnswer),
+    );
 
     try {
       await quiz.fetchAllQuestionsForMode(gameMode);
-    } catch(err) {
+    } catch (err) {
       gameView.displayNoQuestionsFetchedError();
     }
 

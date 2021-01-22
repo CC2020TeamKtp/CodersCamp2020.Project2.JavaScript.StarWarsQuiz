@@ -1,9 +1,10 @@
 export class GameView {
-  constructor() {
+  constructor(handleAnswer) {
     this.answersWrapper = document.querySelector('.answers');
     this.questionImg = document.querySelector('.question__image');
     this.currentQuestion = {};
     this.clickableAnswers = true;
+    this.handleAnswer = handleAnswer;
   }
 
   generateAnswerBtn(answerText) {
@@ -86,5 +87,6 @@ export class GameView {
     } else {
       this.changeBtnColor(target, incorrectColor);
     }
+    this.handleAnswer(chosenAnswer === correctAnswer);
   }
 }
