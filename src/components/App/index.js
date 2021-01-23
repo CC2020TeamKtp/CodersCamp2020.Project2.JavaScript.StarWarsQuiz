@@ -91,7 +91,6 @@ export const App = ({ options }) => {
   function handleAnswerSelected(playerAnswer, correctAnswer) {
     setTimeout(() => {
       const gameLevelObject = gameLevel.setGameLevel(nextQuestion);
-      console.log('eee: ', nextQuestion)
       const randomComputerAnswer = computerMind.generateRandomComputerAnswer(
         gameLevelObject,
         nextQuestion.question.id,
