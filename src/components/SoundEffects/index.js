@@ -1,6 +1,6 @@
 export class SoundEffects {
   constructor() {
-    this.element = document.querySelector('#soundBtn');
+    this.element = document.querySelector('#sound_btn');
     this.isMuted = true;
   }
 
@@ -11,10 +11,10 @@ export class SoundEffects {
           <i class="fas fa-volume-mute"></i>
     `;
     this.element.appendChild(soundBtn);
-    soundBtn.addEventListener('click', () => this.toggleIcon());
+    soundBtn.addEventListener('click', () => this.toggleSoundEffects());
   }
 
-  toggleIcon() {
+  toggleSoundEffects() {
     this.isMuted = !this.isMuted;
     this.element
       .querySelector('.button--sound i')
@@ -24,13 +24,13 @@ export class SoundEffects {
       .classList.toggle('fa-volume-mute');
   }
 
-  playBeeper(correct) {
+  playBeeper(isCorrectAnswer) {
     if (this.isMuted) return;
     const soundCorrect = new Audio('/static/assets/sound/correctAnswer.mp3');
     const soundIncorrect = new Audio(
       '/static/assets/sound/incorrectAnswer.mp3',
     );
-    correct ? soundCorrect.play() : soundIncorrect.play();
+    isCorrectAnswer ? soundCorrect.play() : soundIncorrect.play();
   }
 
   playFinalMelody(playerHasWon) {
