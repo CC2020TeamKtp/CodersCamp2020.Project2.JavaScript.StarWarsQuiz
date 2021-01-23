@@ -66,6 +66,7 @@ export const App = ({ options }) => {
     controlButtons.display();
     gameMode.enableButtons();
     controlButtons.switchToHall();
+    gameLevel.displayGameLevel();
   }
 
   let nextQuestion = {};
@@ -111,6 +112,7 @@ export const App = ({ options }) => {
     controlButtons.hide();
     inGameMode.hidden = false;
     timer.display();
+    gameLevel.hideGameLevel();
     hallOfFame.hide();
     gameMode.disableButtons();
   }
