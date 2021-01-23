@@ -20,18 +20,19 @@
     align-self: center;
     border-radius: 10px;
     position: relative;
-    transform: scaleX(-100%);
+    transform: scaleX(100%);
     left: -2%;
     &--lit {
       content: '';
-
       height: 100%;
       width: 100%;
+      -webkit-transition: 1s linear;
+      -moz-transition: 1s linear;
+      -o-transition: 1s linear;
       transition: 1s linear;
       background-color: whitesmoke;
       border-radius: inherit;
       box-shadow: 14px 0px 16px 4px rgba(250, 18, 56, 1);
-      transition: width 1s;
     }
   }
   &__time {

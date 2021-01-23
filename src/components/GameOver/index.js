@@ -94,7 +94,7 @@ export class GameOver {
   }
 
   getImage(id) {
-    return `<img class="table__img" src="./static/assets/img/modes/${this.config.selectedGame}/${id}.jpg" />`;
+    return `<img class="table__img" src="./static/assets/img/modes/${this.config.selectedGameMode}/${id}.jpg" />`;
   }
 
   rowsGenerator() {

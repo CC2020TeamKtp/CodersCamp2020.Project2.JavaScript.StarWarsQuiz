@@ -5,15 +5,15 @@ export class GameDescription {
     this.descriptionHeader = document.querySelector('#game_description_header');
     this.config = config;
     this.apiDataFetcher = apiDataFetcher;
-    this.setGameDescription(this.config.selectedGame);
+    this.setGameDescription(this.config.selectedGameMode);
   }
 
-  async setGameDescription(selected, skipDescription) {
+  async setGameDescription(selectedGameMode, skipDescription) {
     const descriptionAsset = await this.apiDataFetcher.getRandomAsset(
-      this.config.selectedGame,
+      selectedGameMode,
     );
-    this.setPhoto(selected, descriptionAsset);
-    this.setDescriptionHeader(selected);
+    this.setPhoto(selectedGameMode, descriptionAsset);
+    this.setDescriptionHeader(selectedGameMode);
     if (skipDescription) return;
     this.setDescription(descriptionAsset);
   }
@@ -32,25 +32,25 @@ export class GameDescription {
             </p>`;
   }
 
-  setPhoto(selected, descriptionAsset) {
+  setPhoto(selectedGameMode, descriptionAsset) {
     const id = this.apiDataFetcher.extractIdFromUrl(descriptionAsset.url);
     this.photo.className = `question__photo`;
     this.photo.innerHTML = `        <img
     class="question__image"
-    src="./static/assets/img/modes/${selected}/${id}.jpg"
+    src="./static/assets/img/modes/${selectedGameMode}/${id}.jpg"
     alt="image for quiz question"
     />`;
   }
 
-  setDescriptionHeader(selected) {
+  setDescriptionHeader(selectedGameMode) {
     this.descriptionHeader.className = 'mode__type';
     this.descriptionHeader.innerText = `MODE: ${this.getDescriptionTitle(
-      selected,
+      selectedGameMode,
     )}`;
   }
 
-  getDescriptionTitle(selected) {
-    switch (selected) {
+  getDescriptionTitle(selectedGameMode) {
+    switch (selectedGameMode) {
       case `people`:
         return `Who is this character?`;
       case `vehicles`:
@@ -69,7 +69,7 @@ export class GameDescription {
 
   update = () =>
     this.setGameDescription(
-      this.config.selectedGame,
+      this.config.selectedGameMode,
       !this.description.innerHTML,
     );
 }

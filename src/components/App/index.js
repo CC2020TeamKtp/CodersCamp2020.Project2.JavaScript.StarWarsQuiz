@@ -12,7 +12,7 @@ export const App = ({ options }) => {
   const inGameMode = document.querySelector('.mode__game-in-progress');
 
   const config = {
-    selectedGame: `people`,
+    selectedGameMode: `people`,
     quizMaxTime: options.quizMaxTime,
   };
 
@@ -33,8 +33,8 @@ export const App = ({ options }) => {
 
   const gameMode = new GameModeSelect(handleGameModeChange);
 
-  function handleGameModeChange(selected) {
-    config.selectedGame = selected;
+  function handleGameModeChange(selectedGameMode) {
+    config.selectedGameMode = selectedGameMode;
     gameDescription.update();
     hallOfFame.update();
   }
@@ -47,9 +47,9 @@ export const App = ({ options }) => {
   const controlButtons = new ControlButtons({
     handleSwitchToRules: () =>
       hallOfFame.hide() ||
-      gameDescription.setGameDescription(config.selectedGame),
+      gameDescription.setGameDescription(config.selectedGameMode),
     handleSwitchToHall: () => hallOfFame.display() || gameDescription.hide(),
-    handlePlayTheGame: () => play(config.selectedGame),
+    handlePlayTheGame: () => play(config.selectedGameMode),
   });
   controlButtons.display();
 

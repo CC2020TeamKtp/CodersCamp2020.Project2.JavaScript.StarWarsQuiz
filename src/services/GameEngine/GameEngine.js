@@ -1,4 +1,4 @@
-import { findImageUrl } from '../../components/App/findImageUrl';
+import { findImageUrl } from '../Util/findImageUrl';
 import { gameModeQuestionIndexes } from '../Util/GameModeQuestionIndexes';
 import Util from '../Util/Util';
 
