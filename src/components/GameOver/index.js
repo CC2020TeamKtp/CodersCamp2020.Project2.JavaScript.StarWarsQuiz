@@ -3,22 +3,15 @@ export class GameOver {
     this.element = document.querySelector('#gameovermodal');
     this.config = config;
     this.handleScoreSubmit = handleScoreSubmit;
-    //tymczasowe dla testów
-    this.playerScore = {
-      correct: 10 + Math.floor(Math.random() * 20),
-      answered: 30,
-    };
-    this.computerScore = {
-      correct: 10 + Math.floor(Math.random() * 10),
-      answered: 30,
-    };
+    this.results = [];
   }
 
   hide() {
     this.element.innerHTML = '';
   }
 
-  display() {
+  display(results) {
+    this.processAnswers(results);
     this.element.innerHTML = `
     <div class="modal">
         <h1 class="modal__title">game over</h1>
@@ -98,51 +91,25 @@ export class GameOver {
   }
 
   rowsGenerator() {
-    return this.getAnswers()
-      .map((row) => this.getSummaryRow(row))
-      .join('');
+    return this.results.map((row) => this.getSummaryRow(row)).join('');
   }
 
-  getAnswers() {
-    //tymczasowe dla testów
-    return [
-      {
-        correctAnswer: { id: 4, name: 'Darth Vader' },
-        playerAnswer: 'Darth Vader',
-        computerAnswer: 'Darth Father',
-      },
-      {
-        correctAnswer: { id: 36, name: 'Jar Jar Binks' },
-        playerAnswer: 'Jar Jar Binks',
-        computerAnswer: 'Jar Jar Binks',
-      },
-      {
-        correctAnswer: { id: 4, name: 'Darth Vader' },
-        playerAnswer: 'Darth Vader',
-        computerAnswer: 'Darth Father',
-      },
-      {
-        correctAnswer: { id: 36, name: 'Jar Jar Binks' },
-        playerAnswer: 'Jar Jar Binks',
-        computerAnswer: 'Jar Jar Binks',
-      },
-      {
-        correctAnswer: { id: 4, name: 'Darth Vader' },
-        playerAnswer: 'Darth Vader',
-        computerAnswer: 'Darth Father',
-      },
-      {
-        correctAnswer: { id: 36, name: 'Jar Jar Binks' },
-        playerAnswer: 'Jar Jar Binks',
-        computerAnswer: 'Jar Jar Binks',
-      },
-      {
-        correctAnswer: { id: 4, name: 'Darth Vader' },
-        playerAnswer: 'Darth Vader',
-        computerAnswer: 'Darth Father',
-      },
-    ];
+  processAnswers(results) {
+    this.results = results;
+    this.playerScore = {
+      correct: this.results.filter(
+        (ans) => ans.playerAnswer === ans.correctAnswer.name,
+      ).length,
+      answered: this.results.length,
+    };
+    this.computerScore = {
+      correct: this.results.filter(
+        (ans) => ans.computerAnswer === ans.correctAnswer.name,
+      ).length,
+      answered: this.results.length,
+    };
   }
+
   submitResult() {
     const result = {
       name: this.element.querySelector('.form__input').value,
