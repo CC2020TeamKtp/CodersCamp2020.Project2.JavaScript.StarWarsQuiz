@@ -7,6 +7,8 @@ import { Timer } from '../Timer';
 import { GameView } from '../GameView';
 import { ControlButtons } from '../ControlButtons';
 import { GameDescription } from '../GameDescription';
+import {ComputerMind} from '../../services/ComputerMind/ComputerMind';
+import {GameLevel} from '../GameLevel';
 
 export const App = ({ options }) => {
   const inGameMode = document.querySelector('.mode__game-in-progress');
@@ -15,6 +17,9 @@ export const App = ({ options }) => {
     selectedGameMode: `people`,
     quizMaxTime: options.quizMaxTime,
   };
+  
+  const gameLevel = new GameLevel();
+  gameLevel.displayGameLevel();
 
   const hallOfFame = new HallOfFame(config);
 
@@ -63,7 +68,12 @@ export const App = ({ options }) => {
     controlButtons.switchToHall();
   }
 
+  let nextQuestion = {};
+  const gameOverResults = [];
+  let level = 0;
+  const computerMind = new ComputerMind();
   async function play(gameMode) {
+    level = gameLevel.saveGameLevel();
     const quiz = new GameEngine(gameMode, apiDataFetcher, handleGameOver);
     const gameView = new GameView();
     try {
@@ -71,9 +81,27 @@ export const App = ({ options }) => {
     } catch (err) {
       gameView.displayNoQuestionsFetchedError();
     }
-    const nextQuestion = quiz.generateNextQuestion();
+    nextQuestion = quiz.generateNextQuestion();
     gameView.displayQuestion(nextQuestion);
     setGameInProgressView();
+  }
+  
+  
+    function handleAnswerSelected(playerAnswer, correctAnswer){
+    setTimeout(() => {     
+      console.log(level);
+      const setGameLevel = gameLevel.setGameLevel(nextQuestion, level);
+      const computerSelection = computerMind.randomComputerAnswer(setGameLevel, nextQuestion)
+      const gameView = new GameView(handleAnswerSelected);
+      gameOverResults.push({playerAnswer: playerAnswer, 
+                            correctAnswer: {name: correctAnswer, id:computerSelection.imgId}, 
+                            computerAnswer: computerSelection.computerSelection,
+                            });
+      console.log('GameOverResult: ', gameOverResults);
+      console.log(setGameLevel);
+      nextQuestion = quiz.generateNextQuestion();
+      gameView.displayQuestion(nextQuestion);
+    }, 1000);
   }
 
   function setGameInProgressView() {

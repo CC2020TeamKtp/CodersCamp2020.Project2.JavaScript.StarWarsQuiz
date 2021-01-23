@@ -1,9 +1,12 @@
+ 
 export class GameView {
-  constructor() {
+  constructor(handleAnswerSelected) {
     this.answersWrapper = document.querySelector('.answers');
     this.questionImg = document.querySelector('.question__image');
     this.currentQuestion = {};
+    this.handleAnswerSelected = handleAnswerSelected 
     this.clickableAnswers = true;
+
   }
 
   generateAnswerBtn(answerText) {
@@ -73,7 +76,7 @@ export class GameView {
       btn.style.color = 'black';
     }, 1000);
   }
-
+   
   handleClick({ target }, currentQuestion) {
     this.disableAnswerButtons();
     this.clickableAnswers = false;
@@ -81,10 +84,22 @@ export class GameView {
     const correctAnswer = currentQuestion.correctAnswer;
     const correctColor = 'green';
     const incorrectColor = 'red';
+     
+    
     if (chosenAnswer === correctAnswer) {
-      this.changeBtnColor(target, correctColor);
+     this.changeBtnColor(target, correctColor)
+     this.handleAnswerSelected(chosenAnswer,correctAnswer)
+     
+
+ 
+     
     } else {
-      this.changeBtnColor(target, incorrectColor);
+      this.changeBtnColor(target, incorrectColor)
+      this.handleAnswerSelected(chosenAnswer,correctAnswer);
+      
+    
     }
+     
+   
   }
 }
