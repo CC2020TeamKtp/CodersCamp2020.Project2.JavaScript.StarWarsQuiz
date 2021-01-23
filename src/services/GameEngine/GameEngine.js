@@ -62,8 +62,6 @@ export class GameEngine {
   }
 
   generateNextQuestion() {
-   // console.log('all q:', this.allQuestions);
-
     const nextQuestionIndex = Util.removeOneAtRandom(this.questionIndexes);
 
     const nextQuestion = this.findQuestionByIndex(nextQuestionIndex);
