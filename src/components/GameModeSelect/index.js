@@ -1,7 +1,9 @@
 export class GameModeSelect {
-  constructor(config) {
-    this.config = config;
+  constructor(updateGameDescription) {
+    this.updateGameDescription = updateGameDescription;
     this.enabled = true;
+    this.navList = document.querySelector('#navlist');
+    this.setNavList();
     this.init();
   }
 
@@ -11,7 +13,7 @@ export class GameModeSelect {
       modeItem.addEventListener(`click`, (e) => {
         if (!this.enabled) return;
         this.changeGameModeClassList(e.target);
-        this.setSelectedGameMode(e.target.innerText.toLowerCase());
+        this.updateGameDescription(e.target.innerText.toLowerCase());
       });
     });
   }
@@ -20,10 +22,6 @@ export class GameModeSelect {
     const gameMode = document.querySelector('.menu__item--selected');
     gameMode.classList.remove('menu__item--selected');
     selectedElement.classList.add('menu__item--selected');
-  }
-
-  setSelectedGameMode(selectedElement) {
-    this.config.selectedGame = selectedElement;
   }
 
   disableButtons = () => {
@@ -41,4 +39,10 @@ export class GameModeSelect {
       item.classList.remove('menu__item--disabled');
     });
   };
+
+  setNavList() {
+    this.navList.innerHTML = `<div class="menu__item menu__item--selected">People</div>
+<div class="menu__item menu__item">Vehicles</div>
+<div class="menu__item menu__item">Starships</div>`;
+  }
 }

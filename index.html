@@ -19,58 +19,23 @@
           src="img/StarWarsLogo.png"
           alt="star wars logo"
         />
-        <nav class="menu__list">
-          <a class="menu__item menu__item--selected" href="#">People</a>
-          <a class="menu__item menu__item" href="#">Vehicles</a>
-          <a class="menu__item menu__item" href="#">Starships</a>
-        </nav>
+        <nav id="navlist" class="menu__list"></nav>
       </div>
       <div class="main">
-        <div class="question__photo">
-          <img
-            class="question__image"
-            src="img/QuestionPhoto.png"
-            alt="image for quiz question"
-          />
-        <div></div>
-        </div>
+        <div id="game_photo"></div>
         <div class="mode">
-          <p class="mode__type">MODE: Who is this character?</p>
-          <div class="mode__rules">
-            <p class="mode__title">
-              <i class="fas fa-graduation-cap"></i> Mode rules
-            </p>
-            <p class="mode___description">
-              You have one minute (1m) to answer as many questions as possible.
-              During the game on each question you need to select who from Star
-              Wars is showed on the left (Jar Jar Binks right now) from
-              available options.
-            </p>
-          </div>
-
-          <div class="mode__game-in-progress" hidden>
-            <div class="answers">
-              <button class="button answers__option">1</button>
-              <button class="button answers__option">2</button>
-              <button class="button answers__option">3</button>
-              <button class="button answers__option">4</button>
-            </div>
+          <div id="game_description_header"></div>
+          <div id="game_description"></div>
+          <div class="mode__game-in-progress">
+            <div class="answers"></div>
           </div>
           <div id="halloffame"></div>
+          <div class="buttons"></div>
         </div>
       </div>
-      <div id="progress"></div>
-      <div class="buttons">
-        <button class="button button--ranking">
-          <i class="fas fa-id-badge"></i>
-          <span class="button__text">Hall of fame</span>
-        </button>
-        <button class="button button--play">play the game</button>
-      </div>
-       
+      <div id="progress"></div>            
+
     </div>
- 
-    <div id="gameovermodal">
-    </div>
+    <div id="gameovermodal"></div>
   </body>
 </html>

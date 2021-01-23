@@ -1,13 +1,14 @@
-import { findImageUrl } from '../../components/App/findImageUrl';
+import { findImageUrl } from '../Util/findImageUrl';
 import { gameModeQuestionIndexes } from '../Util/GameModeQuestionIndexes';
 import Util from '../Util/Util';
 
 export class GameEngine {
-  constructor(gameMode, apiDataFetcher) {
+  constructor(gameMode, apiDataFetcher, handleNoMoreQuestions) {
     this.gameMode = gameMode;
     this.apiDataFetcher = apiDataFetcher;
     this.allQuestions = [];
     this.questionIndexes = [...gameModeQuestionIndexes[gameMode]];
+    this.handleNoMoreQuestions = handleNoMoreQuestions;
   }
 
   extractDataFromFetchResponse(apiDataObjects) {
@@ -20,13 +21,16 @@ export class GameEngine {
     return resultResponse;
   }
 
-  fetchAllQuestionsForMode(gameMode) {
-    return Promise.all(this.apiDataFetcher.getAllDataForGameMode(gameMode))
-      .then((res) => this.extractDataFromFetchResponse(res))
-      .then((data) => (this.allQuestions = data))
-      .catch((err) =>
-        console.error('error while fetching data from API: ', err),
+  async fetchAllQuestionsForMode(gameMode) {
+    try {
+      const data = await Promise.all(
+        this.apiDataFetcher.getAllDataForGameMode(gameMode),
       );
+      const questions = this.extractDataFromFetchResponse(data);
+      this.allQuestions = questions;
+    } catch (err) {
+      throw new Error('error while fetching data from API: ', err);
+    }
   }
 
   generateRandomAnswersIndexes(nextQuestionIndex) {
@@ -41,27 +45,38 @@ export class GameEngine {
   }
 
   getAllAnswers(nextQuestionIndex) {
-    const allAnswersIndexes = this.generateRandomAnswersIndexes(nextQuestionIndex);
+    const allAnswersIndexes = this.generateRandomAnswersIndexes(
+      nextQuestionIndex,
+    );
     return allAnswersIndexes.map((index) => this.allQuestions[index].name);
   }
 
   findQuestionByIndex(idx) {
-    return this.allQuestions.find((question) =>  parseInt(question.index) === idx);
+    if (this.allQuestions.length === 0) {
+      this.handleNoMoreQuestions();
+      return;
+    }
+    return this.allQuestions.find(
+      (question) => parseInt(question.index) === idx,
+    );
   }
 
   generateNextQuestion() {
    // console.log('all q:', this.allQuestions);
 
     const nextQuestionIndex = Util.removeOneAtRandom(this.questionIndexes);
-    
+
     const nextQuestion = this.findQuestionByIndex(nextQuestionIndex);
+    if (!nextQuestion) return;
     const { name, index: id } = nextQuestion;
     const questionToAsk = {
       name: name,
       imgUrl: findImageUrl(this.gameMode, id),
       id: id,
     };
-    const allAnswers = this.getAllAnswers(this.allQuestions.indexOf(nextQuestion));
+    const allAnswers = this.getAllAnswers(
+      this.allQuestions.indexOf(nextQuestion),
+    );
     return {
       gameMode: this.gameMode,
       question: questionToAsk,

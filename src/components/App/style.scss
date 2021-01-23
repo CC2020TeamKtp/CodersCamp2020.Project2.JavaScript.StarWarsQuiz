@@ -3,7 +3,7 @@
   margin: 0;
   padding: 0;
   box-sizing: border-box;
-  font-size: 30px;
+  font-size: 27px;
   font-family: 'Montserrat', sans-serif;
   color: black;
 }
@@ -11,7 +11,9 @@
 body {
   background-image: url('../img/QuizBackground.png');
   background-size: cover;
-  padding: 1rem;
+  background-repeat: no-repeat;
+  height: 100%;
+  min-height: 100vh;
 }
 
 .wrapper {
@@ -45,168 +47,20 @@ input[type="radio"]:checked:before {
   justify-content: space-around;
 }
 
-.question__photo {
-  display: flex;
-  flex-direction: column;
-  justify-content: flex-start;
-  align-items: center;
-  width: 25%;
-}
-
-.question__image {
-  width: 100%;
-}
-
-.mode__wrap-game-in-progress {
-  display: flex;
-  flex-direction: column;
-  justify-content: space-around;
-  width: 65%;
-  &__type,
-  &__rules {
-    background-color: white;
-    width: 100%;
-    padding: 30px;
-    text-align: center;
-    margin-bottom: 3%;
-    border-radius: 16px;
-    box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25),
-      4px 4px 40px rgba(255, 0, 0, 0.9), inset 4px 5px 4px rgba(0, 0, 0, 0.5);
-  }
-  &__type {
-    font-weight: 600;
-  }
-  &___description {
-    margin-top: 20px;
-    font-size: 0.8rem;
-    text-align: left;
-  }
-}
-
-.answers {
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: space-between;
-  &__option {
-    margin-bottom: 6%;
-    width: 47%;
-    box-shadow: inset 3px 3px 12px -4px grey;
-  }
-}
-
 .mode {
   display: flex;
   flex-direction: column;
   justify-content: space-around;
   width: 65%;
-  &__type,
-  &__rules {
-    background-color: white;
-    width: 100%;
-    padding: 30px;
-    text-align: center;
-    margin-bottom: 3%;
-    border-radius: 16px;
-    box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25),
-      4px 4px 40px rgba(255, 0, 0, 0.9), inset 4px 5px 4px rgba(0, 0, 0, 0.5);
-  }
-  &__type {
-    font-weight: 600;
-    &___description {
-      margin-top: 20px;
-      font-size: 0.8rem;
-      text-align: left;
-    }
-  }
-}
-
-.buttons {
-  width: 65%;
-  display: flex;
-  justify-content: space-between;
-  margin-left: 32%;
-}
-
-.button {
-  border-radius: 16px;
-  border: none;
-  outline: none;
-  padding: 20px 30px;
-  box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
-  background-color: white;
-  transition: 0.2s linear;
-  &:hover {
-    background-color: #444;
-    color: white;
-  }
-  &--ranking {
-    width: 48%;
-  }
-  &--play {
-    width: 48%;
-    background-color: rgb(255, 0, 0);
-    box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25),
-      4px 4px 40px rgba(255, 0, 0, 0.9);
-    text-transform: uppercase;
-    color: white;
-  }
-  &--settings {
-    position: absolute;
-    bottom: 2%;
-    left: 5%;
-    width: 20%;
-  }
-  &--back {
-    position: relative;
-    margin-top: 10rem;
-    width: 10rem;
-  }
-  &--save {
-    margin-top: 30px;
-    width: 6rem;
-  }
-  &--clear {
-    margin-top: 30px;
-    width: 6rem;
-  }
-}
-
-.api_key--input {
-  border: 4px solid #c4c4c4;
-  border-radius: 8px;
-  width: 55%;
-  font-size: 1.2rem;
-  margin-right: 20px;
-  height: 70px;
-}
-
-.settings {
-  display: flex;
-  flex-direction: column;
-  margin-top: 20px;
-  margin-left: 60px;
-  width: auto;
-}
-
-label {
-  color: white;
-  margin-right: 20px;
-  font-size: 0.8rem;
-}
-
-.hide {
-  display: none;
-}
-
-@media (max-width: 1280px) {
-  * {
-    font-size: 27px;
-  }
 }
 
 @media (max-width: 1024px) {
   * {
     font-size: 24px;
+  }
+
+  .mode {
+    width: 55%;
   }
 }
 
@@ -215,33 +69,17 @@ label {
     font-size: 20px;
   }
 
-  .question__photo {
-    justify-content: flex-start;
-    width: 46%;
+  .main {
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
   }
 
   .mode {
-    width: 46%;
+    width: 70%;
     &__hall {
       padding: 15px;
     }
-  }
-  .api_key--input {
-    width: 80%;
-  }
-  .button--back {
-    margin-top: 10rem;
-    margin-left: 35px;
-  }
-
-  .buttons {
-    width: 95%;
-    margin: 3%;
-  }
-
-  .button--settings {
-    position: static;
-    width: 95%;
   }
 }
 
@@ -250,26 +88,7 @@ label {
     font-size: 18px;
   }
 
-  .menu__list {
-    height: 70px;
-    &__item {
-      font-size: 15px;
-    }
-  }
-
-  .main {
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-  }
-
-  .question__photo {
-    width: 95%;
-    align-items: center;
-    margin-bottom: 2%;
-  }
-
   .mode {
-    width: 95%;
+    width: 85%;
   }
 }

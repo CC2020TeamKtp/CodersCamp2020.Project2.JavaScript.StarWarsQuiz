@@ -61,15 +61,16 @@ export class HallOfFame {
       .sort((a, b) => this.getScore(b) - this.getScore(a))
       .slice(0, 3);
     localStorage.setItem(
-      `results_${this.config.selectedGame}`,
+      `results_${this.config.selectedGameMode}`,
       JSON.stringify(resultStorage),
     );
   }
 
   getBestResults() {
     return (
-      JSON.parse(localStorage.getItem(`results_${this.config.selectedGame}`)) ||
-      []
+      JSON.parse(
+        localStorage.getItem(`results_${this.config.selectedGameMode}`),
+      ) || []
     );
   }
 }

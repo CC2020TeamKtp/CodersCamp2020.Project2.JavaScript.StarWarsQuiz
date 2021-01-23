@@ -5,7 +5,8 @@ export class GameView {
     this.questionImg = document.querySelector('.question__image');
     this.currentQuestion = {};
     this.handleAnswerSelected = handleAnswerSelected 
-   
+    this.clickableAnswers = true;
+
   }
 
   generateAnswerBtn(answerText) {
@@ -18,7 +19,39 @@ export class GameView {
       .join('');
   }
 
+  displayNoQuestionsFetchedError() {
+    const answersWrapper = document.querySelector('.answers');
+    answersWrapper.classList.add('answers--large');
+
+    const html = `<h1>Oops! sorry</h1>
+    <p>It appears there is a problem with API. Please try again later...</p>`;
+    answersWrapper.innerHTML = html;
+    document.querySelector('#progress').remove();
+  }
+
+  enableAnswerButtons = () => {
+    const items = document.querySelectorAll('.answers__option');
+    items.forEach((item) => {
+      item.classList.remove('answers__option--disabled');
+    });
+  };
+
+  disableAnswerButtons = () => {
+    const items = document.querySelectorAll('.answers__option');
+    items.forEach((item) => {
+      item.classList.add('answers__option--disabled');
+    });
+  };
+
   displayQuestion(questionData) {
+    console.log('queston data: ', questionData);
+    if (!questionData) {
+      console.log('No questions fetched. Game will not start');
+      return;
+    }
+    this.enableAnswerButtons();
+    this.clickableAnswers = true;
+
     this.currentQuestion = questionData;
     console.log('question data: ', questionData);
     this.answersWrapper.innerHTML = this.generateQuestionsHTML(
@@ -26,9 +59,12 @@ export class GameView {
     );
     this.questionImg.src = questionData.question.imgUrl;
     Array.from(this.answersWrapper.children).forEach((btn) =>
-      btn.addEventListener('click', (event) =>
-        this.handleClick(event, this.currentQuestion),
-      ),
+      btn.addEventListener('click', (event) => {
+        if (!this.clickableAnswers) {
+          return;
+        }
+        this.handleClick(event, this.currentQuestion);
+      }),
     );
   }
 
@@ -42,6 +78,8 @@ export class GameView {
   }
    
   handleClick({ target }, currentQuestion) {
+    this.disableAnswerButtons();
+    this.clickableAnswers = false;
     const chosenAnswer = target.innerText;
     const correctAnswer = currentQuestion.correctAnswer;
     const correctColor = 'green';

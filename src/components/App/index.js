@@ -1,35 +1,29 @@
-import {HallOfFame} from '../HallOfFame';
-import {GameModeSelect} from '../GameModeSelect';
-import {GameOver} from '../GameOver';
+import { HallOfFame } from '../HallOfFame';
+import { GameModeSelect } from '../GameModeSelect';
+import { GameOver } from '../GameOver';
 import ApiDataFetcher from '../../services/ApiDataFetcher/ApiDataFetcher';
-import {GameEngine} from '../../services/GameEngine/GameEngine';
-import {Timer} from '../Timer';
-import {GameView} from '../GameView';
+import { GameEngine } from '../../services/GameEngine/GameEngine';
+import { Timer } from '../Timer';
+import { GameView } from '../GameView';
+import { ControlButtons } from '../ControlButtons';
+import { GameDescription } from '../GameDescription';
 import {ComputerMind} from '../../services/ComputerMind/ComputerMind';
 import {GameLevel} from '../GameLevel';
 
-export const App = ({
-  options
-}) => {
-  const rankingBtn = document.querySelector('.button--ranking');
-  const modeRules = document.querySelector('.mode__rules');
-  const rankingBtnTxt = rankingBtn.querySelector('.button__text');
-  const rankingBtnIcon = rankingBtn.querySelector('.fas');
-
-  
-  const playTheGame = document.querySelector('.button--play');
+export const App = ({ options }) => {
   const inGameMode = document.querySelector('.mode__game-in-progress');
-  const gameLevel = new GameLevel();
-  gameLevel.displayGameLevel();
-  
-
 
   const config = {
-    selectedGame: `people`,
+    selectedGameMode: `people`,
     quizMaxTime: options.quizMaxTime,
   };
+  
+  const gameLevel = new GameLevel();
+  gameLevel.displayGameLevel();
 
   const hallOfFame = new HallOfFame(config);
+
+  const apiDataFetcher = new ApiDataFetcher(options.swApiBaseUrl);
 
   const gameOver = new GameOver({
     config: config,
@@ -37,81 +31,63 @@ export const App = ({
       hallOfFame.saveResult(result) || hallOfFame.update(),
   });
 
-  //do wykorzystania także, gdy skończą się pytania
-  function handleGameOver() {
-    gameOver.display();
-    timer.hide();
-    inGameMode.hidden = true;
-    rankingBtn.hidden = false;
-    gameLevel.displayGameLevel();
-    playTheGame.hidden = false;
+  const gameDescription = new GameDescription({
+    config: config,
+    apiDataFetcher: apiDataFetcher,
+  });
 
-    switchToHall();
-    gameMode.enableButtons();
-   
-     
+  const gameMode = new GameModeSelect(handleGameModeChange);
+
+  function handleGameModeChange(selectedGameMode) {
+    config.selectedGameMode = selectedGameMode;
+    gameDescription.update();
+    hallOfFame.update();
   }
-
-  const gameMode = new GameModeSelect(config);
 
   const timer = new Timer({
     config: config,
     announceGameOver: handleGameOver,
   });
-  /*to się przydaje do testów w sytuacji, gdy skończyły się pytania
-  document
-    .querySelector('.answers__option')
-    .addEventListener('click', () => handleGameOver());*/
 
+  const controlButtons = new ControlButtons({
+    handleSwitchToRules: () =>
+      hallOfFame.hide() ||
+      gameDescription.setGameDescription(config.selectedGameMode),
+    handleSwitchToHall: () => hallOfFame.display() || gameDescription.hide(),
+    handlePlayTheGame: () => play(config.selectedGameMode),
+  });
+  controlButtons.display();
 
-
-  rankingBtn.addEventListener('click', switchBtn);
-
-  function switchToRules() {
-    rankingBtnTxt.innerText = 'Hall of fame';
-    rankingBtnIcon.classList = 'fas fa-id-badge';
-    hallOfFame.hide();
-    modeRules.hidden = false;
-  }
-
-  function switchToHall() {
-    rankingBtnTxt.innerText = 'Rules';
-    rankingBtnIcon.classList = 'fas fa-graduation-cap';
-    hallOfFame.display();
-    modeRules.hidden = true;
-  }
-
-  function switchBtn() {
-    rankingBtnTxt.innerText === 'Hall of fame' ?
-      switchToHall() :
-      switchToRules();
-      
+  //do wykorzystania także, gdy skończą się pytania
+  function handleGameOver() {
+    gameOver.display();
+    timer.hide();
+    inGameMode.hidden = true;
+    controlButtons.display();
+    gameMode.enableButtons();
+    controlButtons.switchToHall();
   }
 
   let nextQuestion = {};
   const gameOverResults = [];
-
-  let quiz = {};
   let level = 0;
-  
-  //get data from API based on active game mode
   const computerMind = new ComputerMind();
-  const apiDataFetcher = new ApiDataFetcher(options.swApiBaseUrl);
-
-
-  playTheGame.addEventListener('click', () => play(config.selectedGame));
-   
   async function play(gameMode) {
     level = gameLevel.saveGameLevel();
- 
-    quiz = new GameEngine(gameMode, apiDataFetcher);
-    await quiz.fetchAllQuestionsForMode(gameMode);  
-    const gameView = new GameView(handleAnswerSelected);    nextQuestion = quiz.generateNextQuestion();
+    const quiz = new GameEngine(gameMode, apiDataFetcher, handleGameOver);
+    const gameView = new GameView();
+    try {
+      await quiz.fetchAllQuestionsForMode(gameMode);
+    } catch (err) {
+      gameView.displayNoQuestionsFetchedError();
+    }
+    nextQuestion = quiz.generateNextQuestion();
     gameView.displayQuestion(nextQuestion);
-
+    setGameInProgressView();
   }
-
-  function handleAnswerSelected(playerAnswer, correctAnswer){
+  
+  
+    function handleAnswerSelected(playerAnswer, correctAnswer){
     setTimeout(() => {     
       console.log(level);
       const setGameLevel = gameLevel.setGameLevel(nextQuestion, level);
@@ -127,14 +103,10 @@ export const App = ({
       gameView.displayQuestion(nextQuestion);
     }, 1000);
   }
- 
-  playTheGame.addEventListener('click', setGameInProgressView);
 
   function setGameInProgressView() {
-    modeRules.hidden = true;
-    rankingBtn.hidden = true;
-    playTheGame.hidden = true;
-    gameLevel.hideGameLevel();
+    gameDescription.hide();
+    controlButtons.hide();
     inGameMode.hidden = false;
     timer.display();
     hallOfFame.hide();
