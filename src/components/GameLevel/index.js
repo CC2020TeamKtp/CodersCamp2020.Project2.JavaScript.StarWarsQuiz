@@ -2,7 +2,7 @@ export class GameLevel{
 
      
     constructor(b,level) {    
-        this.element = document.getElementsByClassName('question__photo')[0];
+        this.element = document.getElementsByClassName('settings')[0];
         this.b=b;
         this.level = level;    
       }
@@ -21,7 +21,7 @@ export class GameLevel{
       }
     
       displayGameLevel(){
-        this.element.children[1].innerHTML = `${this.gameLevel()}`;
+        this.element.innerHTML = `${this.gameLevel()}`;
         
       }
 

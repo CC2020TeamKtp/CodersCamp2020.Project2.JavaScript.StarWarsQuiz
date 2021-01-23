@@ -4,7 +4,7 @@ import { GameOver } from '../GameOver';
 import ApiDataFetcher from '../../services/ApiDataFetcher/ApiDataFetcher';
 import { GameEngine } from '../../services/GameEngine/GameEngine';
 import { Timer } from '../Timer';
-import { GameView } from '../GameView';
+import {GameView} from '../GameView';
 import { ControlButtons } from '../ControlButtons';
 import { GameDescription } from '../GameDescription';
 import {ComputerMind} from '../../services/ComputerMind/ComputerMind';
@@ -71,11 +71,13 @@ export const App = ({ options }) => {
   let nextQuestion = {};
   const gameOverResults = [];
   let level = 0;
+  let quiz = {};
   const computerMind = new ComputerMind();
+
   async function play(gameMode) {
     level = gameLevel.saveGameLevel();
-    const quiz = new GameEngine(gameMode, apiDataFetcher, handleGameOver);
-    const gameView = new GameView();
+    quiz = new GameEngine(gameMode, apiDataFetcher, handleGameOver);
+    const gameView = new GameView(handleAnswerSelected);
     try {
       await quiz.fetchAllQuestionsForMode(gameMode);
     } catch (err) {
@@ -87,20 +89,20 @@ export const App = ({ options }) => {
   }
   
   
-    function handleAnswerSelected(playerAnswer, correctAnswer){
+  function handleAnswerSelected(playerAnswer, correctAnswer){
     setTimeout(() => {     
       console.log(level);
-      const setGameLevel = gameLevel.setGameLevel(nextQuestion, level);
-      const computerSelection = computerMind.randomComputerAnswer(setGameLevel, nextQuestion)
-      const gameView = new GameView(handleAnswerSelected);
-      gameOverResults.push({playerAnswer: playerAnswer, 
-                            correctAnswer: {name: correctAnswer, id:computerSelection.imgId}, 
-                            computerAnswer: computerSelection.computerSelection,
-                            });
-      console.log('GameOverResult: ', gameOverResults);
-      console.log(setGameLevel);
-      nextQuestion = quiz.generateNextQuestion();
-      gameView.displayQuestion(nextQuestion);
+       const setGameLevel = gameLevel.setGameLevel(nextQuestion, level);
+       const computerSelection = computerMind.randomComputerAnswer(setGameLevel, nextQuestion)
+       const gameView = new GameView(handleAnswerSelected);
+       gameOverResults.push({playerAnswer: playerAnswer, 
+                             correctAnswer: {name: correctAnswer, id:computerSelection.imgId}, 
+                             computerAnswer: computerSelection.computerSelection,
+                             });
+       console.log('GameOverResult: ', gameOverResults);
+       console.log(setGameLevel);
+       nextQuestion = quiz.generateNextQuestion();
+       gameView.displayQuestion(nextQuestion);
     }, 1000);
   }
 

@@ -29,8 +29,18 @@ input[type="radio"] {
   -webkit-appearance: inherit;
   border:1px solid #999999;
   position:relative;
+  color: white;
  
 }
+
+#GameLevel{
+   position: absolute;
+   margin-top: 400px;
+   margin-left: 100px;
+
+   
+}
+
 input[type="radio"]:checked:before {
   content:"";
   position:absolute;
