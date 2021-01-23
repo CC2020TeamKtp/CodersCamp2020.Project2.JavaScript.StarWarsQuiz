@@ -3,11 +3,12 @@ import { gameModeQuestionIndexes } from '../Util/GameModeQuestionIndexes';
 import Util from '../Util/Util';
 
 export class GameEngine {
-  constructor(gameMode, apiDataFetcher) {
+  constructor(gameMode, apiDataFetcher, handleNoMoreQuestions) {
     this.gameMode = gameMode;
     this.apiDataFetcher = apiDataFetcher;
     this.allQuestions = [];
     this.questionIndexes = [...gameModeQuestionIndexes[gameMode]];
+    this.handleNoMoreQuestions = handleNoMoreQuestions;
   }
 
   extractDataFromFetchResponse(apiDataObjects) {
@@ -52,6 +53,7 @@ export class GameEngine {
 
   findQuestionByIndex(idx) {
     if (this.allQuestions.length === 0) {
+      this.handleNoMoreQuestions();
       return;
     }
     return this.allQuestions.find(

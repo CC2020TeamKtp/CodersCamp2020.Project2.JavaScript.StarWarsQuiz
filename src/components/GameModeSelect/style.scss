@@ -3,7 +3,7 @@
   justify-content: space-around;
   align-items: center;
   width: 100%;
-  margin-bottom: 2%;
+  margin-bottom: 1%;
   &__logo {
     width: 25%;
   }
@@ -12,7 +12,7 @@
     justify-content: space-evenly;
     align-items: center;
     width: 65%;
-    height: 110px;
+    height: 3rem;
     background-color: white;
     border-radius: 16px;
     box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25),
@@ -22,7 +22,7 @@
     cursor: pointer;
     position: relative;
     padding: 10px;
-    width: 20%;
+    width: auto;
     text-decoration: none;
     font-weight: 600;
     text-align: center;
@@ -49,15 +49,24 @@
   }
 }
 
+@media (max-width: 1024px) {
+  .menu__logo {
+    width: 28%;
+  }
+  .menu__list {
+    width: 55%;
+  }
+}
+
 @media (max-width: 768px) {
   .menu {
     flex-direction: column;
     &__logo {
-      width: 60%;
+      width: 50%;
     }
     &__list {
-      width: 95%;
-      height: 90px;
+      width: 80%;
+      height: 4rem;
       &__item {
         width: 25%;
       }
@@ -67,7 +76,7 @@
 
 @media (max-width: 480px) {
   .menu__list {
-    height: 70px;
+    width: 90%;
     &__item {
       font-size: 15px;
     }
