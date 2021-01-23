@@ -1,10 +1,10 @@
 export class GameView {
-  constructor(handleAnswer) {
+  constructor(handleAnswerSelected) {
     this.answersWrapper = document.querySelector('.answers');
     this.questionImg = document.querySelector('.question__image');
     this.currentQuestion = {};
     this.clickableAnswers = true;
-    this.handleAnswer = handleAnswer;
+    this.handleAnswerSelected = handleAnswerSelected;
   }
 
   generateAnswerBtn(answerText) {
@@ -42,7 +42,6 @@ export class GameView {
   };
 
   displayQuestion(questionData) {
-    console.log('queston data: ', questionData);
     if (!questionData) {
       console.log('No questions fetched. Game will not start');
       return;
@@ -77,16 +76,19 @@ export class GameView {
 
   handleClick({ target }, currentQuestion) {
     this.disableAnswerButtons();
+
     this.clickableAnswers = false;
     const chosenAnswer = target.innerText;
     const correctAnswer = currentQuestion.correctAnswer;
     const correctColor = 'green';
     const incorrectColor = 'red';
+    //  this.handleAnswerSelected(chosenAnswer,correctAnswer)
     if (chosenAnswer === correctAnswer) {
       this.changeBtnColor(target, correctColor);
+      this.handleAnswerSelected(chosenAnswer, correctAnswer);
     } else {
       this.changeBtnColor(target, incorrectColor);
+      this.handleAnswerSelected(chosenAnswer, correctAnswer);
     }
-    this.handleAnswer(chosenAnswer === correctAnswer);
   }
 }

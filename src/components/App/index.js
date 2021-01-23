@@ -5,23 +5,22 @@ import ApiDataFetcher from '../../services/ApiDataFetcher/ApiDataFetcher';
 import { GameEngine } from '../../services/GameEngine/GameEngine';
 import { Timer } from '../Timer';
 import { GameView } from '../GameView';
+import { ControlButtons } from '../ControlButtons';
 import { GameDescription } from '../GameDescription';
 import { SoundEffects } from '../SoundEffects';
+import { ComputerMind } from '../../services/ComputerMind/ComputerMind';
+import { GameLevel } from '../GameLevel';
 
 export const App = ({ options }) => {
-  const rankingBtn = document.querySelector('.button--ranking');
-  const rankingBtnTxt = rankingBtn.querySelector('.button__text');
-  const rankingBtnIcon = rankingBtn.querySelector('.fas');
-  const btnSettings = document.querySelector('.button--settings');
-  const formSettings = document.querySelector('form');
-  const btnBack = document.querySelector('.button--back');
-  const playTheGame = document.querySelector('.button--play');
   const inGameMode = document.querySelector('.mode__game-in-progress');
 
   const config = {
-    selectedGame: `people`,
+    selectedGameMode: `people`,
     quizMaxTime: options.quizMaxTime,
   };
+
+  const gameLevel = new GameLevel();
+  gameLevel.displayGameLevel();
 
   const hallOfFame = new HallOfFame(config);
 
@@ -35,18 +34,6 @@ export const App = ({ options }) => {
       soundEffects.playFinalMelody(playerHasWon),
   });
 
-  //do wykorzystania także, gdy skończą się pytania
-  function handleGameOver() {
-    gameOver.display();
-    timer.hide();
-    inGameMode.hidden = true;
-    rankingBtn.hidden = false;
-    playTheGame.hidden = false;
-    btnSettings.hidden = false;
-    switchToHall();
-    gameMode.enableButtons();
-  }
-
   const gameDescription = new GameDescription({
     config: config,
     apiDataFetcher: apiDataFetcher,
@@ -54,9 +41,10 @@ export const App = ({ options }) => {
 
   const gameMode = new GameModeSelect(handleGameModeChange);
 
-  function handleGameModeChange(selected) {
-    config.selectedGame = selected;
-    gameDescription.setGameDescription(selected);
+  function handleGameModeChange(selectedGameMode) {
+    config.selectedGameMode = selectedGameMode;
+    gameDescription.update();
+    hallOfFame.update();
   }
 
   const soundEffects = new SoundEffects();
@@ -66,83 +54,71 @@ export const App = ({ options }) => {
     config: config,
     announceGameOver: handleGameOver,
   });
-  /*to się przydaje do testów w sytuacji, gdy skończyły się pytania
-  document
-    .querySelector('.answers__option')
-    .addEventListener('click', () => handleGameOver());*/
 
-  btnSettings.addEventListener('click', () => {
-    btnSettings.hidden = true;
-
-    document.querySelector('.mode___description').hidden = true;
-    document.querySelector('.mode__type').hidden = true;
-    document.querySelector('.button--ranking').hidden = true;
-    document.querySelector('.button--play').hidden = true;
-    document.querySelector('.question__image').hidden = true;
-    hallOfFame.hide();
-    formSettings.hidden = false;
-    btnBack.hidden = false;
+  const controlButtons = new ControlButtons({
+    handleSwitchToRules: () =>
+      hallOfFame.hide() ||
+      gameDescription.setGameDescription(config.selectedGameMode),
+    handleSwitchToHall: () => hallOfFame.display() || gameDescription.hide(),
+    handlePlayTheGame: () => play(config.selectedGameMode),
   });
+  controlButtons.display();
 
-  btnBack.addEventListener('click', () => {
-    window.location.reload();
-  });
-
-  function onLoadHide() {
-    formSettings.hidden = true;
-    btnBack.hidden = true;
+  //do wykorzystania także, gdy skończą się pytania
+  function handleGameOver() {
+    gameOver.display();
+    timer.hide();
+    inGameMode.hidden = true;
+    controlButtons.display();
+    gameMode.enableButtons();
+    controlButtons.switchToHall();
   }
 
-  onLoadHide();
-
-  rankingBtn.addEventListener('click', switchBtn);
-
-  function switchToRules() {
-    rankingBtnTxt.innerText = 'Hall of fame';
-    rankingBtnIcon.classList = 'fas fa-id-badge';
-    hallOfFame.hide();
-    document.querySelector('.mode__rules').hidden = false;
-  }
-
-  function switchToHall() {
-    rankingBtnTxt.innerText = 'Rules';
-    rankingBtnIcon.classList = 'fas fa-graduation-cap';
-    hallOfFame.display();
-    document.querySelector('.mode__rules').hidden = true;
-  }
-
-  function switchBtn() {
-    rankingBtnTxt.innerText === 'Hall of fame'
-      ? switchToHall()
-      : switchToRules();
-  }
-
-  //get data from API based on active game mode
-  playTheGame.addEventListener('click', () => play(config.selectedGame));
+  let nextQuestion = {};
+  const gameOverResults = [];
+  let level = 0;
+  let quiz = {};
+  const computerMind = new ComputerMind();
 
   async function play(gameMode) {
-    const quiz = new GameEngine(gameMode, apiDataFetcher);
-    const gameView = new GameView((correctAnswer) =>
-      soundEffects.playBeeper(correctAnswer),
-    );
-
+    level = gameLevel.saveGameLevel();
+    quiz = new GameEngine(gameMode, apiDataFetcher, handleGameOver);
+    const gameView = new GameView(handleAnswerSelected);
     try {
       await quiz.fetchAllQuestionsForMode(gameMode);
     } catch (err) {
       gameView.displayNoQuestionsFetchedError();
     }
-
-    const nextQuestion = quiz.generateNextQuestion();
+    nextQuestion = quiz.generateNextQuestion();
     gameView.displayQuestion(nextQuestion);
+    setGameInProgressView();
   }
 
-  playTheGame.addEventListener('click', setGameInProgressView);
+  function handleAnswerSelected(playerAnswer, correctAnswer) {
+    setTimeout(() => {
+      console.log(level);
+      const setGameLevel = gameLevel.setGameLevel(nextQuestion, level);
+      const computerSelection = computerMind.randomComputerAnswer(
+        setGameLevel,
+        nextQuestion,
+      );
+      const gameView = new GameView(handleAnswerSelected);
+      gameOverResults.push({
+        playerAnswer: playerAnswer,
+        correctAnswer: { name: correctAnswer, id: computerSelection.imgId },
+        computerAnswer: computerSelection.computerSelection,
+      });
+      console.log('GameOverResult: ', gameOverResults);
+      console.log(setGameLevel);
+      nextQuestion = quiz.generateNextQuestion();
+      gameView.displayQuestion(nextQuestion);
+    }, 1000);
+    soundEffects.playBeeper(correctAnswer === playerAnswer);
+  }
 
   function setGameInProgressView() {
-    document.querySelector('.mode__rules').hidden = true;
-    rankingBtn.hidden = true;
-    playTheGame.hidden = true;
-    btnSettings.hidden = true;
+    gameDescription.hide();
+    controlButtons.hide();
     inGameMode.hidden = false;
     timer.display();
     hallOfFame.hide();

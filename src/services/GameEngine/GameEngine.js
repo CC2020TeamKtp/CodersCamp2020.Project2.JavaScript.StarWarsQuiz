@@ -1,13 +1,14 @@
-import { findImageUrl } from '../../components/App/findImageUrl';
+import { findImageUrl } from '../Util/findImageUrl';
 import { gameModeQuestionIndexes } from '../Util/GameModeQuestionIndexes';
 import Util from '../Util/Util';
 
 export class GameEngine {
-  constructor(gameMode, apiDataFetcher) {
+  constructor(gameMode, apiDataFetcher, handleNoMoreQuestions) {
     this.gameMode = gameMode;
     this.apiDataFetcher = apiDataFetcher;
     this.allQuestions = [];
     this.questionIndexes = [...gameModeQuestionIndexes[gameMode]];
+    this.handleNoMoreQuestions = handleNoMoreQuestions;
   }
 
   extractDataFromFetchResponse(apiDataObjects) {
@@ -52,6 +53,7 @@ export class GameEngine {
 
   findQuestionByIndex(idx) {
     if (this.allQuestions.length === 0) {
+      this.handleNoMoreQuestions();
       return;
     }
     return this.allQuestions.find(
@@ -60,7 +62,7 @@ export class GameEngine {
   }
 
   generateNextQuestion() {
-    console.log('all q:', this.allQuestions);
+   // console.log('all q:', this.allQuestions);
 
     const nextQuestionIndex = Util.removeOneAtRandom(this.questionIndexes);
 
@@ -70,6 +72,7 @@ export class GameEngine {
     const questionToAsk = {
       name: name,
       imgUrl: findImageUrl(this.gameMode, id),
+      id: id,
     };
     const allAnswers = this.getAllAnswers(
       this.allQuestions.indexOf(nextQuestion),
