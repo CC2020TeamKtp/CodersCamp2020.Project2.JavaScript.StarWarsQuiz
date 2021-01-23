@@ -1,12 +1,11 @@
-import { GameEngine } from '../GameEngine/GameEngine';
 import { gameModePages } from '../Util/GameModePages';
 import Util from '../Util/Util';
 import { gameModeQuestionIndexes } from '../Util/GameModeQuestionIndexes';
 
-
 export default class ApiDataFetcher {
-  constructor(apiURL) {
+  constructor(apiURL, handleLoaderDisplay) {
     this.apiURL = apiURL;
+    this.handleLoaderDisplay = handleLoaderDisplay;
   }
 
   extractIdFromUrl(url) {
@@ -24,13 +23,11 @@ export default class ApiDataFetcher {
 
   callPageableApi(gameMode, page) {
     const url = `${this.apiURL}/${gameMode}/?page=${page}`;
-    return fetch(url)
-      .then((res) => res.json())
+    return fetch(url).then((res) => res.json());
   }
 
   getAllDataForGameMode(gameMode = 'people') {
     const pagesToDownload = gameModePages[`${gameMode}`];
-
     const apiDataPromises = [...Array(pagesToDownload)].map((_, indx) =>
       this.callPageableApi(gameMode, indx + 1),
     );
@@ -40,8 +37,12 @@ export default class ApiDataFetcher {
   getRandomAsset(gameMode) {
     const id = Util.getRandomArrayElement(gameModeQuestionIndexes[gameMode]);
     const url = `${this.apiURL}/${gameMode}/${id}`;
+    this.handleLoaderDisplay();
     return fetch(url)
       .then((response) => response.json())
-      .then((res) => (({ name, url }) => ({ name, url }))(res));
+      .then((res) => {
+        this.handleLoaderDisplay();
+        return (({ name, url }) => ({ name, url }))(res);
+      });
   }
 }

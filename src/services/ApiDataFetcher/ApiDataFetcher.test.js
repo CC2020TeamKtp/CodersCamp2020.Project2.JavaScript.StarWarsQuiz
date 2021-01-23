@@ -1,5 +1,9 @@
 import ApiDataFetcher from './ApiDataFetcher';
-const apiDataFetcher = new ApiDataFetcher('http://swapi.dev/api');
+const handleLoaderDisplay = jest.fn();
+const apiDataFetcher = new ApiDataFetcher(
+  'http://swapi.dev/api',
+  handleLoaderDisplay,
+);
 const unmockedFetch = global.fetch;
 
 describe('ApiDataFetcher', () => {
