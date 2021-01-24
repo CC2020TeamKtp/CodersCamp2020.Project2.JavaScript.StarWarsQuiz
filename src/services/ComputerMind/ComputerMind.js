@@ -1,6 +1,4 @@
 export class ComputerMind {
-  
-
   //losowanie odpowiedzi komputera
   randomComputerAnswer(randomObject, nextQuestion) {
     let sum = 0;
@@ -11,14 +9,10 @@ export class ComputerMind {
       sum += randomObject[computerSelection];
       if (randomNumber <= sum) {
         return {
-         
-            computerSelection: computerSelection,
-            imgId: nextQuestion[questionKeys[1]].id
-          
-        }
+          computerSelection: computerSelection,
+          imgId: nextQuestion[questionKeys[1]].id,
+        };
       }
     }
   }
-
-
 }
