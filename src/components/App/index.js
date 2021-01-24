@@ -7,8 +7,11 @@ import { Timer } from '../Timer';
 import { GameView } from '../GameView';
 import { ControlButtons } from '../ControlButtons';
 import { GameDescription } from '../GameDescription';
+import { SoundEffects } from '../SoundEffects';
 import { ComputerMind } from '../../services/ComputerMind/ComputerMind';
 import { GameLevel } from '../GameLevel';
+import { Loader } from '../Loader';
+
 
 export const App = ({ options }) => {
   const inGameMode = document.querySelector('.mode__game-in-progress');
@@ -23,12 +26,27 @@ export const App = ({ options }) => {
 
   const hallOfFame = new HallOfFame(config);
 
-  const apiDataFetcher = new ApiDataFetcher(options.swApiBaseUrl);
+  const loader = new Loader(document.querySelector('#app-wrapper'));
+
+  const handleLoaderDisplay = () => {
+    loader.toggleLoaderDisplay();
+  };
+
+  document.onreadystatechange = () => {
+    handleLoaderDisplay();
+  };
+
+  const apiDataFetcher = new ApiDataFetcher(
+    options.swApiBaseUrl,
+    handleLoaderDisplay,
+  );
 
   const gameOver = new GameOver({
     config: config,
     handleScoreSubmit: (result) =>
       hallOfFame.saveResult(result) || hallOfFame.update(),
+    handleGameSummary: (playerHasWon) =>
+      soundEffects.playFinalMelody(playerHasWon),
   });
 
   const gameDescription = new GameDescription({
@@ -44,6 +62,9 @@ export const App = ({ options }) => {
     hallOfFame.update();
   }
 
+  const soundEffects = new SoundEffects();
+  soundEffects.display();
+
   const timer = new Timer({
     config: config,
     announceGameOver: handleGameOver,
@@ -58,9 +79,8 @@ export const App = ({ options }) => {
   });
   controlButtons.display();
 
-  //do wykorzystania także, gdy skończą się pytania
   function handleGameOver() {
-    gameOver.display();
+    gameOver.display(gameOverResults);
     timer.hide();
     inGameMode.hidden = true;
     controlButtons.display();
@@ -70,18 +90,22 @@ export const App = ({ options }) => {
   }
 
   let nextQuestion = {};
-  const gameOverResults = [];
-  let level = '';
 
+  let gameOverResults = [];
+  let level = '';
+ 
   let quiz = {};
   const computerMind = new ComputerMind();
 
   async function play(gameMode) {
+    gameOverResults = [];
     level = gameLevel.saveGameLevel();
     quiz = new GameEngine(gameMode, apiDataFetcher, handleGameOver);
     const gameView = new GameView(handleAnswerSelected);
     try {
+      handleLoaderDisplay();
       await quiz.fetchAllQuestionsForMode(gameMode);
+      handleLoaderDisplay();
     } catch (err) {
       gameView.displayNoQuestionsFetchedError();
     }
@@ -92,23 +116,21 @@ export const App = ({ options }) => {
 
   function handleAnswerSelected(playerAnswer, correctAnswer) {
     setTimeout(() => {
-      console.log(level);
-      const setGameLevel = gameLevel.setGameLevel(nextQuestion, level);
-      const computerSelection = computerMind.randomComputerAnswer(
-        setGameLevel,
-        nextQuestion,
+      const gameLevelObject = gameLevel.setGameLevel(nextQuestion);
+      const randomComputerAnswer = computerMind.generateRandomComputerAnswer(
+        gameLevelObject,
+        nextQuestion.question.id,
       );
       const gameView = new GameView(handleAnswerSelected);
       gameOverResults.push({
         playerAnswer: playerAnswer,
-        correctAnswer: { name: correctAnswer, id: computerSelection.imgId },
-        computerAnswer: computerSelection.computerSelection,
+        correctAnswer: { name: correctAnswer, id: randomComputerAnswer.imgId },
+        computerAnswer: randomComputerAnswer.computerSelection,
       });
-      console.log('GameOverResult: ', gameOverResults);
-      console.log(setGameLevel);
       nextQuestion = quiz.generateNextQuestion();
       gameView.displayQuestion(nextQuestion);
     }, 1000);
+    soundEffects.playBeeper(correctAnswer === playerAnswer);
   }
 
   function setGameInProgressView() {

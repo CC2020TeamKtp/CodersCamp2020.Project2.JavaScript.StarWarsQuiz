@@ -1,27 +1,21 @@
 export class GameOver {
-  constructor({ config, handleScoreSubmit }) {
+  constructor({ config, handleScoreSubmit, handleGameSummary }) {
     this.element = document.querySelector('#gameovermodal');
     this.config = config;
     this.handleScoreSubmit = handleScoreSubmit;
-    //tymczasowe dla testów
-    this.playerScore = {
-      correct: 10 + Math.floor(Math.random() * 20),
-      answered: 30,
-    };
-    this.computerScore = {
-      correct: 10 + Math.floor(Math.random() * 10),
-      answered: 30,
-    };
+    this.results = [];
+    this.handleGameSummary = handleGameSummary;
   }
 
   hide() {
     this.element.innerHTML = '';
   }
 
-  display() {
+  display(results) {
+    this.processAnswers(results);
     this.element.innerHTML = `
     <div class="modal">
-        <h1 class="modal__title">game over</h1>
+        <h1 class="modal__title">game over - ${this.getResultMessage()}</h1>
         ${this.getSummaryIntro()}
         <div class="modal__answers">
             <img class="modal__answers--img" src="./static/assets/ui/MasterYodaLeft.png"/>
@@ -37,7 +31,7 @@ export class GameOver {
   }
 
   displayScore = (data) => (data ? data.correct + '/' + data.answered : '');
-
+  getScore = ({ correct: c, answered: a }) => c * 100 - (a - c) * 50;
   getForm() {
     return `<form>
         <div class="form">
@@ -52,7 +46,14 @@ export class GameOver {
         </div>
       </form>`;
   }
-
+  getResultMessage() {
+    const playerHasWon =
+      this.getScore(this.playerScore) > this.getScore(this.computerScore);
+    this.handleGameSummary(playerHasWon);
+    return playerHasWon
+      ? 'you have won'
+      : 'may the force be with you next time';
+  }
   getSummaryIntro() {
     return `
     <p class="modal__description">
@@ -98,51 +99,25 @@ export class GameOver {
   }
 
   rowsGenerator() {
-    return this.getAnswers()
-      .map((row) => this.getSummaryRow(row))
-      .join('');
+    return this.results.map((row) => this.getSummaryRow(row)).join('');
   }
 
-  getAnswers() {
-    //tymczasowe dla testów
-    return [
-      {
-        correctAnswer: { id: 4, name: 'Darth Vader' },
-        playerAnswer: 'Darth Vader',
-        computerAnswer: 'Darth Father',
-      },
-      {
-        correctAnswer: { id: 36, name: 'Jar Jar Binks' },
-        playerAnswer: 'Jar Jar Binks',
-        computerAnswer: 'Jar Jar Binks',
-      },
-      {
-        correctAnswer: { id: 4, name: 'Darth Vader' },
-        playerAnswer: 'Darth Vader',
-        computerAnswer: 'Darth Father',
-      },
-      {
-        correctAnswer: { id: 36, name: 'Jar Jar Binks' },
-        playerAnswer: 'Jar Jar Binks',
-        computerAnswer: 'Jar Jar Binks',
-      },
-      {
-        correctAnswer: { id: 4, name: 'Darth Vader' },
-        playerAnswer: 'Darth Vader',
-        computerAnswer: 'Darth Father',
-      },
-      {
-        correctAnswer: { id: 36, name: 'Jar Jar Binks' },
-        playerAnswer: 'Jar Jar Binks',
-        computerAnswer: 'Jar Jar Binks',
-      },
-      {
-        correctAnswer: { id: 4, name: 'Darth Vader' },
-        playerAnswer: 'Darth Vader',
-        computerAnswer: 'Darth Father',
-      },
-    ];
+  processAnswers(results) {
+    this.results = results;
+    this.playerScore = {
+      correct: this.results.filter(
+        (ans) => ans.playerAnswer === ans.correctAnswer.name,
+      ).length,
+      answered: this.results.length,
+    };
+    this.computerScore = {
+      correct: this.results.filter(
+        (ans) => ans.computerAnswer === ans.correctAnswer.name,
+      ).length,
+      answered: this.results.length,
+    };
   }
+
   submitResult() {
     const result = {
       name: this.element.querySelector('.form__input').value,

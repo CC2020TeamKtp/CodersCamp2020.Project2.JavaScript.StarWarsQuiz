@@ -1,8 +1,11 @@
+
+const allAnswersKeyIndex = 3;
+const correctAnswerKeyIndex = 2;
+
 export class GameLevel {
-  constructor(b, level) {
+  constructor() {
     this.element = document.getElementsByClassName('settings')[0];
-    this.b = b;
-    this.level = level;
+    this.level = 'easy';
   }
 
   gameLevel() {
@@ -16,6 +19,7 @@ export class GameLevel {
         <label for="hard" class="switch__expert" >Expert</label>
         <div class="switch__indicator" /></div>
       </div>`;
+ 
   }
 
   displayGameLevel() {
@@ -23,25 +27,26 @@ export class GameLevel {
   }
 
   hideGameLevel() {
-    this.element.innerHTML = ''; ///.hidden = true;
+
+    this.element.innerHTML = ''; 
   }
 
   saveGameLevel() {
     if (document.getElementById('easy').checked) {
-      this.b = 'easy';
+      this.level = 'easy';
     } else if (document.getElementById('medium').checked) {
-      this.b = 'medium';
+      this.level = 'medium';
     } else if (document.getElementById('hard').checked) {
-      this.b = 'hard';
+      this.level = 'hard';
     }
-    return this.b;
+    return this.level;
   }
+
   setGameLevel(nextQuestion) {
-    this.level = this.b;
     const gameLevelObject = {};
     const questionKeys = Object.keys(nextQuestion);
-    const possibleAnswers = nextQuestion[questionKeys[3]];
-    const correctAnswer = nextQuestion[questionKeys[2]];
+    const possibleAnswers = nextQuestion[questionKeys[allAnswersKeyIndex]];
+    const correctAnswer = nextQuestion[questionKeys[correctAnswerKeyIndex]];
     if (this.level === 'easy') {
       for (const key of possibleAnswers) {
         gameLevelObject[key] = 0.25;
@@ -60,3 +65,4 @@ export class GameLevel {
     return gameLevelObject;
   }
 }
+
