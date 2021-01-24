@@ -20,37 +20,9 @@ body {
   position: relative;
   margin: 0 0;
 }
-input[type="radio"] {
- 
-  width:15px;
-  height:15px;
-  box-shadow: -4px 0 0 rgb(137, 49, 49); 
-  border-radius: 999px;
-  -webkit-appearance: inherit;
-  border:1px solid #999999;
-  position:relative;
-  color: white;
- 
-}
 
-#GameLevel{
-   position: absolute;
-   margin-top: 400px;
-   margin-left: 100px;
 
-   
-}
 
-input[type="radio"]:checked:before {
-  content:"";
-  position:absolute;
-  border-radius: 999px;
-  left:25%;
-  top:25%;
-  width:50%;
-  height:50%;
-  background:#999999;
-}
 .main {
   width: 100%;
   display: flex;

@@ -12,6 +12,7 @@ import { ComputerMind } from '../../services/ComputerMind/ComputerMind';
 import { GameLevel } from '../GameLevel';
 import { Loader } from '../Loader';
 
+
 export const App = ({ options }) => {
   const inGameMode = document.querySelector('.mode__game-in-progress');
 
@@ -85,11 +86,14 @@ export const App = ({ options }) => {
     controlButtons.display();
     gameMode.enableButtons();
     controlButtons.switchToHall();
+    gameLevel.displayGameLevel();
   }
 
   let nextQuestion = {};
+
   let gameOverResults = [];
-  let level = 0;
+  let level = '';
+ 
   let quiz = {};
   const computerMind = new ComputerMind();
 
@@ -134,6 +138,7 @@ export const App = ({ options }) => {
     controlButtons.hide();
     inGameMode.hidden = false;
     timer.display();
+    gameLevel.hideGameLevel();
     hallOfFame.hide();
     gameMode.disableButtons();
   }

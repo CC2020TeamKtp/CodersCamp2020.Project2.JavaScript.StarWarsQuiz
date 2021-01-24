@@ -1,3 +1,4 @@
+
 const allAnswersKeyIndex = 3;
 const correctAnswerKeyIndex = 2;
 
@@ -9,14 +10,16 @@ export class GameLevel {
 
   gameLevel() {
     return `
-         <div id="GameLevel">
-            <input  type="radio" id="easy" name="gameLevel" value="easy" checked>
-            <label for="easy" class="game_level" >Easy</label>    
-            <input type="radio" id="medium" name="gameLevel" value="medium">
-            <label for="medium" class="game_level">Medium</label>      
-            <input type="radio" id="hard" name="gameLevel" value="hard">
-            <label for="hard" class="game_level">Hard</label>
-          </div>`;
+      <div class="switch">
+        <input name="switch" id="easy" type="radio" checked/>
+        <label for="easy" class="switch__easy">Easy</label>
+        <input name="switch" id="medium" type="radio" />
+        <label for="medium" class="switch__label">Medium</label>
+        <input name="switch" id="hard" type="radio" />
+        <label for="hard" class="switch__expert" >Expert</label>
+        <div class="switch__indicator" /></div>
+      </div>`;
+ 
   }
 
   displayGameLevel() {
@@ -24,7 +27,8 @@ export class GameLevel {
   }
 
   hideGameLevel() {
-    this.element.children[1].innerHTML = ''; ///.hidden = true;
+
+    this.element.innerHTML = ''; 
   }
 
   saveGameLevel() {
@@ -61,3 +65,4 @@ export class GameLevel {
     return gameLevelObject;
   }
 }
+
