@@ -10,6 +10,7 @@ import { GameDescription } from '../GameDescription';
 import { SoundEffects } from '../SoundEffects';
 import { ComputerMind } from '../../services/ComputerMind/ComputerMind';
 import { GameLevel } from '../GameLevel';
+import { Loader } from '../Loader';
 
 export const App = ({ options }) => {
   const inGameMode = document.querySelector('.mode__game-in-progress');
@@ -24,7 +25,20 @@ export const App = ({ options }) => {
 
   const hallOfFame = new HallOfFame(config);
 
-  const apiDataFetcher = new ApiDataFetcher(options.swApiBaseUrl);
+  const loader = new Loader(document.querySelector('#app-wrapper'));
+
+  const handleLoaderDisplay = () => {
+    loader.toggleLoaderDisplay();
+  };
+
+  document.onreadystatechange = () => {
+    handleLoaderDisplay();
+  };
+
+  const apiDataFetcher = new ApiDataFetcher(
+    options.swApiBaseUrl,
+    handleLoaderDisplay,
+  );
 
   const gameOver = new GameOver({
     config: config,
@@ -85,7 +99,9 @@ export const App = ({ options }) => {
     quiz = new GameEngine(gameMode, apiDataFetcher, handleGameOver);
     const gameView = new GameView(handleAnswerSelected);
     try {
+      handleLoaderDisplay();
       await quiz.fetchAllQuestionsForMode(gameMode);
+      handleLoaderDisplay();
     } catch (err) {
       gameView.displayNoQuestionsFetchedError();
     }

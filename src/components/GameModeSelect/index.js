@@ -41,6 +41,7 @@ export class GameModeSelect {
   };
 
   setNavList() {
+    this.navList.className = `menu__list`;
     this.navList.innerHTML = `<div class="menu__item menu__item--selected">People</div>
 <div class="menu__item menu__item">Vehicles</div>
 <div class="menu__item menu__item">Starships</div>`;
