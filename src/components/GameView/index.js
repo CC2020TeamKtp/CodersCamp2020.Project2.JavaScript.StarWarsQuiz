@@ -50,7 +50,6 @@ export class GameView {
     this.clickableAnswers = true;
 
     this.currentQuestion = questionData;
-    console.log('question data: ', questionData);
     this.answersWrapper.innerHTML = this.generateQuestionsHTML(
       questionData.allAnswers,
     );
@@ -66,7 +65,6 @@ export class GameView {
   }
 
   changeBtnColor(btn, color) {
-    console.log('btn: ', btn);
     btn.style.backgroundColor = color;
     setTimeout(() => {
       btn.style.backgroundColor = 'white';
@@ -82,7 +80,6 @@ export class GameView {
     const correctAnswer = currentQuestion.correctAnswer;
     const correctColor = 'green';
     const incorrectColor = 'red';
-    //  this.handleAnswerSelected(chosenAnswer,correctAnswer)
     if (chosenAnswer === correctAnswer) {
       this.changeBtnColor(target, correctColor);
       this.handleAnswerSelected(chosenAnswer, correctAnswer);

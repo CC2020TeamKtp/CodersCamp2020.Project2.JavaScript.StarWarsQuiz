@@ -3,13 +3,13 @@ export class SoundEffects {
     this.element = document.querySelector('#sound_btn');
     this.isMuted = true;
     this.soundCorrectAnswer = new Audio(
-      '/static/assets/sound/correctAnswer.mp3',
+      './static/assets/sound/correctAnswer.mp3',
     );
     this.soundIncorrectAnswer = new Audio(
-      '/static/assets/sound/incorrectAnswer.mp3',
+      './static/assets/sound/incorrectAnswer.mp3',
     );
-    this.soundFailure = new Audio('/static/assets/sound/failure.mp3');
-    this.soundVictory = new Audio('/static/assets/sound/victory.mp3');
+    this.soundFailure = new Audio('./static/assets/sound/failure.mp3');
+    this.soundVictory = new Audio('./static/assets/sound/victory.mp3');
   }
 
   display() {

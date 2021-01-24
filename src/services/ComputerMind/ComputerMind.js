@@ -11,6 +11,7 @@ export class ComputerMind {
         return {
           computerSelection: computerSelection,
           imgId: questionId,
+
         };
       }
     }

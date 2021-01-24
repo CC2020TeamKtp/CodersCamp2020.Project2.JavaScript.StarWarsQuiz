@@ -40,7 +40,6 @@ export class GameEngine {
         Util.randomizeUnique(this.allQuestions.length, allAnswersIndexes),
       );
     }
-    console.log(`all answers indexes: ${allAnswersIndexes}`);
     return allAnswersIndexes;
   }
 
@@ -61,12 +60,11 @@ export class GameEngine {
   }
 
   generateNextQuestion() {
-    // console.log('all q:', this.allQuestions);
-
     const nextQuestionIndex = Util.removeOneAtRandom(this.questionIndexes);
-
     const nextQuestion = this.findQuestionByIndex(nextQuestionIndex);
-    if (!nextQuestion) return this.handleNoMoreQuestions();
+    if (!nextQuestion) {
+      return this.handleNoMoreQuestions();
+    }
     const { name, index: id } = nextQuestion;
     const questionToAsk = {
       name: name,
