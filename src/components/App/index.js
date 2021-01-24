@@ -90,7 +90,6 @@ export const App = ({ options }) => {
 
   function handleAnswerSelected(playerAnswer, correctAnswer) {
     setTimeout(() => {
-      console.log(level);
       const setGameLevel = gameLevel.setGameLevel(nextQuestion, level);
       const computerSelection = computerMind.randomComputerAnswer(
         setGameLevel,
@@ -102,8 +101,6 @@ export const App = ({ options }) => {
         correctAnswer: { name: correctAnswer, id: computerSelection.imgId },
         computerAnswer: computerSelection.computerSelection,
       });
-      console.log('GameOverResult: ', gameOverResults);
-      console.log(setGameLevel);
       nextQuestion = quiz.generateNextQuestion();
       gameView.displayQuestion(nextQuestion);
     }, 1000);
