@@ -7,6 +7,7 @@ import { Timer } from '../Timer';
 import { GameView } from '../GameView';
 import { ControlButtons } from '../ControlButtons';
 import { GameDescription } from '../GameDescription';
+import { SoundEffects } from '../SoundEffects';
 import { ComputerMind } from '../../services/ComputerMind/ComputerMind';
 import { GameLevel } from '../GameLevel';
 
@@ -29,6 +30,8 @@ export const App = ({ options }) => {
     config: config,
     handleScoreSubmit: (result) =>
       hallOfFame.saveResult(result) || hallOfFame.update(),
+    handleGameSummary: (playerHasWon) =>
+      soundEffects.playFinalMelody(playerHasWon),
   });
 
   const gameDescription = new GameDescription({
@@ -43,6 +46,9 @@ export const App = ({ options }) => {
     gameDescription.update();
     hallOfFame.update();
   }
+
+  const soundEffects = new SoundEffects();
+  soundEffects.display();
 
   const timer = new Timer({
     config: config,
@@ -90,20 +96,21 @@ export const App = ({ options }) => {
 
   function handleAnswerSelected(playerAnswer, correctAnswer) {
     setTimeout(() => {
-      const setGameLevel = gameLevel.setGameLevel(nextQuestion, level);
-      const computerSelection = computerMind.randomComputerAnswer(
-        setGameLevel,
-        nextQuestion,
+      const gameLevelObject = gameLevel.setGameLevel(nextQuestion);
+      const randomComputerAnswer = computerMind.generateRandomComputerAnswer(
+        gameLevelObject,
+        nextQuestion.question.id,
       );
       const gameView = new GameView(handleAnswerSelected);
       gameOverResults.push({
         playerAnswer: playerAnswer,
-        correctAnswer: { name: correctAnswer, id: computerSelection.imgId },
-        computerAnswer: computerSelection.computerSelection,
+        correctAnswer: { name: correctAnswer, id: randomComputerAnswer.imgId },
+        computerAnswer: randomComputerAnswer.computerSelection,
       });
       nextQuestion = quiz.generateNextQuestion();
       gameView.displayQuestion(nextQuestion);
     }, 1000);
+    soundEffects.playBeeper(correctAnswer === playerAnswer);
   }
 
   function setGameInProgressView() {

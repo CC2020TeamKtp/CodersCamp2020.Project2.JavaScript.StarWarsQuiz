@@ -1,4 +1,3 @@
- 
 export class GameView {
   constructor(handleAnswerSelected) {
     this.answersWrapper = document.querySelector('.answers');
@@ -6,7 +5,6 @@ export class GameView {
     this.currentQuestion = {};
     this.clickableAnswers = true;
     this.handleAnswerSelected = handleAnswerSelected;
-
   }
 
   generateAnswerBtn(answerText) {
@@ -44,7 +42,6 @@ export class GameView {
   };
 
   displayQuestion(questionData) {
-    
     if (!questionData) {
       console.log('No questions fetched. Game will not start');
       return;
@@ -76,26 +73,22 @@ export class GameView {
       btn.style.color = 'black';
     }, 1000);
   }
-   
+
   handleClick({ target }, currentQuestion) {
     this.disableAnswerButtons();
-    
+
     this.clickableAnswers = false;
     const chosenAnswer = target.innerText;
     const correctAnswer = currentQuestion.correctAnswer;
     const correctColor = 'green';
     const incorrectColor = 'red';
-  //  this.handleAnswerSelected(chosenAnswer,correctAnswer)
+    //  this.handleAnswerSelected(chosenAnswer,correctAnswer)
     if (chosenAnswer === correctAnswer) {
-     this.changeBtnColor(target, correctColor);
-    this.handleAnswerSelected(chosenAnswer,correctAnswer)
-
+      this.changeBtnColor(target, correctColor);
+      this.handleAnswerSelected(chosenAnswer, correctAnswer);
     } else {
-      this.changeBtnColor(target, incorrectColor)
-      this.handleAnswerSelected(chosenAnswer,correctAnswer)
- 
- 
+      this.changeBtnColor(target, incorrectColor);
+      this.handleAnswerSelected(chosenAnswer, correctAnswer);
     }
-  
   }
 }

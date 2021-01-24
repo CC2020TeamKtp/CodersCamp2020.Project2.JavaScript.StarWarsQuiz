@@ -1,9 +1,10 @@
 export class GameOver {
-  constructor({ config, handleScoreSubmit }) {
+  constructor({ config, handleScoreSubmit, handleGameSummary }) {
     this.element = document.querySelector('#gameovermodal');
     this.config = config;
     this.handleScoreSubmit = handleScoreSubmit;
     this.results = [];
+    this.handleGameSummary = handleGameSummary;
   }
 
   hide() {
@@ -14,7 +15,7 @@ export class GameOver {
     this.processAnswers(results);
     this.element.innerHTML = `
     <div class="modal">
-        <h1 class="modal__title">game over</h1>
+        <h1 class="modal__title">game over - ${this.getResultMessage()}</h1>
         ${this.getSummaryIntro()}
         <div class="modal__answers">
             <img class="modal__answers--img" src="./static/assets/ui/MasterYodaLeft.png"/>
@@ -30,7 +31,7 @@ export class GameOver {
   }
 
   displayScore = (data) => (data ? data.correct + '/' + data.answered : '');
-
+  getScore = ({ correct: c, answered: a }) => c * 100 - (a - c) * 50;
   getForm() {
     return `<form>
         <div class="form">
@@ -45,7 +46,14 @@ export class GameOver {
         </div>
       </form>`;
   }
-
+  getResultMessage() {
+    const playerHasWon =
+      this.getScore(this.playerScore) > this.getScore(this.computerScore);
+    this.handleGameSummary(playerHasWon);
+    return playerHasWon
+      ? 'you have won'
+      : 'may the force be with you next time';
+  }
   getSummaryIntro() {
     return `
     <p class="modal__description">
