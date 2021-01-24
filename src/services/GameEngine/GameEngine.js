@@ -53,7 +53,6 @@ export class GameEngine {
 
   findQuestionByIndex(idx) {
     if (this.allQuestions.length === 0) {
-      this.handleNoMoreQuestions();
       return;
     }
     return this.allQuestions.find(
@@ -62,11 +61,12 @@ export class GameEngine {
   }
 
   generateNextQuestion() {
-    console.log('all q: ', this.allQuestions)
+    // console.log('all q:', this.allQuestions);
+
     const nextQuestionIndex = Util.removeOneAtRandom(this.questionIndexes);
 
     const nextQuestion = this.findQuestionByIndex(nextQuestionIndex);
-    if (!nextQuestion) return;
+    if (!nextQuestion) return this.handleNoMoreQuestions();
     const { name, index: id } = nextQuestion;
     const questionToAsk = {
       name: name,

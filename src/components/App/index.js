@@ -64,9 +64,8 @@ export const App = ({ options }) => {
   });
   controlButtons.display();
 
-  //do wykorzystania także, gdy skończą się pytania
   function handleGameOver() {
-    gameOver.display();
+    gameOver.display(gameOverResults);
     timer.hide();
     inGameMode.hidden = true;
     controlButtons.display();
@@ -75,12 +74,13 @@ export const App = ({ options }) => {
   }
 
   let nextQuestion = {};
-  const gameOverResults = [];
+  let gameOverResults = [];
   let level = 0;
   let quiz = {};
   const computerMind = new ComputerMind();
 
   async function play(gameMode) {
+    gameOverResults = [];
     level = gameLevel.saveGameLevel();
     quiz = new GameEngine(gameMode, apiDataFetcher, handleGameOver);
     const gameView = new GameView(handleAnswerSelected);
@@ -107,8 +107,6 @@ export const App = ({ options }) => {
         correctAnswer: { name: correctAnswer, id: randomComputerAnswer.imgId },
         computerAnswer: randomComputerAnswer.computerSelection,
       });
-      console.log('GameOverResult: ', gameOverResults);
-      console.log(gameLevelObject);
       nextQuestion = quiz.generateNextQuestion();
       gameView.displayQuestion(nextQuestion);
     }, 1000);
