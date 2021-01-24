@@ -2,16 +2,22 @@ export class SoundEffects {
   constructor() {
     this.element = document.querySelector('#sound_btn');
     this.isMuted = true;
+    this.soundCorrectAnswer = new Audio(
+      '/static/assets/sound/correctAnswer.mp3',
+    );
+    this.soundIncorrectAnswer = new Audio(
+      '/static/assets/sound/incorrectAnswer.mp3',
+    );
+    this.soundFailure = new Audio('/static/assets/sound/failure.mp3');
+    this.soundVictory = new Audio('/static/assets/sound/victory.mp3');
   }
 
   display() {
-    const soundBtn = document.createElement('div');
-    soundBtn.innerHTML = `
+    this.element.innerHTML = `
     <button class="button button--sound">
           <i class="fas fa-volume-mute"></i>
     `;
-    this.element.appendChild(soundBtn);
-    soundBtn.addEventListener('click', () => this.toggleSoundEffects());
+    this.element.addEventListener('click', () => this.toggleSoundEffects());
   }
 
   toggleSoundEffects() {
@@ -26,17 +32,13 @@ export class SoundEffects {
 
   playBeeper(isCorrectAnswer) {
     if (this.isMuted) return;
-    const soundCorrect = new Audio('/static/assets/sound/correctAnswer.mp3');
-    const soundIncorrect = new Audio(
-      '/static/assets/sound/incorrectAnswer.mp3',
-    );
-    isCorrectAnswer ? soundCorrect.play() : soundIncorrect.play();
+    isCorrectAnswer
+      ? this.soundCorrectAnswer.play()
+      : this.soundIncorrectAnswer.play();
   }
 
   playFinalMelody(playerHasWon) {
     if (this.isMuted) return;
-    const soundFailure = new Audio('/static/assets/sound/failure.mp3');
-    const soundVictory = new Audio('/static/assets/sound/victory.mp3');
-    playerHasWon ? soundVictory.play() : soundFailure.play();
+    playerHasWon ? this.soundVictory.play() : this.soundFailure.play();
   }
 }
