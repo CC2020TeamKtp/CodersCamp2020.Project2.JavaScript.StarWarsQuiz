@@ -7,6 +7,7 @@ import { Timer } from '../Timer';
 import { GameView } from '../GameView';
 import { ControlButtons } from '../ControlButtons';
 import { GameDescription } from '../GameDescription';
+import { SoundEffects } from '../SoundEffects';
 import { ComputerMind } from '../../services/ComputerMind/ComputerMind';
 import { GameLevel } from '../GameLevel';
 
@@ -29,6 +30,8 @@ export const App = ({ options }) => {
     config: config,
     handleScoreSubmit: (result) =>
       hallOfFame.saveResult(result) || hallOfFame.update(),
+    handleGameSummary: (playerHasWon) =>
+      soundEffects.playFinalMelody(playerHasWon),
   });
 
   const gameDescription = new GameDescription({
@@ -43,6 +46,9 @@ export const App = ({ options }) => {
     gameDescription.update();
     hallOfFame.update();
   }
+
+  const soundEffects = new SoundEffects();
+  soundEffects.display();
 
   const timer = new Timer({
     config: config,
@@ -106,6 +112,7 @@ export const App = ({ options }) => {
       nextQuestion = quiz.generateNextQuestion();
       gameView.displayQuestion(nextQuestion);
     }, 1000);
+    soundEffects.playBeeper(correctAnswer === playerAnswer);
   }
 
   function setGameInProgressView() {
