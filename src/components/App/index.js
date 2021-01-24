@@ -96,20 +96,19 @@ export const App = ({ options }) => {
 
   function handleAnswerSelected(playerAnswer, correctAnswer) {
     setTimeout(() => {
-      console.log(level);
-      const setGameLevel = gameLevel.setGameLevel(nextQuestion, level);
-      const computerSelection = computerMind.randomComputerAnswer(
-        setGameLevel,
-        nextQuestion,
+      const gameLevelObject = gameLevel.setGameLevel(nextQuestion);
+      const randomComputerAnswer = computerMind.generateRandomComputerAnswer(
+        gameLevelObject,
+        nextQuestion.question.id,
       );
       const gameView = new GameView(handleAnswerSelected);
       gameOverResults.push({
         playerAnswer: playerAnswer,
-        correctAnswer: { name: correctAnswer, id: computerSelection.imgId },
-        computerAnswer: computerSelection.computerSelection,
+        correctAnswer: { name: correctAnswer, id: randomComputerAnswer.imgId },
+        computerAnswer: randomComputerAnswer.computerSelection,
       });
       console.log('GameOverResult: ', gameOverResults);
-      console.log(setGameLevel);
+      console.log(gameLevelObject);
       nextQuestion = quiz.generateNextQuestion();
       gameView.displayQuestion(nextQuestion);
     }, 1000);
