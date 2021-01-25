@@ -5,7 +5,7 @@ export class ControlButtons {
     this.handleSwitchToHall = handleSwitchToHall;
     this.handlePlayTheGame = handlePlayTheGame;
   }
-
+ 
   display() {
     this.element.innerHTML = `  
     <button class="button button--ranking">

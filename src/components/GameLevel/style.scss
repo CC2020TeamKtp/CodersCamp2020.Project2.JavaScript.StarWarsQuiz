@@ -1,39 +1,54 @@
 .switch {
   position: relative;
   width: 80%;
-  margin-left: 40px;
-  margin-top: 10px;
+  margin-top: 15px;
 
   &:before {
     content: '  ';
-    position: absolute;
+    display: flex;
     left: 0;
     z-index: -1;
-    width: 100%;
+    width: 300px;
     height: 2rem;
     background: white;
     border-radius: 10px;
     box-shadow: 0 0 1em red;
   }
   &__label {
-    display: inline-block;
-    width: 1rem;
-    padding: 0.7rem;
+    position: absolute;
+    top: 0rem;
+    left: 0;
+    width: 2rem;
+    margin-top: 7%;
+    margin-left: 45%;
     font-size: 0.5rem;
-    margin-left: 25px;
     text-align: center;
     cursor: pointer;
     color: black;
   }
   &__easy {
-    margin-left: 55px;
+    position: absolute;
+    top: 0rem;
+    left: 0;
+    width: 2rem;
+    margin-top: 7%;
+    margin-left: 10%;
     font-size: 0.5rem;
+    text-align: center;
     cursor: pointer;
+    color: black;
   }
   &__expert {
-    margin-left: 70px;
+    position: absolute;
+    top: 0rem;
+    left: 0;
+    width: 2rem;
+    margin-top: 7%;
+    margin-left: 85%;
     font-size: 0.5rem;
+    text-align: center;
     cursor: pointer;
+    color: black;
   }
 
   &__indicator {
@@ -51,19 +66,19 @@
 
   input#easy:checked ~ .switch__indicator {
     background: red;
-    transform: translate3d(1.3rem, 0, 0);
+    transform: translate3d(20%, 0, 0);
     opacity: 0.6;
     box-shadow: 0 0 1em red;
   }
   input#medium:checked ~ .switch__indicator {
     background: red;
-    transform: translate3d(4.7rem, 0, 0);
+    transform: translate3d(3.8rem, 0, 0);
     opacity: 0.6;
     box-shadow: 0 0 1em red;
   }
   input#hard:checked ~ .switch__indicator {
     background: red;
-    transform: translate3d(8rem, 0, 0);
+    transform: translate3d(7rem, 0, 0);
     opacity: 0.6;
     box-shadow: 0 0 1em red;
   }
@@ -77,49 +92,55 @@
 
 @media (max-width: 1024px) {
   .switch {
-    margin-left: 30px;
+   
     margin-bottom: 10px;
-    width: 80%;
+ 
 
     input#easy:checked ~ .switch__indicator {
-      transform: translate3d(1.5rem, 0, 0);
+      transform: translate3d(0.8rem, 0, 0);
     }
     input#medium:checked ~ .switch__indicator {
-      transform: translate3d(5rem, 0, 0);
+      transform: translate3d(4rem, 0, 0);
     }
     input#hard:checked ~ .switch__indicator {
-      transform: translate3d(8.5rem, 0, 0);
+      transform: translate3d(8rem, 0, 0);
     }
   }
 }
 
 @media (max-width: 768px) {
   .switch {
-    margin-left: 60px;
+    
     margin-bottom: 10px;
-    width: 70%;
+     
 
     input#easy:checked ~ .switch__indicator {
-      transform: translate3d(2rem, 0, 0);
+      transform: translate3d(0.8rem, 0, 0);
     }
     input#medium:checked ~ .switch__indicator {
-      transform: translate3d(5.7rem, 0, 0);
+      transform: translate3d(5rem, 0, 0);
     }
     input#hard:checked ~ .switch__indicator {
-      transform: translate3d(10rem, 0, 0);
+      transform: translate3d(9.5rem, 0, 0);
     }
   }
 }
 
 @media (max-width: 480px) {
   .switch {
-    width: 70%;
+ 
 
     input#hard:checked ~ .switch__indicator {
       transform: translate3d(10.7rem, 0, 0);
     }
     input#medium:checked ~ .switch__indicator {
-      transform: translate3d(6rem, 0, 0);
+      transform: translate3d(5.5rem, 0, 0);
     }
   }
+}
+
+#settingsImg{
+  display: flex;
+  align-items: center;
+  flex-direction: column;
 }
